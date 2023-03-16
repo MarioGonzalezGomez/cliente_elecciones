@@ -1,16 +1,17 @@
 package com.mggcode.cliente_elecciones.conexion;
 
-import com.mggcode.cliente_elecciones.config.ConfigIPF;
+import com.mggcode.cliente_elecciones.config.Config;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import static com.mggcode.cliente_elecciones.config.ConfigIPF.config;
+import static com.mggcode.cliente_elecciones.config.Config.config;
 
 public class ConexionIPF {
     private static ConexionIPF conexion;
+
 
     private String direccion;
     private Socket servidor;
@@ -45,8 +46,8 @@ public class ConexionIPF {
     }
 
     private void prepararConexion() {
-        ConfigIPF.getConfiguracion();
-        if (config.getProperty("direccion").equals("0")) {
+        Config.getConfiguracion();
+        if (config.getProperty("direccion1").equals("0")) {
             direccion = "localhost";
         } else {
             direccion = config.getProperty("direccion");

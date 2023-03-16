@@ -1,6 +1,5 @@
 package com.mggcode.cliente_elecciones;
 
-import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionPartidoService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

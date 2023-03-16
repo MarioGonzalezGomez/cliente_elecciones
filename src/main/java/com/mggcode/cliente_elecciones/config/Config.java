@@ -3,19 +3,19 @@ package com.mggcode.cliente_elecciones.config;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-public class ConfigIPF {
+public class Config {
 
-    private static ConfigIPF configuracion;
+    private static Config configuracion;
     public static Properties config;
 
-    private ConfigIPF() {
+    private Config() {
         config = new Properties();
         loadConfig();
     }
 
-    public static ConfigIPF getConfiguracion() {
+    public static Config getConfiguracion() {
         if (configuracion == null) {
-            configuracion = new ConfigIPF();
+            configuracion = new Config();
         }
         return configuracion;
     }
