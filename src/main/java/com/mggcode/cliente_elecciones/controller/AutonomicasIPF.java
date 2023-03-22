@@ -1,6 +1,7 @@
 package com.mggcode.cliente_elecciones.controller;
 
 import com.mggcode.cliente_elecciones.conexion.ConexionIPF;
+import com.mggcode.cliente_elecciones.conexion.ConexionManager;
 import com.mggcode.cliente_elecciones.config.Config;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/autonomicas")
 public class AutonomicasIPF {
 
-    private final ConexionIPF c = ConexionIPF.getConexion();
+    private final ConexionManager conexionManager = ConexionManager.getConexionManager();
+
+    //TODO(Indicar aquí la dirección de la conexión IPF que quiero, ¿Cada controller va a un IPF?)
+
+    private final ConexionIPF c = conexionManager.getConexionByAdress("localhost");
     private final Config conf = Config.getConfiguracion();
 
 

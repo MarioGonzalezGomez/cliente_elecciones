@@ -12,7 +12,6 @@ import static com.mggcode.cliente_elecciones.config.Config.config;
 public class ConexionIPF {
     private static ConexionIPF conexion;
 
-
     private String direccion;
     private Socket servidor;
 
@@ -20,13 +19,17 @@ public class ConexionIPF {
     private DataOutputStream datoSalida = null;
 
 
-    private ConexionIPF() {
-        iniciarControl();
+    public ConexionIPF(String address) {
+        iniciarControl(address);
+    }
+    public String getDireccion(){
+        return direccion;
     }
 
-    public static ConexionIPF getConexion() {
+    public static ConexionIPF getConexion(String address) {
         if (conexion == null) {
-            conexion = new ConexionIPF();
+
+            conexion = new ConexionIPF(address);
         }
         return conexion;
     }
@@ -40,18 +43,15 @@ public class ConexionIPF {
         }
     }
 
-    public void iniciarControl() {
-        prepararConexion();
+    public void iniciarControl(String address) {
+        prepararConexion(address);
         conectar();
     }
 
-    private void prepararConexion() {
+
+    private void prepararConexion(String address) {
         Config.getConfiguracion();
-        if (config.getProperty("direccion1").equals("0")) {
-            direccion = "localhost";
-        } else {
-            direccion = config.getProperty("direccion");
-        }
+        direccion = address;
     }
 
     private void conectar() {
@@ -64,6 +64,7 @@ public class ConexionIPF {
             System.exit(-1);
         }
     }
+
 
     private void crearFlujosES() {
         try {
