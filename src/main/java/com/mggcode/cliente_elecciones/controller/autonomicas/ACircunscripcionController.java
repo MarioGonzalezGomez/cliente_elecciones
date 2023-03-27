@@ -31,22 +31,21 @@ public class ACircunscripcionController {
     public String verCircunscripciones(Model model) {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
         model.addAttribute("circunscripciones", circunscripciones);
-        model.addAttribute("rutaCSV", "/autonomicas/circunscripciones/csv");
-        model.addAttribute("rutaExcel", "/autonomicas/circunscripciones/excel");
         return "circunscripciones";
     }
 
     @RequestMapping(path = "/csv")
     public String findAllInCsv(RedirectAttributes redirectAttributes) throws IOException {
-        File file = circunscripcionService.findAllInCsv();
-        redirectAttributes.addFlashAttribute("success", "Archivo descargado correctamente.");
+        circunscripcionService.findAllInCsv();
+        redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         return "redirect:/autonomicas/circunscripciones";
     }
 
     @RequestMapping(path = "/excel")
-    public String findAllInExcel() throws IOException {
+    public String findAllInExcel(RedirectAttributes redirectAttributes) throws IOException {
         circunscripcionService.findAllInExcel();
-        return "Descargado correctamente";
+        redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
+        return "redirect:/autonomicas/circunscripciones";
     }
 
     @GetMapping("/{codigo}")
@@ -54,21 +53,19 @@ public class ACircunscripcionController {
         Circunscripcion circunscripcion = circunscripcionService.findById(cod);
         model.addAttribute("circunscripcion", circunscripcion);
         model.addAttribute("referer", referer);
-        //  model.addAttribute("rutaCSV", "/autonomicas/circunscripciones/csv");
-        //  model.addAttribute("rutaExcel", "/autonomicas/circunscripciones/excel");
         return "circunscripcionDetalle";
     }
 
     @RequestMapping(path = "/{codPartido}/csv")
     public String findByIdInCsv(@PathVariable("codPartido") String codPartido) throws IOException {
         circunscripcionService.findByIdInCsv(codPartido);
-        return "Descargado correctamente";
+        return "circunscripcionDetalle";
     }
 
     @RequestMapping(path = "/{codPartido}/excel")
     public String findByIdInExcel(@PathVariable("codPartido") String codPartido) throws IOException {
         circunscripcionService.findByIdInExcel(codPartido);
-        return "Descargado correctamente";
+        return "circunscripcionDetalle";
     }
 
 }

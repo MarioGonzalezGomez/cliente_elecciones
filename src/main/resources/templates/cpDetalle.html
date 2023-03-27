@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Detalle de CP</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .dl-horizontal dt {
+   width: 240px;}
+   dl dt {
+  margin-right: 20px;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12">
+                            <h3>Detalle CP</h3>
+                        </div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a th:href="${referer}" th:if="${referer != null}">Volver a
+                                    la lista</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"
+                                    th:text="${cp.key.circunscripcion}"></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>Circunscripción:</dt>
+                        <dd th:text="${cp.key.circunscripcion}"></dd>
+                        <dt>Partido:</dt>
+                        <dd th:text="${cp.key.partido}"></dd>
+                        <dt>Escaños Desde:</dt>
+                        <dd th:text="${cp.escanos_desde}"></dd>
+                        <dt>Escaños Hasta:</dt>
+                        <dd th:text="${cp.escanos_hasta}"></dd>
+                        <dt>Porcentaje de Voto:</dt>
+                        <dd th:text="${cp.porcentajeVoto}"></dd>
+                        <dt>Número de Votantes:</dt>
+                        <dd th:text="${cp.numVotantes}"></dd>
+                        <dt>Escaños Desde (Histórico):</dt>
+                        <dd th:text="${cp.escanos_desde_hist}"></dd>
+                        <dt>Escaños Hasta (Histórico):</dt>
+                        <dd th:text="${cp.escanos_hasta_hist}"></dd>
+                        <dt>Porcentaje de voto (Histórico):</dt>
+                        <dd th:text="${cp.votantesHistorico}"></dd>
+                        <dt>Número de votantes (Histórico):</dt>
+                        <dd th:text="${cp.numVotantesHistorico}"></dd>
+                        <dt>Escanos desde (Sondeo):</dt>
+                        <dd th:text="${cp.escanos_desde_sondeo}"></dd>
+                        <dt>Escanos hasta (Sondeo):</dt>
+                        <dd th:text="${cp.escanos_hasta_sondeo}"></dd>
+                        <dt>Porcentaje de voto (Sondeo):</dt>
+                        <dd th:text="${cp.porcentajeVotoSondeo}"></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -51,12 +51,12 @@ public class ACircunscripcionPartidoService {
     }
 
 
-    public Circunscripcion findById(String idC, String idP) {
+    public CircunscripcionPartido findById(String idC, String idP) {
         String ipServer = Config.config.getProperty("ipServer");
-        ResponseEntity<Circunscripcion> response =
+        ResponseEntity<CircunscripcionPartido> response =
                 restTemplate.getForEntity(
                         "http://" + ipServer + ":8080/autonomicas/cp/" + idC + "/" + idP,
-                        Circunscripcion.class);
+                        CircunscripcionPartido.class);
         return response.getBody();
     }
 

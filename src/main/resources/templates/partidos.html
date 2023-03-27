@@ -11,13 +11,34 @@
   <title>Partidos</title>
 </head>
 <body>
+<script>
+    setTimeout(function() {
+        $('.alert').fadeOut('fast');
+    }, 2000); // Oculta la alerta después de 2 segundos
+</script>
+<div th:if="${mensaje}">
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <span th:text="${mensaje}"></span>
+  </div>
+</div>
 <p></p>
-<div class="container">
-  <button type="button" class="btn btn-success">Entra</button>
-  <button type="button" class="btn btn-danger">Sale</button>
-
-  <button type="button" class="btn btn-secondary">Descargar CSV</button>
-  <button type="button" class="btn btn-secondary">Descargar Excel</button>
+<div class="row">
+  <div class="col-md-9 offset-md-1">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="text-start">
+        <button type="button" class="btn btn-primary" onclick="location.href='/'">Volver al menú principal</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-success">Entra</button>
+        <button type="button" class="btn btn-danger">Sale</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-secondary" onclick="location.href='/autonomicas/partidos/csv';">Descargar CSV</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='/autonomicas/partidos/excel';">Descargar Excel</button>
+      </div>
+    </div>
+  </div>
 </div>
 <p></p>
 <div class="container">
@@ -38,7 +59,6 @@
               <th>Siglas</th>
               <th>Nombre Completo</th>
               <th>Código Padre</th>
-
             </tr>
             </thead>
 

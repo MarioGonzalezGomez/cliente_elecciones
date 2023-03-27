@@ -35,16 +35,16 @@ public class ACircunscripcionService {
         File carpetaBase = comprobarCarpetas(ruta);
         URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv"));
-        File file = new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv");
-        return file;
+        return new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv");
     }
 
-    public void findAllInExcel() throws IOException {
+    public File findAllInExcel() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
         String ruta = Config.config.getProperty("rutaFicheros");
         File carpetaBase = comprobarCarpetas(ruta);
         URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx"));
+        return new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx");
     }
 
     public Circunscripcion findById(String id) {

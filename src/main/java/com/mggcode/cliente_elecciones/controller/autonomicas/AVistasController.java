@@ -23,33 +23,6 @@ public class AVistasController {
     @Autowired
     private APartidoService partidoService;
 
-    // @GetMapping("/circunscripciones/vista")
-    // public String verCircunscripciones(Model model) {
-    //     List<Circunscripcion> circunscripciones = aCircunscripcionController.findAll().getBody();
-    //     model.addAttribute("circunscripciones", circunscripciones);
-    //     model.addAttribute("rutaCSV", "/autonomicas/circunscripciones/csv");
-    //     model.addAttribute("rutaExcel", "/autonomicas/circunscripciones/excel");
-    //     return "circunscripciones";
-    // }
-//
-
-     @GetMapping("/partidos/vista")
-     public String verPartidos(Model model) throws IOException {
-         List<Partido> partidos = partidoService.findAll();
-         model.addAttribute("partidos", partidos);
-         model.addAttribute("rutaCSV", "/autonomicas/partidos/csv");
-         model.addAttribute("rutaExcel", "/autonomicas/partidos/excel");
-         return "partidos";
-     }
-
-    @GetMapping("/cp/vista")
-    public String verCPS(Model model) throws IOException {
-        List<CircunscripcionPartido> cps = cpService.findAll();
-        model.addAttribute("cps", cps);
-        model.addAttribute("rutaCSV", "/autonomicas/cp/csv");
-        model.addAttribute("rutaExcel", "/autonomicas/cp/excel");
-        return "cps";
-    }
 
     // @GetMapping("/cp/mayorias/autonomias/vista")
     // public String verCPSporMA(Model model) {
