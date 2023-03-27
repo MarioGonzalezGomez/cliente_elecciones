@@ -32,6 +32,7 @@ public class AVistasController {
     //     return "circunscripciones";
     // }
 //
+
      @GetMapping("/partidos/vista")
      public String verPartidos(Model model) throws IOException {
          List<Partido> partidos = partidoService.findAll();

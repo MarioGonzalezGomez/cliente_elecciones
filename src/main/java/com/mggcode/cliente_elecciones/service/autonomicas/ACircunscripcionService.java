@@ -29,12 +29,14 @@ public class ACircunscripcionService {
         return Arrays.asList(arrayP);
     }
 
-    public void findAllInCsv() throws IOException {
+    public File findAllInCsv() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
         String ruta = Config.config.getProperty("rutaFicheros");
         File carpetaBase = comprobarCarpetas(ruta);
         URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv"));
+        File file = new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv");
+        return file;
     }
 
     public void findAllInExcel() throws IOException {

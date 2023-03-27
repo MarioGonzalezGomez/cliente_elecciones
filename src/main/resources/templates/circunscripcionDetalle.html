@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle de Circunscripción</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="panel">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12">
+              <h3>Detalle de Circunscripción</h3>
+            </div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="${referer}" th:if="${referer != null}">Volver a la lista</a></li>
+                <li class="breadcrumb-item active" aria-current="page" th:text="${circunscripcion.nombreCircunscripcion}"></li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>Código:</dt>
+            <dd th:text="${circunscripcion.codigo}"></dd>
+            <dt>Código Comunidad:</dt>
+            <dd th:text="${circunscripcion.codigoComunidad}"></dd>
+            <dt>Código Provincia:</dt>
+            <dd th:text="${circunscripcion.codigoProvincia}"></dd>
+            <dt>Código Municipio:</dt>
+            <dd th:text="${circunscripcion.codigoMunicipio}"></dd>
+            <dt>Nombre:</dt>
+            <dd th:text="${circunscripcion.nombreCircunscripcion}"></dd>
+            <dt>Escrutado:</dt>
+            <dd th:text="${circunscripcion.escrutado}"></dd>
+            <dt>Escaños Totales:</dt>
+            <dd th:text="${circunscripcion.escanios}"></dd>
+            <dt>Avance 1:</dt>
+            <dd th:text="${circunscripcion.avance1}"></dd>
+            <dt>Avance 2:</dt>
+            <dd th:text="${circunscripcion.avance2}"></dd>
+            <dt>Avance 3:</dt>
+            <dd th:text="${circunscripcion.avance3}"></dd>
+            <dt>Participación:</dt>
+            <dd th:text="${circunscripcion.participacion}"></dd>
+            <dt>Votantes:</dt>
+            <dd th:text="${circunscripcion.votantes}"></dd>
+            <dt>Escaños Históricos:</dt>
+            <dd th:text="${circunscripcion.escaniosHistoricos}"></dd>
+            <dt>Avance 1 Histórico:</dt>
+            <dd th:text="${circunscripcion.avance1Hist}"></dd>
+            <dt>Avance 2 Histórico:</dt>
+            <dd th:text="${circunscripcion.avance2Hist}"></dd>
+            <dt>Avance 3 Histórico:</dt>
+            <dd th:text="${circunscripcion.avance3Hist}"></dd>
+            <dt>Participación Histórica:</dt>
+            <dd th:text="${circunscripcion.participacionHist}"></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
