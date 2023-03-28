@@ -1,11 +1,10 @@
 package com.mggcode.cliente_elecciones.DTO;
 
-
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class CpDTO {
     private String codigoPartido;
     private String codigoPadre;
