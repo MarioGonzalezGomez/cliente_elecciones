@@ -17,6 +17,7 @@
     }, 2000); // Oculta la alerta después de 2 segundos
 
 
+
 </script>
 <div th:if="${mensaje}">
     <div class="alert alert-success">
@@ -97,8 +98,7 @@
                             <th>Código Padre</th>
                             <th>Escaños desde</th>
                             <th>Escaños hasta</th>
-                            <th>Escaños desde (Histórico)</th>
-                            <th>Escaños hasta (Histórico)</th>
+                            <th>Escaños (Histórico)</th>
                             <th>Porcentaje de Voto</th>
                             <th>Porcentaje de Voto (Histórico)</th>
                             <th>Votantes</th>
@@ -110,7 +110,6 @@
                             <td th:text="${cp.codigoPadre}"></td>
                             <td th:text="${cp.escanos_desde}"></td>
                             <td th:text="${cp.escanos_hasta}"></td>
-                            <td th:text="${cp.escanos_desde_hist}"></td>
                             <td th:text="${cp.escanos_hasta_hist}"></td>
                             <td th:text="${cp.porcentajeVoto}"></td>
                             <td th:text="${cp.porcentajeVotoHistorico}"></td>

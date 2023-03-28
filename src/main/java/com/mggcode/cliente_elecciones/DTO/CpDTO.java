@@ -10,7 +10,6 @@ public class CpDTO {
     private String codigoPadre;
     private int escanos_desde;
     private int escanos_hasta;
-    private int escanos_desde_hist;
     private int escanos_hasta_hist;
     private double porcentajeVoto;
     private double porcentajeVotoHistorico;
