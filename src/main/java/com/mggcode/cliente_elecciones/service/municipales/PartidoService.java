@@ -18,6 +18,7 @@ import java.util.List;
 public class PartidoService {
 
     private final Config conf = Config.getConfiguracion();
+    private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
     @Autowired
     RestTemplate restTemplate;
 
@@ -33,16 +34,14 @@ public class PartidoService {
 
     public void findAllInCsv() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/partidos/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\partidos.csv"));
     }
 
     public void findAllInExcel() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/partidos/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\partidos.xlsx"));
     }
@@ -58,22 +57,24 @@ public class PartidoService {
 
     public void findByIdInCsv(String id) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/partidos/" + id + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\partido_" + id + ".csv"));
     }
 
     public void findByIdInExcel(String id) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/partidos/" + id + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\partido_" + id + ".xlsx"));
     }
 
 
-    private File comprobarCarpetas(String ruta) {
+    private File comprobarCarpetas() {
+        File municipales = new File(ruta);
+        if (!municipales.exists()) {
+            municipales.mkdir();
+        }
         File partidos = new File(ruta + "\\PARTIDOS");
         if (!partidos.exists()) {
             partidos.mkdir();

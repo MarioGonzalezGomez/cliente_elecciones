@@ -17,6 +17,7 @@ import java.util.List;
 @Service
 public class CircunscripcionService {
     private final Config conf = Config.getConfiguracion();
+    private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
     @Autowired
     RestTemplate restTemplate;
 
@@ -32,16 +33,14 @@ public class CircunscripcionService {
 
     public void findAllInCsv() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv"));
     }
 
     public void findAllInExcel() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx"));
     }
@@ -57,22 +56,24 @@ public class CircunscripcionService {
 
     public void findByIdInCsv(String id) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/" + id + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripcion_" + id + ".csv"));
     }
 
     public void findByIdInExcel(String id) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/" + id + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripcion_" + id + ".xlsx"));
     }
 
 
-    private File comprobarCarpetas(String ruta) {
+    private File comprobarCarpetas() {
+        File municipales = new File(ruta);
+        if (!municipales.exists()) {
+            municipales.mkdir();
+        }
         File circunscripciones = new File(ruta + "\\CIRCUNSCRIPCIONES");
         if (!circunscripciones.exists()) {
             circunscripciones.mkdir();

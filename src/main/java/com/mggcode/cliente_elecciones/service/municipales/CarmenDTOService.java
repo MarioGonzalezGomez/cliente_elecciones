@@ -17,6 +17,7 @@ import java.net.URL;
 public class CarmenDTOService {
 
     private final Config conf = Config.getConfiguracion();
+    private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
 
     @Autowired
     RestTemplate restTemplate;
@@ -34,21 +35,23 @@ public class CarmenDTOService {
 
     public void findAllInCsv(String codAutonomia) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/carmen/" + codAutonomia + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\CarmenDTO_" + codAutonomia + ".csv"));
     }
 
     public void findAllInExcel(String codAutonomia) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/carmen/" + codAutonomia + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\CarmenDTO_" + codAutonomia + ".xlsx"));
     }
 
-    private File comprobarCarpetas(String ruta) {
+    private File comprobarCarpetas() {
+        File municipales = new File(ruta);
+        if (!municipales.exists()) {
+            municipales.mkdir();
+        }
         File partidos = new File(ruta + "\\CARMEN");
         if (!partidos.exists()) {
             partidos.mkdir();

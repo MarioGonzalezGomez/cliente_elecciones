@@ -2,7 +2,6 @@ package com.mggcode.cliente_elecciones.service.municipales;
 
 
 import com.mggcode.cliente_elecciones.config.Config;
-import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import java.util.List;
 public class CircunscripcionPartidoService {
 
     private final Config conf = Config.getConfiguracion();
+    private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
     @Autowired
     RestTemplate restTemplate;
 
@@ -35,27 +35,25 @@ public class CircunscripcionPartidoService {
 
     public void findAllInCsv() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cps.csv"));
     }
 
     public void findAllInExcel() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cps.xlsx"));
     }
 
 
-    public Circunscripcion findById(String idC, String idP) {
+    public CircunscripcionPartido findById(String idC, String idP) {
         String ipServer = Config.config.getProperty("ipServer");
-        ResponseEntity<Circunscripcion> response =
+        ResponseEntity<CircunscripcionPartido> response =
                 restTemplate.getForEntity(
                         "http://" + ipServer + ":8080/municipales/cp/" + idC + "/" + idP,
-                        Circunscripcion.class);
+                        CircunscripcionPartido.class);
         return response.getBody();
     }
 
@@ -71,16 +69,14 @@ public class CircunscripcionPartidoService {
 
     public void masVotadosPorAutonomiaInCsv() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/autonomias/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\mas_votado_por_autonomias.csv"));
     }
 
     public void masVotadosPorAutonomiaInExcel() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/autonomias/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\mas_votado_por_autonomias.xlsx"));
     }
@@ -98,16 +94,14 @@ public class CircunscripcionPartidoService {
 
     public void masVotadosPorProvinciaInCsv() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/provincias/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\mas_votado_por_provincias.csv"));
     }
 
     public void masVotadosPorProvinciaInExcel() throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/provincias/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\mas_votado_por_provincias.xlsx"));
     }
@@ -124,16 +118,14 @@ public class CircunscripcionPartidoService {
 
     public void masVotadosAutonomicoInCsv(String codAutonomia) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/" + codAutonomia + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\mas_votado_en_" + codAutonomia + ".csv"));
     }
 
     public void masVotadosAutonomicoInExcel(String codAutonomia) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/" + codAutonomia + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\mas_votado_en_" + codAutonomia + ".xlsx"));
     }
@@ -151,16 +143,14 @@ public class CircunscripcionPartidoService {
 
     public void findByIdCircunscripcionInCsv(String codAutonomia) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cps_" + codAutonomia + ".csv"));
     }
 
     public void findByIdCircunscripcionInExcel(String codAutonomia) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cps_" + codAutonomia + ".xlsx"));
     }
@@ -178,16 +168,14 @@ public class CircunscripcionPartidoService {
 
     public void findByIdPartidoAutonomicoPorProvinciasInCsv(String codAutonomia, String codPartido) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/partido/" + codPartido + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cp_" + codAutonomia + "_" + codPartido + ".csv"));
     }
 
     public void findByIdPartidoAutonomicoPorProvinciasInExcel(String codAutonomia, String codPartido) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/partido/" + codPartido + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cp_" + codAutonomia + "_" + codPartido + ".xlsx"));
     }
@@ -205,16 +193,14 @@ public class CircunscripcionPartidoService {
 
     public void findByIdPartidoAutonomiasCodInCsv(String codPartido) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByCodAuto/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cp_" + codPartido + "_PorAutonomiasOrderByCodigo.csv"));
     }
 
     public void findByIdPartidoAutonomiasCodInExcel(String codPartido) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/\" + codPartido + \"/autonomias/orderByCodAuto/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cp_" + codPartido + "_PorAutonomiasOrderByCodigo.xlsx"));
     }
@@ -231,16 +217,14 @@ public class CircunscripcionPartidoService {
 
     public void findByIdPartidoAutonomiasEscaniosInCsv(String codPartido) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByEscanios/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cp_" + codPartido + "_PorAutonomiasOrderByEscanios.csv"));
     }
 
     public void findByIdPartidoAutonomiasEscaniosInExcel(String codPartido) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByEscanios/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cp_" + codPartido + "_PorAutonomiasOrderByEscanios.xlsx"));
     }
@@ -258,32 +242,34 @@ public class CircunscripcionPartidoService {
 
     public void findByIdPartidoProvinciasInCsv(String codPartido) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/provincias/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cp_" + codPartido + "_PorProvincias.csv"));
     }
 
     public void findByIdPartidoProvinciasInExcel(String codPartido) throws IOException {
         String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/provincias/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cp_" + codPartido + "_PorProvincias.xlsx"));
     }
 
-    private File comprobarCarpetas(String ruta) {
-        File circunscripciones = new File(ruta + "\\CP");
-        if (!circunscripciones.exists()) {
-            circunscripciones.mkdir();
+    private File comprobarCarpetas() {
+        File municipales = new File(ruta);
+        if (!municipales.exists()) {
+            municipales.mkdir();
         }
-        File csv = new File(circunscripciones.getPath() + "\\CSV");
-        File excel = new File(circunscripciones.getPath() + "\\EXCEL");
+        File cps = new File(ruta + "\\CP");
+        if (!cps.exists()) {
+            cps.mkdir();
+        }
+        File csv = new File(cps.getPath() + "\\CSV");
+        File excel = new File(cps.getPath() + "\\EXCEL");
         if (!csv.exists()) {
             csv.mkdir();
             excel.mkdir();
         }
-        return circunscripciones;
+        return cps;
     }
 
 }
