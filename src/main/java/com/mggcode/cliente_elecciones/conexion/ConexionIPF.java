@@ -11,7 +11,6 @@ import static com.mggcode.cliente_elecciones.config.Config.config;
 
 public class ConexionIPF {
     private static ConexionIPF conexion;
-
     private String direccion;
     private Socket servidor;
 
@@ -28,7 +27,6 @@ public class ConexionIPF {
 
     public static ConexionIPF getConexion(String address) {
         if (conexion == null) {
-
             conexion = new ConexionIPF(address);
         }
         return conexion;
@@ -61,7 +59,7 @@ public class ConexionIPF {
             System.out.println("Cliente->Conectado al servidor...");
         } catch (IOException ex) {
             System.err.println("Cliente->ERROR: Al conectar al servidor " + ex.getMessage());
-            System.exit(-1);
+           // System.exit(-1);
         }
     }
 
@@ -87,4 +85,7 @@ public class ConexionIPF {
         }
     }
 
+    public void prueba(){
+        System.out.println("FUNCIONA");
+    }
 }
