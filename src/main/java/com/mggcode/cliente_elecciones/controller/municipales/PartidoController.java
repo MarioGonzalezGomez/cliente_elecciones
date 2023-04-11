@@ -11,7 +11,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 @RequestMapping("/municipales/partidos")
@@ -40,5 +45,31 @@ public class PartidoController {
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         return "redirect:/municipales/partidos";
     }
+
+    List<Partido> partidos = new ArrayList<>();
+    AtomicBoolean isSuscribed = new AtomicBoolean(false);
+    @RequestMapping(path = "/suscribe")
+    public void suscribePartidos() {
+        if(!isSuscribed.get()) {
+            System.out.println("Suscribiendo...");
+            isSuscribed.set(true);
+            ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+            exec.scheduleAtFixedRate(() -> {
+                if (partidos.isEmpty()) {
+                    System.out.println("Cargando partidos");
+                    partidos = partidoService.findAll();
+                } else {
+                    System.out.println("Comprobando cambios");
+                    var partidosNew = partidoService.findAll();
+                    if (!partidosNew.equals(partidos)) {
+                        System.out.println("Cambios detectados");
+                        //TODO(Hacer aquí las cosas)
+                    }
+                }
+            }, 0, 10, TimeUnit.MILLISECONDS);
+        }
+    }
+
+
 
 }

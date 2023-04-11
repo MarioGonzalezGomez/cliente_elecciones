@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 @Controller
@@ -64,5 +69,30 @@ public class CircunscripcionController {
         circunscripcionService.findByIdInExcel(codPartido);
         return "circunscripcionDetalle";
     }
+
+    List<Circunscripcion> circunscripciones = new ArrayList<>();
+    AtomicBoolean isSuscribed = new AtomicBoolean(false);
+
+    public void suscribeCircunscripciones() {
+        if(!isSuscribed.get()) {
+            System.out.println("Suscribiendo municipales...");
+            isSuscribed.set(true);
+            ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+            exec.scheduleAtFixedRate(() -> {
+                if (circunscripciones.isEmpty()) {
+                    System.out.println("Cargando partidos");
+                    circunscripciones = circunscripcionService.findAll();
+                } else {
+                    System.out.println("Comprobando cambios");
+                    var partidosNew = circunscripcionService.findAll();
+                    if (!partidosNew.equals(circunscripciones)) {
+                        System.out.println("Cambios detectados");
+                        //TODO(Hacer aquí las cosas)
+                    }
+                }
+            }, 0, 10, TimeUnit.SECONDS);
+        }
+    }
+
 
 }
