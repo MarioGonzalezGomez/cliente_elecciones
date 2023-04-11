@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Configuración</h1>
+    <form th:object="${configuracion}" method="post">
+        <div class="form-group">
+            <label for="inputBDAutonomicas">Nombre de las bases de datos de IPF</label>
+            <input type="text" class="form-control" id="inputBDAutonomicas" name="BDAutonomicas" th:value="${configuracion.BDAutonomicas}">
+        </div>
+        <div class="form-group">
+            <label for="inputBDMunicipales">BDMunicipales</label>
+            <input type="text" class="form-control" id="inputBDMunicipales" name="BDMunicipales" th:value="${configuracion.BDMunicipales}">
+        </div>
+        <div class="form-group">
+            <label for="inputIpServer">Datos del servidor</label>
+            <input type="text" class="form-control" id="inputIpServer" name="ipServer" th:value="${configuracion.ipServer}">
+        </div>
+        <div class="form-group">
+            <label for="inputRutaFicheros">Datos de ficheros</label>
+            <input type="text" class="form-control" id="inputRutaFicheros" name="rutaFicheros" th:value="${configuracion.rutaFicheros}">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+<script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // previene el envío normal del formulario
+        const formData = new FormData(form); // crea un objeto FormData con los valores del formulario
+        const data = Object.fromEntries(formData.entries()); // convierte el FormData a un objeto JavaScript
+        fetch('/configuracion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // envía los datos del formulario en formato JSON
+        }).then(response => {
+            if (response.ok) {
+                alert('Configuración guardada correctamente.');
+            } else {
+                alert('Error al guardar la configuración.');
+            }
+        });
+    });
+</script>
+</body>
+</html>

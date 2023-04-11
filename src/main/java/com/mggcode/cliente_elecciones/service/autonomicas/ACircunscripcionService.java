@@ -8,7 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -16,11 +17,12 @@ import java.util.List;
 @Service
 public class ACircunscripcionService {
     private final Config conf = Config.getConfiguracion();
+    private final String ipServer = Config.config.getProperty("ipServer");
+    private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Autonomicas";
     @Autowired
     RestTemplate restTemplate;
 
     public List<Circunscripcion> findAll() {
-        String ipServer = Config.config.getProperty("ipServer");
         ResponseEntity<Circunscripcion[]> response =
                 restTemplate.getForEntity(
                         "http://" + ipServer + ":8080/autonomicas/circunscripciones",
@@ -29,24 +31,21 @@ public class ACircunscripcionService {
         return Arrays.asList(arrayP);
     }
 
-    public void findAllInCsv() throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+    public File findAllInCsv() throws IOException {
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv"));
+        return new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv");
     }
 
-    public void findAllInExcel() throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+    public File findAllInExcel() throws IOException {
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx"));
+        return new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx");
     }
 
     public Circunscripcion findById(String id) {
-        String ipServer = Config.config.getProperty("ipServer");
         ResponseEntity<Circunscripcion> response =
                 restTemplate.getForEntity(
                         "http://" + ipServer + ":8080/autonomicas/circunscripciones/" + id,
@@ -55,23 +54,23 @@ public class ACircunscripcionService {
     }
 
     public void findByIdInCsv(String id) throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/" + id + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripcion_" + id + ".csv"));
     }
 
     public void findByIdInExcel(String id) throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
-        String ruta = Config.config.getProperty("rutaFicheros");
-        File carpetaBase = comprobarCarpetas(ruta);
+        File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/" + id + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripcion_" + id + ".xlsx"));
     }
 
 
-    private File comprobarCarpetas(String ruta) {
+    private File comprobarCarpetas() {
+        File autonomicas = new File(ruta);
+        if (!autonomicas.exists()) {
+            autonomicas.mkdir();
+        }
         File circunscripciones = new File(ruta + "\\CIRCUNSCRIPCIONES");
         if (!circunscripciones.exists()) {
             circunscripciones.mkdir();

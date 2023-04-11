@@ -1,17 +1,15 @@
 package com.mggcode.cliente_elecciones.DTO;
 
-
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class CpDTO {
     private String codigoPartido;
     private String codigoPadre;
     private int escanos_desde;
     private int escanos_hasta;
-    private int escanos_desde_hist;
     private int escanos_hasta_hist;
     private double porcentajeVoto;
     private double porcentajeVotoHistorico;
