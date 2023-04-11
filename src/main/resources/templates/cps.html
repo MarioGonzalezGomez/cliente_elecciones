@@ -16,6 +16,7 @@
         $('.alert').fadeOut('fast');
     }, 2000); // Oculta la alerta después de 2 segundos
 
+
 </script>
 <div th:if="${mensaje}">
     <div class="alert alert-success">
@@ -36,9 +37,12 @@
                 <button type="button" class="btn btn-danger">Sale</button>
             </div>
             <div>
-                <button type="button" class="btn btn-secondary"  th:onclick="'location.href=\'' + @{${ruta} + '/csv'} + '\''">Descargar CSV</button>
+                <button type="button" class="btn btn-secondary"
+                        th:onclick="'location.href=\'' + @{${ruta} + '/csv'} + '\''">Descargar CSV
+                </button>
 
-                <button type="button" class="btn btn-secondary" th:onclick="'location.href=\'' + @{${ruta} + '/excel'} + '\''">
+                <button type="button" class="btn btn-secondary"
+                        th:onclick="'location.href=\'' + @{${ruta} + '/excel'} + '\''">
                     Descargar Excel
                 </button>
             </div>
@@ -79,7 +83,7 @@
                             <td th:text="${cp.porcentajeVoto}"></td>
                             <td th:text="${cp.numVotantes}"></td>
                             <td>
-                                <a th:href="@{/autonomicas/cp/{idCircunscripcion}/{idPartido}(idCircunscripcion=${cp.key.circunscripcion},idPartido=${cp.key.partido})}"
+                                <a th:href="@{/{tipo}/cp/{idCircunscripcion}/{idPartido}(idCircunscripcion=${cp.key.circunscripcion},idPartido=${cp.key.partido},tipo=${tipo})}"
                                    class="btn btn-sm btn-success"><i class="fa fa-search"></i></a>
                             </td>
                         </tr>

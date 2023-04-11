@@ -17,6 +17,7 @@ import java.net.URL;
 public class CarmenDTOService {
 
     private final Config conf = Config.getConfiguracion();
+    private final String ipServer= Config.config.getProperty("ipServer");
     private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
 
     @Autowired
@@ -25,7 +26,6 @@ public class CarmenDTOService {
     //Este DTO trae los partidos de una circunscripción dada por código
     // ordenados del modo en que Carmen necesita para sus gráficos
     public CarmenDTO findAll(String codAutonomia) {
-        String ipServer = Config.config.getProperty("ipServer");
         ResponseEntity<CarmenDTO> response =
                 restTemplate.getForEntity(
                         "http://" + ipServer + ":8080/municipales/carmen/" + codAutonomia,
@@ -34,14 +34,12 @@ public class CarmenDTOService {
     }
 
     public void findAllInCsv(String codAutonomia) throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/carmen/" + codAutonomia + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\CarmenDTO_" + codAutonomia + ".csv"));
     }
 
     public void findAllInExcel(String codAutonomia) throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/carmen/" + codAutonomia + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\CarmenDTO_" + codAutonomia + ".xlsx"));

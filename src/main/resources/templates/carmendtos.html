@@ -65,11 +65,11 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Circunscripción</th>
+                            <th>Codigo Circunscripcion</th>
+                            <th>Nombre</th>
                             <th>Escaños totales</th>
                             <th>Partidos con escaños</th>
                             <th>Escrutado actual</th>
-                            <th>Escrutado anterior</th>
                             <th>Autonomia</th>
                             <th>Provincia</th>
                             <th>Municipio</th>
@@ -81,11 +81,11 @@
 
                         <tbody>
                         <tr class="text-uppercase text-success">
+                            <td th:text="${carmen.circunscripcion.codigo}"></td>
                             <td th:text="${carmen.circunscripcion.nombreCircunscripcion}"></td>
                             <td th:text="${carmen.circunscripcion.escanios}"></td>
                             <td th:text="${carmen.numPartidos}"></td>
                             <td th:text="${carmen.circunscripcion.escrutado}"></td>
-                            <td>Sin datos</td>
                             <td th:text="${carmen.circunscripcion.codigoComunidad}"></td>
                             <td th:text="${carmen.circunscripcion.codigoProvincia}"></td>
                             <td th:text="${carmen.circunscripcion.codigoMunicipio}"></td>

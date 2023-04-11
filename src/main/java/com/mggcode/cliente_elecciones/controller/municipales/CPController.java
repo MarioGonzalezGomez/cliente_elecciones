@@ -1,7 +1,7 @@
-package com.mggcode.cliente_elecciones.controller.autonomicas;
+package com.mggcode.cliente_elecciones.controller.municipales;
 
 import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
-import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionPartidoService;
+import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionPartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,17 +16,17 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/autonomicas/cp")
-public class ACPController {
+@RequestMapping("/municipales/cp")
+public class CPController {
     @Autowired
-    private ACircunscripcionPartidoService cpService;
+    private CircunscripcionPartidoService cpService;
 
     @GetMapping
     public String verCPS(Model model) {
         List<CircunscripcionPartido> cps = cpService.findAll();
         model.addAttribute("cps", cps);
-        model.addAttribute("ruta", "/autonomicas/cp");
-        model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/municipales/cp");
+        model.addAttribute("tipo", "municipales");
         return "cps";
     }
 
@@ -34,14 +34,14 @@ public class ACPController {
     public String findAllInCsv(RedirectAttributes redirectAttributes) throws IOException {
         cpService.findAllInCsv();
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/autonomicas/cp";
+        return "redirect:/municipales/cp";
     }
 
     @RequestMapping(path = "/excel")
     public String findAllInExcel(RedirectAttributes redirectAttributes) throws IOException {
         cpService.findAllInExcel();
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/autonomicas/cp";
+        return "redirect:/municipales/cp";
     }
 
     @GetMapping("/{codigoCir}/{codigoPar}")
@@ -57,8 +57,8 @@ public class ACPController {
     public String verTodosCPDeUnaCircunscripcion(@PathVariable("codigo") String cod, Model model) {
         List<CircunscripcionPartido> cps = cpService.findByIdCircunscripcion(cod);
         model.addAttribute("cps", cps);
-        model.addAttribute("ruta", "/autonomicas/cp/circunscripcion/" + cod);
-        model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/municipales/cp/circunscripcion/" + cod);
+        model.addAttribute("tipo", "municipales");
         return "cps";
     }
 
@@ -68,8 +68,8 @@ public class ACPController {
     public String verCPSporMA(Model model) {
         List<CircunscripcionPartido> cps = cpService.masVotadosPorAutonomia();
         model.addAttribute("cps", cps);
-        model.addAttribute("ruta", "/autonomicas/cp/mayorias/autonomias");
-        model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/municipales/cp/mayorias/autonomias");
+        model.addAttribute("tipo", "municipales");
         return "cps";
     }
 
@@ -77,8 +77,8 @@ public class ACPController {
     public String verCPSporMP(Model model) {
         List<CircunscripcionPartido> cps = cpService.masVotadosPorProvincia();
         model.addAttribute("cps", cps);
-        model.addAttribute("ruta", "/autonomicas/cp/mayorias/provincias");
-        model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/municipales/cp/mayorias/provincias");
+        model.addAttribute("tipo", "municipales");
         return "cps";
     }
 
@@ -86,8 +86,8 @@ public class ACPController {
     public String verMayoriasAutonomicas(@PathVariable("codigo") String cod, Model model) {
         List<CircunscripcionPartido> cps = cpService.masVotadosAutonomico(cod);
         model.addAttribute("cps", cps);
-        model.addAttribute("ruta", "/autonomicas/cp/mayorias/" + cod);
-        model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/municipales/cp/mayorias/" + cod);
+        model.addAttribute("tipo", "municipales");
         return "cps";
     }
 
@@ -96,8 +96,8 @@ public class ACPController {
     public String verTodoDePartidoOrderAuto(@PathVariable("codigo") String cod, Model model) {
         List<CircunscripcionPartido> cps = cpService.findByIdPartidoAutonomiasCod(cod);
         model.addAttribute("cps", cps);
-        model.addAttribute("ruta", "/autonomicas/cp/partido/" + cod + "/autonomias/orderByCodAuto");
-        model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/municipales/cp/partido/" + cod + "/autonomias/orderByCodAuto");
+        model.addAttribute("tipo", "municipales");
         return "cps";
     }
 
@@ -105,8 +105,8 @@ public class ACPController {
     public String verTodoDePartidoOrderEscanios(@PathVariable("codigo") String cod, Model model) {
         List<CircunscripcionPartido> cps = cpService.findByIdPartidoAutonomiasEscanios(cod);
         model.addAttribute("cps", cps);
-        model.addAttribute("ruta", "/autonomicas/cp/partido/" + cod + "/autonomias/orderByEscanios");
-        model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/municipales/cp/partido/" + cod + "/autonomias/orderByEscanios");
+        model.addAttribute("tipo", "municipales");
         return "cps";
     }
 
@@ -114,8 +114,8 @@ public class ACPController {
     public String verTodoDePartidoPorProvincias(@PathVariable("codigo") String cod, Model model) {
         List<CircunscripcionPartido> cps = cpService.findByIdPartidoProvincias(cod);
         model.addAttribute("cps", cps);
-        model.addAttribute("ruta", "/autonomicas/cp/partido/" + cod + "/provincias");
-        model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/municipales/cp/partido/" + cod + "/provincias");
+        model.addAttribute("tipo", "municipales");
         return "cps";
     }
 

@@ -17,12 +17,13 @@ import java.util.List;
 @Service
 public class CircunscripcionService {
     private final Config conf = Config.getConfiguracion();
+    private final String ipServer= Config.config.getProperty("ipServer");
     private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
+
     @Autowired
     RestTemplate restTemplate;
 
     public List<Circunscripcion> findAll() {
-        String ipServer = Config.config.getProperty("ipServer");
         ResponseEntity<Circunscripcion[]> response =
                 restTemplate.getForEntity(
                         "http://" + ipServer + ":8080/municipales/circunscripciones",
@@ -32,21 +33,18 @@ public class CircunscripcionService {
     }
 
     public void findAllInCsv() throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv"));
     }
 
     public void findAllInExcel() throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx"));
     }
 
     public Circunscripcion findById(String id) {
-        String ipServer = Config.config.getProperty("ipServer");
         ResponseEntity<Circunscripcion> response =
                 restTemplate.getForEntity(
                         "http://" + ipServer + ":8080/municipales/circunscripciones/" + id,
@@ -55,14 +53,12 @@ public class CircunscripcionService {
     }
 
     public void findByIdInCsv(String id) throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/" + id + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripcion_" + id + ".csv"));
     }
 
     public void findByIdInExcel(String id) throws IOException {
-        String ipServer = Config.config.getProperty("ipServer");
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/" + id + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripcion_" + id + ".xlsx"));
