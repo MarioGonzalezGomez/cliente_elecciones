@@ -75,23 +75,24 @@ public class ACircunscripcionController {
     AtomicBoolean isSuscribed = new AtomicBoolean(false);
 
     public void suscribeCircunscripciones() {
-        if(!isSuscribed.get()) {
-            System.out.println("Suscribiendo autonomicas...");
+        if (!isSuscribed.get()) {
+            System.out.println("Suscribiendo municipales...");
             isSuscribed.set(true);
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
             exec.scheduleAtFixedRate(() -> {
                 if (circunscripciones.isEmpty()) {
-                    System.out.println("Cargando partidos");
+                    System.out.println("Cargando circunscripciones");
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios");
-                    var partidosNew = circunscripcionService.findAll();
-                    if (!partidosNew.equals(circunscripciones)) {
+                    //    System.out.println("Comprobando cambios");
+                    var circunscripcionesNew = circunscripcionService.findAll();
+                    if (!circunscripcionesNew.equals(circunscripciones)) {
                         System.out.println("Cambios detectados");
                         //TODO(Hacer aquí las cosas)
+                        circunscripciones = circunscripcionesNew;
                     }
                 }
-            }, 0, 10, TimeUnit.SECONDS);
+            }, 0, 1, TimeUnit.SECONDS);
         }
     }
 

@@ -10,22 +10,83 @@
 <div class="container">
     <h1>Configuración</h1>
     <form th:object="${configuracion}" method="post">
-        <div class="form-group">
-            <label for="inputBDAutonomicas">Nombre de las bases de datos de IPF</label>
-            <input type="text" class="form-control" id="inputBDAutonomicas" name="BDAutonomicas" th:value="${configuracion.BDAutonomicas}">
-        </div>
-        <div class="form-group">
-            <label for="inputBDMunicipales">BDMunicipales</label>
-            <input type="text" class="form-control" id="inputBDMunicipales" name="BDMunicipales" th:value="${configuracion.BDMunicipales}">
-        </div>
-        <div class="form-group">
-            <label for="inputIpServer">Datos del servidor</label>
-            <input type="text" class="form-control" id="inputIpServer" name="ipServer" th:value="${configuracion.ipServer}">
-        </div>
-        <div class="form-group">
-            <label for="inputRutaFicheros">Datos de ficheros</label>
-            <input type="text" class="form-control" id="inputRutaFicheros" name="rutaFicheros" th:value="${configuracion.rutaFicheros}">
-        </div>
+        <fieldset>
+            <legend>Ajustes IPF</legend>
+
+            <div class="form-group">
+                <label for="inputPuerto">Puerto de conexión</label>
+                <input type="text" class="form-control" id="inputPuerto" name="puerto"
+                       th:value="${configuracion.puerto}">
+            </div>
+
+            <fieldset>
+                <legend>Bases de datos</legend>
+                <div class="form-group">
+                    <label for="inputBDAutonomicas">Nombre de las bases de datos de IPF</label>
+                    <input type="text" class="form-control" id="inputBDAutonomicas" name="BDAutonomicas"
+                           th:value="${configuracion.bdAutonomicas}">
+                </div>
+                <div class="form-group">
+                    <label for="inputBDMunicipales">Nombre de las bases de datos de municipales</label>
+                    <input type="text" class="form-control" id="inputBDMunicipales" name="BDMunicipales"
+                           th:value="${configuracion.bdMunicipales}">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Direcciones IP para IPF</legend>
+                <div class="form-group">
+                    <label for="inputDireccion1">Dirección 1</label>
+                    <input type="text" class="form-control" id="inputDireccion1" name="direccion1"
+                           th:value="${configuracion.direccion1}">
+                </div>
+                <div class="form-group">
+                    <label for="inputDireccion2">Dirección 2</label>
+                    <input type="text" class="form-control" id="inputDireccion2" name="direccion2"
+                           th:value="${configuracion.direccion2}">
+                </div>
+                <div class="form-group">
+                    <label for="inputDireccion3">Dirección 3</label>
+                    <input type="text" class="form-control" id="inputDireccion3" name="direccion3"
+                           th:value="${configuracion.direccion3}">
+                </div>
+                <div class="form-group">
+                    <label for="inputDireccion4">Dirección 4</label>
+                    <input type="text" class="form-control" id="inputDireccion4" name="direccion4"
+                           th:value="${configuracion.direccion4}">
+                </div>
+            </fieldset>
+        </fieldset>
+
+        <fieldset>
+            <legend>IP de los Servidores</legend>
+            <div class="form-group">
+                <label for="inputIpServer">Principal</label>
+                <input type="text" class="form-control" id="inputIpServer" name="ipServer"
+                       th:value="${configuracion.ipServer}">
+            </div>
+            <div class="form-group">
+                <label for="inputIpServerReserva">Reserva</label>
+                <input type="text" class="form-control" id="inputIpServerReserva" name="ipServerReserva"
+                       th:value="${configuracion.ipServerReserva}">
+            </div>
+            <div class="form-group">
+                <label for="inputIpServerLocal">Local</label>
+                <input type="text" class="form-control" id="inputIpServerLocal" name="ipServerLocal"
+                       th:value="${configuracion.ipServerLocal}">
+            </div>
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Manejo de ficheros</legend>
+            <div class="form-group">
+                <label for="inputRutaFicheros">Ruta de los ficheros</label>
+                <input type="text" class="form-control" id="inputRutaFicheros" name="rutaFicheros"
+                       th:value="${configuracion.rutaFicheros}">
+            </div>
+        </fieldset>
+        <p></p>
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 </div>
@@ -50,6 +111,10 @@
             }
         });
     });
+
+
+
+
 </script>
 </body>
 </html>
