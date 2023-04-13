@@ -60,6 +60,7 @@ public class HomeController {
             //TODO(esto es opcional y se puede activar en la parte del cliente como una opción)
             /*cpController.suscribeCircunscripciones();
             aCPController.suscribeCircunscripciones();*/
+
         } catch (ConnectException e) {
             System.err.println("Error de conexión");
         }

@@ -17,7 +17,7 @@ import java.net.URL;
 public class CarmenDTOService {
 
     private final Config conf = Config.getConfiguracion();
-    private final String ipServer= Config.connectedServer;
+    private final String ipServer = Config.connectedServer;
     private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
 
     @Autowired
@@ -28,21 +28,25 @@ public class CarmenDTOService {
     public CarmenDTO findAll(String codAutonomia) {
         ResponseEntity<CarmenDTO> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/carmen/" + codAutonomia,
+                        "http://" + Config.connectedServer + ":8080/municipales/carmen/" + codAutonomia,
                         CarmenDTO.class);
         return response.getBody();
     }
 
-    public void findAllInCsv(String codAutonomia) throws IOException {
+    public File findAllInCsv(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/carmen/" + codAutonomia + "/csv");
-        FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\CarmenDTO_" + codAutonomia + ".csv"));
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/" + codAutonomia + "/csv");
+        File csv = new File(carpetaBase.getPath() + "\\CSV\\CarmenDTO_" + codAutonomia + ".csv");
+        FileUtils.copyURLToFile(url, csv);
+        return csv;
     }
 
-    public void findAllInExcel(String codAutonomia) throws IOException {
+    public File findAllInExcel(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/carmen/" + codAutonomia + "/excel");
-        FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\CarmenDTO_" + codAutonomia + ".xlsx"));
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/" + codAutonomia + "/excel");
+        File excel = new File(carpetaBase.getPath() + "\\EXCEL\\CarmenDTO_" + codAutonomia + ".xlsx");
+        FileUtils.copyURLToFile(url, excel);
+        return excel;
     }
 
     private File comprobarCarpetas() {

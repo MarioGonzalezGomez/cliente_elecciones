@@ -28,21 +28,26 @@ public class ACarmenDTOService {
     public CarmenDTO findAll(String codAutonomia) {
         ResponseEntity<CarmenDTO> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/autonomicas/carmen/" + codAutonomia,
+                        "http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia,
                         CarmenDTO.class);
         return response.getBody();
     }
 
-    public void findAllInCsv(String codAutonomia) throws IOException {
+    public File findAllInCsv(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/carmen/" + codAutonomia + "/csv");
-        FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\CarmenDTO_" + codAutonomia + ".csv"));
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/csv");
+        System.out.println(url);
+        File csv = new File(carpetaBase.getPath() + "\\CSV\\CarmenDTO_" + codAutonomia + ".csv");
+        FileUtils.copyURLToFile(url, csv);
+        return csv;
     }
 
-    public void findAllInExcel(String codAutonomia) throws IOException {
+    public File findAllInExcel(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/carmen/" + codAutonomia + "/excel");
-        FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\CarmenDTO_" + codAutonomia + ".xlsx"));
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/excel");
+        File excel = new File(carpetaBase.getPath() + "\\EXCEL\\CarmenDTO_" + codAutonomia + ".xlsx");
+        FileUtils.copyURLToFile(url, excel);
+        return excel;
     }
 
     private File comprobarCarpetas() {
