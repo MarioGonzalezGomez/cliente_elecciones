@@ -27,7 +27,7 @@ public class CircunscripcionPartidoService {
     public List<CircunscripcionPartido> findAll() {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp",
+                        "http://" + Config.connectedServer + ":8080/municipales/cp",
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -35,13 +35,13 @@ public class CircunscripcionPartidoService {
 
     public void findAllInCsv() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cps.csv"));
     }
 
     public void findAllInExcel() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cps.xlsx"));
     }
 
@@ -49,7 +49,7 @@ public class CircunscripcionPartidoService {
     public CircunscripcionPartido findById(String idC, String idP) {
         ResponseEntity<CircunscripcionPartido> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/" + idC + "/" + idP,
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/" + idC + "/" + idP,
                         CircunscripcionPartido.class);
         return response.getBody();
     }
@@ -57,7 +57,7 @@ public class CircunscripcionPartidoService {
     public List<CircunscripcionPartido> masVotadosPorAutonomia() {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/mayorias/autonomias",
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/autonomias",
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -65,13 +65,13 @@ public class CircunscripcionPartidoService {
 
     public void masVotadosPorAutonomiaInCsv() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/autonomias/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/autonomias/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\mas_votado_por_autonomias.csv"));
     }
 
     public void masVotadosPorAutonomiaInExcel() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/autonomias/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/autonomias/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\mas_votado_por_autonomias.xlsx"));
     }
 
@@ -79,7 +79,7 @@ public class CircunscripcionPartidoService {
     public List<CircunscripcionPartido> masVotadosPorProvincia() {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/mayorias/provincias",
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/provincias",
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -87,20 +87,20 @@ public class CircunscripcionPartidoService {
 
     public void masVotadosPorProvinciaInCsv() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/provincias/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/provincias/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\mas_votado_por_provincias.csv"));
     }
 
     public void masVotadosPorProvinciaInExcel() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/provincias/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/provincias/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\mas_votado_por_provincias.xlsx"));
     }
 
     public List<CircunscripcionPartido> masVotadosAutonomico(String codAutonomia) {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/mayorias/" + codAutonomia,
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/" + codAutonomia,
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -108,13 +108,13 @@ public class CircunscripcionPartidoService {
 
     public void masVotadosAutonomicoInCsv(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/" + codAutonomia + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/" + codAutonomia + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\mas_votado_en_" + codAutonomia + ".csv"));
     }
 
     public void masVotadosAutonomicoInExcel(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/mayorias/" + codAutonomia + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/mayorias/" + codAutonomia + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\mas_votado_en_" + codAutonomia + ".xlsx"));
     }
 
@@ -122,7 +122,7 @@ public class CircunscripcionPartidoService {
     public List<CircunscripcionPartido> findByIdCircunscripcion(String codAutonomia) {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia,
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia,
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -130,13 +130,13 @@ public class CircunscripcionPartidoService {
 
     public void findByIdCircunscripcionInCsv(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cps_" + codAutonomia + ".csv"));
     }
 
     public void findByIdCircunscripcionInExcel(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cps_" + codAutonomia + ".xlsx"));
     }
 
@@ -144,7 +144,7 @@ public class CircunscripcionPartidoService {
     public List<CircunscripcionPartido> findByIdPartidoAutonomicoPorProvincias(String codAutonomia, String codPartido) {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/partido/" + codPartido,
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/partido/" + codPartido,
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -152,13 +152,13 @@ public class CircunscripcionPartidoService {
 
     public void findByIdPartidoAutonomicoPorProvinciasInCsv(String codAutonomia, String codPartido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/partido/" + codPartido + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/partido/" + codPartido + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cp_" + codAutonomia + "_" + codPartido + ".csv"));
     }
 
     public void findByIdPartidoAutonomicoPorProvinciasInExcel(String codAutonomia, String codPartido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/partido/" + codPartido + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/circunscripcion/" + codAutonomia + "/partido/" + codPartido + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cp_" + codAutonomia + "_" + codPartido + ".xlsx"));
     }
 
@@ -166,7 +166,7 @@ public class CircunscripcionPartidoService {
     public List<CircunscripcionPartido> findByIdPartidoAutonomiasCod(String codPartido) {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByCodAuto",
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByCodAuto",
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -174,20 +174,20 @@ public class CircunscripcionPartidoService {
 
     public void findByIdPartidoAutonomiasCodInCsv(String codPartido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByCodAuto/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByCodAuto/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cp_" + codPartido + "_PorAutonomiasOrderByCodigo.csv"));
     }
 
     public void findByIdPartidoAutonomiasCodInExcel(String codPartido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/\" + codPartido + \"/autonomias/orderByCodAuto/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/partido/\" + codPartido + \"/autonomias/orderByCodAuto/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cp_" + codPartido + "_PorAutonomiasOrderByCodigo.xlsx"));
     }
 
     public List<CircunscripcionPartido> findByIdPartidoAutonomiasEscanios(String codPartido) {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByEscanios",
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByEscanios",
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -195,13 +195,13 @@ public class CircunscripcionPartidoService {
 
     public void findByIdPartidoAutonomiasEscaniosInCsv(String codPartido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByEscanios/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByEscanios/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cp_" + codPartido + "_PorAutonomiasOrderByEscanios.csv"));
     }
 
     public void findByIdPartidoAutonomiasEscaniosInExcel(String codPartido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByEscanios/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/partido/" + codPartido + "/autonomias/orderByEscanios/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cp_" + codPartido + "_PorAutonomiasOrderByEscanios.xlsx"));
     }
 
@@ -209,7 +209,7 @@ public class CircunscripcionPartidoService {
     public List<CircunscripcionPartido> findByIdPartidoProvincias(String codPartido) {
         ResponseEntity<CircunscripcionPartido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/provincias",
+                        "http://" + Config.connectedServer + ":8080/municipales/cp/partido/" + codPartido + "/provincias",
                         CircunscripcionPartido[].class);
         CircunscripcionPartido[] arrayCP = response.getBody();
         return Arrays.asList(arrayCP);
@@ -217,13 +217,13 @@ public class CircunscripcionPartidoService {
 
     public void findByIdPartidoProvinciasInCsv(String codPartido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/provincias/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/partido/" + codPartido + "/provincias/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\cp_" + codPartido + "_PorProvincias.csv"));
     }
 
     public void findByIdPartidoProvinciasInExcel(String codPartido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/cp/partido/" + codPartido + "/provincias/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/cp/partido/" + codPartido + "/provincias/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\cp_" + codPartido + "_PorProvincias.xlsx"));
     }
 
