@@ -19,7 +19,7 @@ import java.util.List;
 public class CircunscripcionPartidoService {
 
     private final Config conf = Config.getConfiguracion();
-    private final String ipServer= Config.config.getProperty("ipServer");
+    private final String ipServer= Config.connectedServer;
     private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
     @Autowired
     RestTemplate restTemplate;
