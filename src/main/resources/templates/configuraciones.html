@@ -8,113 +8,88 @@
 </head>
 <body>
 <div class="container">
-    <h1>Configuración</h1>
+    <h1 class="mb-5">Configuración</h1>
     <form th:object="${configuracion}" method="post">
-        <fieldset>
-            <legend>Ajustes IPF</legend>
-
-            <div class="form-group">
-                <label for="inputPuerto">Puerto de conexión</label>
-                <input type="text" class="form-control" id="inputPuerto" name="puerto"
-                       th:value="${configuracion.puerto}">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-ipf-tab" data-bs-toggle="tab" data-bs-target="#nav-ipf"
+                        type="button" role="tab" aria-controls="nav-ipf" aria-selected="true">IPF
+                </button>
+                <button class="nav-link" id="nav-servidores-tab" data-bs-toggle="tab" data-bs-target="#nav-servidores"
+                        type="button" role="tab" aria-controls="nav-servidores" aria-selected="false">Servidores
+                </button>
+                <button class="nav-link" id="nav-ficheros-tab" data-bs-toggle="tab" data-bs-target="#nav-ficheros"
+                        type="button" role="tab" aria-controls="nav-ficheros" aria-selected="false">Ficheros
+                </button>
             </div>
-
+        </nav>
+        <div class="tab-pane fade show active" id="nav-ipf" role="tabpanel" aria-labelledby="nav-ipf-tab">
             <fieldset>
-                <legend>Bases de datos</legend>
+                <legend>Ajustes IPF</legend>
                 <div class="form-group">
-                    <label for="inputBDAutonomicas">Nombre de las bases de datos de IPF</label>
-                    <input type="text" class="form-control" id="inputBDAutonomicas" name="BDAutonomicas"
-                           th:value="${configuracion.bdAutonomicas}">
+                    <label for="inputConexiones">Número de conexiones</label>
+                    <input type="text" class="form-control" id="inputConexiones" name="nConexiones"
+                           th:value="${configuracion.nConexiones}">
                 </div>
                 <div class="form-group">
-                    <label for="inputBDMunicipales">Nombre de las bases de datos de municipales</label>
-                    <input type="text" class="form-control" id="inputBDMunicipales" name="BDMunicipales"
-                           th:value="${configuracion.bdMunicipales}">
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Direcciones IP para IPF</legend>
-                <div class="form-group">
-                    <label for="inputDireccion1">Dirección 1</label>
+                    <label for="inputDireccion1">Dirección IP 1</label>
                     <input type="text" class="form-control" id="inputDireccion1" name="direccion1"
                            th:value="${configuracion.direccion1}">
                 </div>
                 <div class="form-group">
-                    <label for="inputDireccion2">Dirección 2</label>
+                    <label for="inputDireccion2">Dirección IP 2</label>
                     <input type="text" class="form-control" id="inputDireccion2" name="direccion2"
                            th:value="${configuracion.direccion2}">
                 </div>
                 <div class="form-group">
-                    <label for="inputDireccion3">Dirección 3</label>
+                    <label for="inputDireccion3">Dirección IP 3</label>
                     <input type="text" class="form-control" id="inputDireccion3" name="direccion3"
                            th:value="${configuracion.direccion3}">
                 </div>
                 <div class="form-group">
-                    <label for="inputDireccion4">Dirección 4</label>
+                    <label for="inputDireccion4">Dirección IP 4</label>
                     <input type="text" class="form-control" id="inputDireccion4" name="direccion4"
                            th:value="${configuracion.direccion4}">
                 </div>
+                <div class="form-group">
+                    <label for="inputPuerto">Puerto de conexión</label>
+                    <input type="text" class="form-control" id="inputPuerto" name="puerto"
+                           th:value="${configuracion.puerto}">
+                </div>
             </fieldset>
-        </fieldset>
-
-        <fieldset>
-            <legend>IP de los Servidores</legend>
+        </div>
+        <div class="tab-pane fade" id="nav-servidores" role="tabpanel" aria-labelledby="nav-servidores-tab">
+            <fieldset>
+                <legend>Configuración de servidores</legend>
+                <div class="form-group">
+                    <label for="inputIpServer">Dirección IP del servidor principal</label>
+                    <input type="text" class="form-control" id="inputIpServer" name="ipServer"
+                           th:value="${configuracion.ipServer}">
+                </div>
+                <div class="form-group">
+                    <label for="inputIpServerReserva">Dirección IP del servidor de reserva</label>
+                    <input type="text" class="form-control" id="inputIpServerReserva" name="ipServerReserva"
+                           th:value="${configuracion.ipServerReserva}">
+                </div>
+                <div class="form-group">
+                    <label for="inputIpServerLocal">Dirección IP del servidor local</label>
+                    <input type="text" class="form-control" id="inputIpServerLocal" name="ipServerLocal"
+                           th:value="${configuracion.ipServerLocal}">
+                </div>
+            </fieldset>
+        </div>
+        <div class="tab-pane fade" id="nav-ficheros" role="tabpanel" aria-labelledby="nav-ficheros-tab">
             <div class="form-group">
-                <label for="inputIpServer">Principal</label>
-                <input type="text" class="form-control" id="inputIpServer" name="ipServer"
-                       th:value="${configuracion.ipServer}">
-            </div>
-            <div class="form-group">
-                <label for="inputIpServerReserva">Reserva</label>
-                <input type="text" class="form-control" id="inputIpServerReserva" name="ipServerReserva"
-                       th:value="${configuracion.ipServerReserva}">
-            </div>
-            <div class="form-group">
-                <label for="inputIpServerLocal">Local</label>
-                <input type="text" class="form-control" id="inputIpServerLocal" name="ipServerLocal"
-                       th:value="${configuracion.ipServerLocal}">
-            </div>
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Manejo de ficheros</legend>
-            <div class="form-group">
-                <label for="inputRutaFicheros">Ruta de los ficheros</label>
-                <input type="text" class="form-control" id="inputRutaFicheros" name="rutaFicheros"
+                <label for="rutaFicherosInput">Ruta de los ficheros</label>
+                <input type="text" class="form-control" id="rutaFicherosInput" name="rutaFicheros"
                        th:value="${configuracion.rutaFicheros}">
             </div>
-        </fieldset>
-        <p></p>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
     </form>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
-<script>
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(e) {
-        e.preventDefault(); // previene el envío normal del formulario
-        const formData = new FormData(form); // crea un objeto FormData con los valores del formulario
-        const data = Object.fromEntries(formData.entries()); // convierte el FormData a un objeto JavaScript
-        fetch('/configuracion', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // envía los datos del formulario en formato JSON
-        }).then(response => {
-            if (response.ok) {
-                alert('Configuración guardada correctamente.');
-            } else {
-                alert('Error al guardar la configuración.');
-            }
-        });
-    });
-
-
-
-
-</script>
+<script src="/js/config.js"></script>
 </body>
 </html>

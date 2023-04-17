@@ -27,6 +27,7 @@ public class ConfiguracionController {
     @PostMapping()
     public String guardarConfiguracion(@RequestBody String jsonConfiguracion) {
         Configuracion configuracion = convertirJsonAConfiguracion(jsonConfiguracion);
+        System.out.println(jsonConfiguracion);
         configuracionService.guardarConfiguracion(configuracion);
         return "redirect:/configuracion";
     }
@@ -36,6 +37,7 @@ public class ConfiguracionController {
         try {
             return objectMapper.readValue(jsonConfiguracion, Configuracion.class);
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             // Manejar la excepción
         }
         return null;

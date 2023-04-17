@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class Configuracion {
-
+    //IPF
     private int nConexiones;
 
     private String direccion1;
@@ -20,9 +20,11 @@ public class Configuracion {
     @JsonProperty("BDMunicipales")
     private String bdMunicipales;
 
+    //Servidor
     private String ipServer;
     private String ipServerReserva;
     private String ipServerLocal;
 
+    //
     private String rutaFicheros;
 }
