@@ -13,13 +13,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.io.IOException;
+import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 @RequestMapping("/municipales/cp")
 public class CPController {
     @Autowired
     private CircunscripcionPartidoService cpService;
+
+    List<CircunscripcionPartido> circunscripcionPartidos = new ArrayList<>();
+    AtomicBoolean isSuscribed = new AtomicBoolean(false);
+    List<CircunscripcionPartido> changes;
 
     @GetMapping
     public String verCPS(Model model) {
@@ -117,6 +127,40 @@ public class CPController {
         model.addAttribute("ruta", "/municipales/cp/partido/" + cod + "/provincias");
         model.addAttribute("tipo", "municipales");
         return "cps";
+    }
+
+    public void suscribeCircunscripciones() throws ConnectException {
+        if (!isSuscribed.get()) {
+            System.out.println("Suscribiendo cp municipales...");
+            isSuscribed.set(true);
+            ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+            exec.scheduleAtFixedRate(() -> {
+                if (circunscripcionPartidos.isEmpty()) {
+                    System.out.println("Cargando circunscripciones/partido municipales");
+                    circunscripcionPartidos = cpService.findAll();
+                } else {
+                    System.out.println("Comprobando cambios cp municipales");
+                    List<CircunscripcionPartido> circunscripcionesNew = null;
+                    circunscripcionesNew = cpService.findAll();
+                    if (!circunscripcionesNew.equals(circunscripcionPartidos)) {
+                        System.out.println("Cambios detectados");
+                        //TODO(Hacer el código necesario para ver que se hace con estos cambios)
+                        getChanges(circunscripcionPartidos, circunscripcionesNew);
+                        System.out.println(changes);
+                        circunscripcionPartidos = circunscripcionesNew;
+                    }
+                }
+            }, 0, 3, TimeUnit.SECONDS);
+        }
+    }
+
+
+    private List<CircunscripcionPartido> getChanges(List<CircunscripcionPartido> oldList, List<CircunscripcionPartido> newList) {
+        List<CircunscripcionPartido> differences = newList.stream()
+                .filter(element -> !oldList.contains(element))
+                .toList();
+
+        return differences;
     }
 
 }

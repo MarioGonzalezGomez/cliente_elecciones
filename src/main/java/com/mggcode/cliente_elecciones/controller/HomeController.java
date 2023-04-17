@@ -1,7 +1,9 @@
 package com.mggcode.cliente_elecciones.controller;
 
 import com.mggcode.cliente_elecciones.config.Config;
+import com.mggcode.cliente_elecciones.controller.autonomicas.ACPController;
 import com.mggcode.cliente_elecciones.controller.autonomicas.ACircunscripcionController;
+import com.mggcode.cliente_elecciones.controller.municipales.CPController;
 import com.mggcode.cliente_elecciones.controller.municipales.CircunscripcionController;
 import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
@@ -31,6 +33,11 @@ public class HomeController {
     @Autowired
     CircunscripcionController circunscripcionController;
 
+    @Autowired
+    CPController cpController;
+    @Autowired
+    ACPController aCPController;
+
 
     @RequestMapping(value = "/")
     public String index(Model model) {
@@ -49,6 +56,11 @@ public class HomeController {
         try {
             aCircunscripcionController.suscribeCircunscripciones();
             circunscripcionController.suscribeCircunscripciones();
+
+            //TODO(esto es opcional y se puede activar en la parte del cliente como una opción)
+            /*cpController.suscribeCircunscripciones();
+            aCPController.suscribeCircunscripciones();*/
+
         } catch (ConnectException e) {
             System.err.println("Error de conexión");
         }

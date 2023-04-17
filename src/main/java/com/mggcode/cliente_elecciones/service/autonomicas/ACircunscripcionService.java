@@ -23,9 +23,10 @@ public class ACircunscripcionService {
     RestTemplate restTemplate;
 
     public List<Circunscripcion> findAll() {
+
         ResponseEntity<Circunscripcion[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/autonomicas/circunscripciones",
+                        "http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones",
                         Circunscripcion[].class);
         Circunscripcion[] arrayP = response.getBody();
         return Arrays.asList(arrayP);
@@ -33,14 +34,14 @@ public class ACircunscripcionService {
 
     public File findAllInCsv() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv"));
         return new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv");
     }
 
     public File findAllInExcel() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx"));
         return new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx");
     }
@@ -48,20 +49,20 @@ public class ACircunscripcionService {
     public Circunscripcion findById(String id) {
         ResponseEntity<Circunscripcion> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/autonomicas/circunscripciones/" + id,
+                        "http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones/" + id,
                         Circunscripcion.class);
         return response.getBody();
     }
 
     public void findByIdInCsv(String id) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/" + id + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones/" + id + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripcion_" + id + ".csv"));
     }
 
     public void findByIdInExcel(String id) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/circunscripciones/" + id + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones/" + id + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripcion_" + id + ".xlsx"));
     }
 

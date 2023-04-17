@@ -18,6 +18,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Controller
@@ -26,6 +28,12 @@ public class ACircunscripcionController {
 
     @Autowired
     private ACircunscripcionService circunscripcionService;
+
+    List<Circunscripcion> changes;
+
+
+    List<Circunscripcion> circunscripciones = new ArrayList<>();
+    AtomicBoolean isSuscribed = new AtomicBoolean(false);
 
 
     @GetMapping
@@ -70,8 +78,8 @@ public class ACircunscripcionController {
         return "circunscripcionDetalle";
     }
 
-    List<Circunscripcion> circunscripciones = new ArrayList<>();
-    AtomicBoolean isSuscribed = new AtomicBoolean(false);
+
+    boolean hasChanged = false;
 
     public void suscribeCircunscripciones() throws ConnectException {
         if (!isSuscribed.get()) {
@@ -83,13 +91,15 @@ public class ACircunscripcionController {
                     System.out.println("Cargando partidos");
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios");
-                    List<Circunscripcion> partidosNew = null;
-                    partidosNew = circunscripcionService.findAll();
-                    if (!partidosNew.equals(circunscripciones)) {
+                    System.out.println("Comprobando cambios autonomicos");
+                    List<Circunscripcion> circunscripcionesNew = null;
+                    circunscripcionesNew = circunscripcionService.findAll();
+                    if (!circunscripcionesNew.equals(circunscripciones)) {
                         System.out.println("Cambios detectados");
-                        //TODO(Hacer aquí las cosas)
-
+                        //TODO(Hacer el código necesario para ver que se hace con estos cambios)
+                        getChanges(circunscripciones, circunscripcionesNew);
+                        System.out.println(changes);
+                        circunscripciones = circunscripcionesNew;
                     }
                 }
             }, 0, 10, TimeUnit.SECONDS);
@@ -97,4 +107,11 @@ public class ACircunscripcionController {
     }
 
 
+    private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
+        List<Circunscripcion> differences = newList.stream()
+                .filter(element -> !oldList.contains(element))
+                .toList();
+        System.out.println(differences);
+        return changes;
+    }
 }

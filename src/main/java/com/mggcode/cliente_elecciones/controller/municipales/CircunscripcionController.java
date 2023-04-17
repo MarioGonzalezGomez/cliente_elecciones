@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -72,27 +73,40 @@ public class CircunscripcionController {
 
     List<Circunscripcion> circunscripciones = new ArrayList<>();
     AtomicBoolean isSuscribed = new AtomicBoolean(false);
+    List<Circunscripcion> changes;
 
-    public void suscribeCircunscripciones() {
+    public void suscribeCircunscripciones() throws ConnectException {
         if (!isSuscribed.get()) {
-            System.out.println("Suscribiendo municipales...");
+            System.out.println("Suscribiendo autonomicas...");
             isSuscribed.set(true);
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
             exec.scheduleAtFixedRate(() -> {
                 if (circunscripciones.isEmpty()) {
-                    System.out.println("Cargando circunscripciones");
+                    System.out.println("Cargando partidos");
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    //    System.out.println("Comprobando cambios");
-                    var circunscripcionesNew = circunscripcionService.findAll();
+                    System.out.println("Comprobando cambios municipales");
+                    List<Circunscripcion> circunscripcionesNew = null;
+                    circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
                         System.out.println("Cambios detectados");
-                        //TODO(Hacer aquí las cosas)
+                        //TODO(Hacer el código necesario para ver que se hace con estos cambios)
+                        getChanges(circunscripciones, circunscripcionesNew);
+                        System.out.println(changes);
                         circunscripciones = circunscripcionesNew;
                     }
                 }
-            }, 0, 1, TimeUnit.SECONDS);
+            }, 0, 10, TimeUnit.SECONDS);
         }
+    }
+
+
+    private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
+        List<Circunscripcion> differences = newList.stream()
+                .filter(element -> !oldList.contains(element))
+                .toList();
+        System.out.println(differences);
+        return changes;
     }
 
 

@@ -17,7 +17,6 @@ import java.util.List;
 @Service
 public class CircunscripcionService {
     private final Config conf = Config.getConfiguracion();
-    private final String ipServer= Config.connectedServer;
     private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
 
     @Autowired
@@ -26,7 +25,7 @@ public class CircunscripcionService {
     public List<Circunscripcion> findAll() {
         ResponseEntity<Circunscripcion[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/circunscripciones",
+                        "http://" + Config.connectedServer + ":8080/municipales/circunscripciones",
                         Circunscripcion[].class);
         Circunscripcion[] arrayP = response.getBody();
         return Arrays.asList(arrayP);
@@ -34,33 +33,33 @@ public class CircunscripcionService {
 
     public void findAllInCsv() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/circunscripciones/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripciones.csv"));
     }
 
     public void findAllInExcel() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/circunscripciones/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripciones.xlsx"));
     }
 
     public Circunscripcion findById(String id) {
         ResponseEntity<Circunscripcion> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/municipales/circunscripciones/" + id,
+                        "http://" + Config.connectedServer + ":8080/municipales/circunscripciones/" + id,
                         Circunscripcion.class);
         return response.getBody();
     }
 
     public void findByIdInCsv(String id) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/" + id + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/circunscripciones/" + id + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\circunscripcion_" + id + ".csv"));
     }
 
     public void findByIdInExcel(String id) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/municipales/circunscripciones/" + id + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/circunscripciones/" + id + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\circunscripcion_" + id + ".xlsx"));
     }
 
