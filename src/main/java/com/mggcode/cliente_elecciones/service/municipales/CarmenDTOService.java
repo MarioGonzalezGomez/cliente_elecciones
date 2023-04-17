@@ -33,10 +33,19 @@ public class CarmenDTOService {
         return response.getBody();
     }
 
+    public File writeCircunscripcionSeleccionada(String codCircunscripcion) throws IOException{
+        File carpetaBase = comprobarCarpetas();
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codCircunscripcion + "/csv");
+
+        File csv = new File(carpetaBase.getPath() + File.separator +
+                File.separator + "F_Autonomicas.csv");
+        FileUtils.copyURLToFile(url, csv);
+        return csv;
+    }
     public File findAllInCsv(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/" + codAutonomia + "/csv");
-        File csv = new File(carpetaBase.getPath() + "\\CSV\\CarmenDTO_" + codAutonomia + ".csv");
+        File csv = new File(carpetaBase.getPath() + "\\CSV\\F_" + codAutonomia + ".csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
@@ -44,7 +53,7 @@ public class CarmenDTOService {
     public File findAllInExcel(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/" + codAutonomia + "/excel");
-        File excel = new File(carpetaBase.getPath() + "\\EXCEL\\CarmenDTO_" + codAutonomia + ".xlsx");
+        File excel = new File(carpetaBase.getPath() + "\\EXCEL\\F_" + codAutonomia + ".xlsx");
         FileUtils.copyURLToFile(url, excel);
         return excel;
     }
