@@ -75,7 +75,6 @@ public class ACarmenDTOService {
     public File writeAutonomiaSeleccionada(String codAutonomia) throws IOException{
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/csv");
-
         File csv = new File(carpetaBase.getPath() + File.separator +
                 File.separator + "F_Autonomicas.csv");
         FileUtils.copyURLToFile(url, csv);
