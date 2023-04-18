@@ -101,12 +101,11 @@ public class CircunscripcionController {
     }
 
 
-    private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
+    private void getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
         List<Circunscripcion> differences = newList.stream()
                 .filter(element -> !oldList.contains(element))
                 .toList();
         System.out.println(differences);
-        return changes;
     }
 
 
