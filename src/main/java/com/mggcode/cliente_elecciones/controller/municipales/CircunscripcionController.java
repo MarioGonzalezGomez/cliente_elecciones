@@ -1,9 +1,13 @@
 package com.mggcode.cliente_elecciones.controller.municipales;
 
 
+import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
+import com.mggcode.cliente_elecciones.service.municipales.CarmenDTOService;
 import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +33,25 @@ public class CircunscripcionController {
     @Autowired
     private CircunscripcionService circunscripcionService;
 
+    @Autowired
+    private CarmenDTOService carmenDTOService;
+
+    Data data = Data.getInstance();
+
     @GetMapping
     public String verCircunscripciones(Model model) {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
         model.addAttribute("circunscripciones", circunscripciones);
         model.addAttribute("tipo", "municipales");
         return "circunscripciones";
+    }
+
+    @RequestMapping("/selected/{codigo}")
+    public ResponseEntity<String> selectCircunscripcion(@PathVariable("codigo") String codigo) {
+        System.out.println("---" + codigo);
+        Data data = Data.getInstance();
+        data.setCircunscripcionSeleccionada(codigo);
+        return new ResponseEntity<>(codigo, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/csv")
@@ -92,20 +109,32 @@ public class CircunscripcionController {
                         System.out.println("Cambios detectados");
                         //TODO(Hacer el código necesario para ver que se hace con estos cambios)
                         getChanges(circunscripciones, circunscripcionesNew);
-                        System.out.println(changes);
+                        if (changes.contains(circunscripcionService.findById(data.getCircunscripcionSeleccionada()))) {
+                            System.out.println("Seleccionada ha cambiado");
+                            try {
+                                updateSelected();
+                            } catch (IOException e) {
+                                System.err.println(e.getMessage());
+                                throw new RuntimeException(e);
+                            }
+                        }
                         circunscripciones = circunscripcionesNew;
                     }
                 }
-            }, 0, 10, TimeUnit.SECONDS);
+            }, 0, 2, TimeUnit.SECONDS);
         }
     }
 
+    private void updateSelected() throws IOException {
+        carmenDTOService.writeCricunscripcionSeleccionada(data.getCircunscripcionSeleccionada());
+    }
 
     private void getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
         List<Circunscripcion> differences = newList.stream()
                 .filter(element -> !oldList.contains(element))
                 .toList();
         System.out.println(differences);
+        changes = differences;
     }
 
 

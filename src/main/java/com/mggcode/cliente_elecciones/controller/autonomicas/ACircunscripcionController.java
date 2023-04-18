@@ -7,6 +7,8 @@ import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,7 +52,12 @@ public class ACircunscripcionController {
         return "circunscripciones";
     }
 
-
+    @RequestMapping("/selected/{codigo}")
+    public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo) {
+        Data data = Data.getInstance();
+        data.setAutonomiaSeleccionada(codigo);
+        return new ResponseEntity<>(codigo, HttpStatus.OK);
+    }
     //Descarga todos los csv de autonomía
     @RequestMapping(path = "/csv")
     public String findAllInCsv(RedirectAttributes redirectAttributes) throws IOException {
@@ -86,6 +93,9 @@ public class ACircunscripcionController {
         return "circunscripcionDetalle";
     }
 
+
+    boolean hasChanged = false;
+
     public void suscribeCircunscripciones() throws ConnectException {
         if (!isSuscribed.get()) {
             System.out.println("Suscribiendo autonomicas...");
@@ -102,7 +112,7 @@ public class ACircunscripcionController {
 
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios autonomicos");
+                   // System.out.println("Comprobando cambios autonomicos");
                     List<Circunscripcion> circunscripcionesNew = null;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
@@ -114,20 +124,30 @@ public class ACircunscripcionController {
                         }
                         //TODO(Hacer el código necesario para ver que se hace con estos cambios)
                         getChanges(circunscripciones, circunscripcionesNew);
-                        System.out.println(changes);
+                        if(changes.contains(circunscripcionService.findById(data.getAutonomiaSeleccionada()))) {
+                            System.out.println("Seleccionada ha cambiado");
+                            try {
+                                updateSelected();
+                            } catch (IOException e) {
+                                System.err.println(e.getMessage());
+                                throw new RuntimeException(e);
+                            }
+                        }
                         circunscripciones = circunscripcionesNew;
                     }
                 }
-            }, 0, 10, TimeUnit.SECONDS);
+            }, 0, 2, TimeUnit.SECONDS);
         }
     }
+
+    Data data = Data.getInstance();
 
     private void updateAllCsv() throws IOException {
         carmenDTOService.findAllCsv();
     }
 
     private void updateSelected() throws IOException {
-        carmenDTOService.writeAutonomiaSeleccionada(Data.autonomiaSeleccionada);
+        carmenDTOService.writeAutonomiaSeleccionada(data.getAutonomiaSeleccionada());
     }
 
     private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
@@ -135,9 +155,10 @@ public class ACircunscripcionController {
                 .filter(element -> !oldList.contains(element))
                 .toList();
         System.out.println(differences);
-        System.out.println(Data.autonomiaSeleccionada);
+        System.out.println(data.getAutonomiaSeleccionada());
         changes = differences;
         //Data no funciona bien
+
         return changes;
     }
 

@@ -45,9 +45,11 @@ public class HomeController {
 
     }
 
-    @RequestMapping("/{codigo}")
-    public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo){
-        Data.autonomiaSeleccionada = codigo;
+    @RequestMapping("/selected/{codigo}")
+    public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo) {
+        System.out.println("---" + codigo);
+        Data data = Data.getInstance();
+        data.setAutonomiaSeleccionada(codigo);
         return new ResponseEntity<>(codigo, HttpStatus.OK);
     }
 

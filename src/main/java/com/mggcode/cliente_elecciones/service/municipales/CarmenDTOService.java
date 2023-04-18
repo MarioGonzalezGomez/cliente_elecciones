@@ -18,7 +18,7 @@ public class CarmenDTOService {
 
     private final Config conf = Config.getConfiguracion();
     private final String ipServer = Config.connectedServer;
-    private final String ruta = Config.config.getProperty("rutaFicheros") + "\\Municipales";
+    private final String ruta = Config.config.getProperty("rutaFicheros");
 
     @Autowired
     RestTemplate restTemplate;
@@ -31,16 +31,6 @@ public class CarmenDTOService {
                         "http://" + Config.connectedServer + ":8080/municipales/carmen/" + codAutonomia,
                         CarmenDTO.class);
         return response.getBody();
-    }
-
-    public File writeCircunscripcionSeleccionada(String codCircunscripcion) throws IOException{
-        File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codCircunscripcion + "/csv");
-
-        File csv = new File(carpetaBase.getPath() + File.separator +
-                File.separator + "F_Autonomicas.csv");
-        FileUtils.copyURLToFile(url, csv);
-        return csv;
     }
     public File findAllInCsv(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
@@ -59,20 +49,29 @@ public class CarmenDTOService {
     }
 
     private File comprobarCarpetas() {
-        File municipales = new File(ruta);
-        if (!municipales.exists()) {
-            municipales.mkdir();
+        File autonomicas = new File(ruta);
+        if (!autonomicas.exists()) {
+            autonomicas.mkdir();
         }
-        File partidos = new File(ruta + "\\CARMEN");
+        File partidos = new File(ruta);
         if (!partidos.exists()) {
             partidos.mkdir();
         }
-        File csv = new File(partidos.getPath() + "\\CSV");
-        File excel = new File(partidos.getPath() + "\\EXCEL");
+        File csv = new File(partidos.getPath());
+        File excel = new File(partidos.getPath());
         if (!csv.exists()) {
             csv.mkdir();
             excel.mkdir();
         }
         return partidos;
+    }
+
+    public File writeCricunscripcionSeleccionada(String codCirunscripcion) throws IOException{
+        File carpetaBase = comprobarCarpetas();
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/" + codCirunscripcion + "/csv");
+        File csv = new File(carpetaBase.getPath() + File.separator +
+                File.separator + "F_Municipales.csv");
+        FileUtils.copyURLToFile(url, csv);
+        return csv;
     }
 }
