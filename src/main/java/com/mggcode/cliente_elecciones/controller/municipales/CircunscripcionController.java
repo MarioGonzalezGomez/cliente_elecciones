@@ -103,7 +103,7 @@ public class CircunscripcionController {
                     circunscripciones = circunscripcionService.findAll();
                 } else {
                     System.out.println("Comprobando cambios municipales");
-                    List<Circunscripcion> circunscripcionesNew = null;
+                    List<Circunscripcion> circunscripcionesNew;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
                         System.out.println("Cambios detectados");
