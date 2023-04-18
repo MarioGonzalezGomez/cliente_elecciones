@@ -5,23 +5,17 @@ import com.mggcode.cliente_elecciones.controller.autonomicas.ACPController;
 import com.mggcode.cliente_elecciones.controller.autonomicas.ACircunscripcionController;
 import com.mggcode.cliente_elecciones.controller.municipales.CPController;
 import com.mggcode.cliente_elecciones.controller.municipales.CircunscripcionController;
-import com.mggcode.cliente_elecciones.exception.ConnectionException;
-import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
-import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionService;
+import com.mggcode.cliente_elecciones.data.Data;
+import com.mggcode.cliente_elecciones.utils.IPFMessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
 import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 @Controller
 public class HomeController {
@@ -38,10 +32,10 @@ public class HomeController {
     @Autowired
     ACPController aCPController;
 
+    IPFMessageBuilder ipfMessageBuilder = IPFMessageBuilder.getInstance();
 
     @RequestMapping(value = "/")
     public String index(Model model) {
-
         if (Config.checkConnectionWithRetry()) {
             System.out.println("Servidor conectado: " + Config.connectedServer);
             startListeners();
@@ -49,6 +43,12 @@ public class HomeController {
         }
         return "index";
 
+    }
+
+    @RequestMapping("/{codigo}")
+    public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo){
+        Data.autonomiaSeleccionada = codigo;
+        return new ResponseEntity<>(codigo, HttpStatus.OK);
     }
 
 

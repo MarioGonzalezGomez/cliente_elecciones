@@ -1,6 +1,7 @@
 package com.mggcode.cliente_elecciones.controller.autonomicas;
 
 
+import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
@@ -32,7 +33,7 @@ public class ACircunscripcionController {
     private ACircunscripcionService circunscripcionService;
 
     @Autowired
-            private ACarmenDTOService carmenDTOService;
+    private ACarmenDTOService carmenDTOService;
 
     List<Circunscripcion> changes;
 
@@ -85,9 +86,6 @@ public class ACircunscripcionController {
         return "circunscripcionDetalle";
     }
 
-
-    boolean hasChanged = false;
-
     public void suscribeCircunscripciones() throws ConnectException {
         if (!isSuscribed.get()) {
             System.out.println("Suscribiendo autonomicas...");
@@ -128,11 +126,24 @@ public class ACircunscripcionController {
         carmenDTOService.findAllCsv();
     }
 
+    private void updateSelected() throws IOException {
+        carmenDTOService.writeAutonomiaSeleccionada(Data.autonomiaSeleccionada);
+    }
+
     private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
         List<Circunscripcion> differences = newList.stream()
                 .filter(element -> !oldList.contains(element))
                 .toList();
         System.out.println(differences);
+        System.out.println(Data.autonomiaSeleccionada);
+        changes = differences;
+        //Data no funciona bien
         return changes;
+    }
+
+    private boolean containsSelected(String codigo) {
+        var found = circunscripcionService.findById(codigo);
+        var res = changes.contains(circunscripcionService.findById(codigo));
+        return res;
     }
 }
