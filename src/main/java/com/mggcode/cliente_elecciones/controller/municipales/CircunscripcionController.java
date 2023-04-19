@@ -85,7 +85,7 @@ public class CircunscripcionController {
                     System.out.println("Cargando partidos");
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios municipales");
+                   // System.out.println("Comprobando cambios municipales");
                     List<Circunscripcion> circunscripcionesNew = null;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {

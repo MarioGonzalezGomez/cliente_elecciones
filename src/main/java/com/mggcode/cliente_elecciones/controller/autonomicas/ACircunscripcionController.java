@@ -102,7 +102,7 @@ public class ACircunscripcionController {
 
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios autonomicos");
+                    //System.out.println("Comprobando cambios autonomicos");
                     List<Circunscripcion> circunscripcionesNew = null;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {

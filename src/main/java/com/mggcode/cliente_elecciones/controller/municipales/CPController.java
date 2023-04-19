@@ -139,7 +139,7 @@ public class CPController {
                     System.out.println("Cargando circunscripciones/partido municipales");
                     circunscripcionPartidos = cpService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios cp municipales");
+                    // System.out.println("Comprobando cambios cp municipales");
                     List<CircunscripcionPartido> circunscripcionesNew = null;
                     circunscripcionesNew = cpService.findAll();
                     if (!circunscripcionesNew.equals(circunscripcionPartidos)) {
