@@ -32,18 +32,11 @@ public class ACarmenDTOController {
     public ResponseEntity<String> findAllCsv(RedirectAttributes redirectAttributes){
         var res = carmenDTOService.findAll();
         carmenDTOService.findAllCsv();
-        /*res.forEach(carmenDTO -> {
-            try {
-                findByIdCsv(carmenDTO.getCircunscripcion().getCodigo(),redirectAttributes);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });*/
         return new ResponseEntity<>("Archivos descargados", HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{codigo}")
-    public String findById(@PathVariable("codigo") String codAutonomia, Model model) throws IOException {
+    public String findById(@PathVariable("codigo") String codAutonomia, Model model) {
         CarmenDTO cdto = carmenDTOService.findById(codAutonomia);
         model.addAttribute("carmen", cdto);
         return "carmendtos";

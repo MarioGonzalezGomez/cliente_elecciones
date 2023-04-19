@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -129,7 +127,7 @@ public class CPController {
         return "cps";
     }
 
-    public void suscribeCircunscripciones() throws ConnectException {
+    public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
             System.out.println("Suscribiendo cp municipales...");
             isSuscribed.set(true);
@@ -156,11 +154,10 @@ public class CPController {
 
 
     private List<CircunscripcionPartido> getChanges(List<CircunscripcionPartido> oldList, List<CircunscripcionPartido> newList) {
-        List<CircunscripcionPartido> differences = newList.stream()
+
+        return newList.stream()
                 .filter(element -> !oldList.contains(element))
                 .toList();
-
-        return differences;
     }
 
 }

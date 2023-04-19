@@ -3,7 +3,6 @@ package com.mggcode.cliente_elecciones.controller;
 import com.mggcode.cliente_elecciones.conexion.ConexionIPF;
 import com.mggcode.cliente_elecciones.conexion.ConexionManager;
 import com.mggcode.cliente_elecciones.config.Config;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

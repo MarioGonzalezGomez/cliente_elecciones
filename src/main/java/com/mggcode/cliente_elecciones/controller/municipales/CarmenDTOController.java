@@ -19,7 +19,7 @@ public class CarmenDTOController {
     private CarmenDTOService carmenDTOService;
 
     @RequestMapping(path = "/{codigo}")
-    public String findAll(@PathVariable("codigo") String codAutonomia, Model model) throws IOException {
+    public String findAll(@PathVariable("codigo") String codAutonomia, Model model) {
         CarmenDTO cdto = carmenDTOService.findAll(codAutonomia);
         model.addAttribute("carmen", cdto);
         return "carmendtos";

@@ -15,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.net.ConnectException;
-
 @Controller
 public class HomeController {
 
@@ -45,24 +43,20 @@ public class HomeController {
 
     }
 
-    @RequestMapping("/{codigo}")
-    public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo){
-        Data.autonomiaSeleccionada = codigo;
+    @RequestMapping("/selected/{codigo}")
+    public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo) {
+        System.out.println("---" + codigo);
+        Data data = Data.getInstance();
+        data.setAutonomiaSeleccionada(codigo);
         return new ResponseEntity<>(codigo, HttpStatus.OK);
     }
 
 
     private void startListeners() {
-        try {
-            aCircunscripcionController.suscribeCircunscripciones();
-            circunscripcionController.suscribeCircunscripciones();
+        aCircunscripcionController.suscribeCircunscripciones();
+        circunscripcionController.suscribeCircunscripciones();
 
-            //TODO(esto es opcional y se puede activar en la parte del cliente como una opción)
-            /*cpController.suscribeCircunscripciones();
-            aCPController.suscribeCircunscripciones();*/
+        //TODO(esto es opcional y se puede activar en la parte del cliente como una opción)
 
-        } catch (ConnectException e) {
-            System.err.println("Error de conexión");
-        }
     }
 }

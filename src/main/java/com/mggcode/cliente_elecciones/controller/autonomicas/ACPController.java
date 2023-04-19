@@ -1,6 +1,5 @@
 package com.mggcode.cliente_elecciones.controller.autonomicas;
 
-import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionPartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -132,7 +129,7 @@ public class ACPController {
     }
 
 
-    public void suscribeCircunscripciones() throws ConnectException {
+    public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
             System.out.println("Suscribiendo cp autonomicos...");
             isSuscribed.set(true);
@@ -159,10 +156,9 @@ public class ACPController {
 
 
     private List<CircunscripcionPartido> getChanges(List<CircunscripcionPartido> oldList, List<CircunscripcionPartido> newList) {
-        List<CircunscripcionPartido> differences = newList.stream()
+        //System.out.println(differences);
+        return newList.stream()
                 .filter(element -> !oldList.contains(element))
                 .toList();
-        //System.out.println(differences);
-        return differences;
     }
 }

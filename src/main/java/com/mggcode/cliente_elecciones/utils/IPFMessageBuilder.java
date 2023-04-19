@@ -6,8 +6,6 @@ import com.mggcode.cliente_elecciones.config.Config;
 public class IPFMessageBuilder {
 
     private static IPFMessageBuilder instance = null;
-    private String eventRun = "EVENT_RUN";
-    private String itemSet = "itemset('";
 
     String bd = "<databse>";
 
@@ -78,10 +76,10 @@ public class IPFMessageBuilder {
 
     private String eventRunBuild(String eventName) {
         String message = "";
-        StringBuilder sb = new StringBuilder(message);
-        sb.append(itemSet);
-        sb.append(bd);
-        sb.append(eventName).append("','").append(eventRun).append("');");
-        return sb.toString();
+        String itemSet = "itemset('";
+        String eventRun = "EVENT_RUN";
+        return message + itemSet +
+                bd +
+                eventName + "','" + eventRun + "');";
     }
 }
