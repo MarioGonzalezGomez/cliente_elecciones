@@ -139,7 +139,7 @@ public class ACPController {
                     System.out.println("Cargando circunscripciones/partido autonomicos");
                     circunscripcionPartidos = cpService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios cp autonomicos");
+                    //System.out.println("Comprobando cambios cp autonomicos");
                     List<CircunscripcionPartido> circunscripcionesNew = null;
                     circunscripcionesNew = cpService.findAll();
                     if (!circunscripcionesNew.equals(circunscripcionPartidos)) {
