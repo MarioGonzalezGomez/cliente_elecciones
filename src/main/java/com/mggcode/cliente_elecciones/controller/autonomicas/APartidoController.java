@@ -1,6 +1,5 @@
 package com.mggcode.cliente_elecciones.controller.autonomicas;
 
-import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.model.Partido;
 import com.mggcode.cliente_elecciones.service.autonomicas.APartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,18 +44,6 @@ public class APartidoController {
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         return "redirect:/autonomicas/partidos";
     }
-
-    //  @RequestMapping(path = "/{codPartido}/csv")
-    //  public String findByIdInCsv(@PathVariable("codPartido") String codPartido) throws IOException {
-    //      partidoService.findByIdInCsv(codPartido);
-    //      return "Descargado correctamente";
-    //  }
-//
-    //  @RequestMapping(path = "/{codPartido}/excel")
-    //  public String findByIdInExcel(@PathVariable("codPartido") String codPartido) throws IOException {
-    //      partidoService.findByIdInExcel(codPartido);
-    //      return "Descargado correctamente";
-    //  }
 
     List<Partido> partidos = new ArrayList<>();
     AtomicBoolean isSuscribed = new AtomicBoolean(false);

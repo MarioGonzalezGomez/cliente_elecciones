@@ -11,7 +11,7 @@ import java.util.Properties;
 
 @Service
 public class ConfiguracionService {
-    private String rutaConfig = "src/main/resources/config.properties";
+    private final String rutaConfig = "src/main/resources/config.properties";
 
 
     public Configuracion cargarConfiguracion() {

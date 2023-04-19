@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 @Controller
@@ -51,6 +51,13 @@ public class CircunscripcionController {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
+        try {lock.lock();
+            updateSelected();
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            lock.unlock();
+        }
         return new ResponseEntity<>(codigo, HttpStatus.OK);
     }
 
@@ -91,8 +98,9 @@ public class CircunscripcionController {
     List<Circunscripcion> circunscripciones = new ArrayList<>();
     AtomicBoolean isSuscribed = new AtomicBoolean(false);
     List<Circunscripcion> changes;
+    ReentrantLock lock = new ReentrantLock();
 
-    public void suscribeCircunscripciones() throws ConnectException {
+    public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
             System.out.println("Suscribiendo autonomicas...");
             isSuscribed.set(true);
@@ -102,7 +110,6 @@ public class CircunscripcionController {
                     System.out.println("Cargando partidos");
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios municipales");
                     List<Circunscripcion> circunscripcionesNew;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
@@ -112,10 +119,13 @@ public class CircunscripcionController {
                         if (changes.contains(circunscripcionService.findById(data.getCircunscripcionSeleccionada()))) {
                             System.out.println("Seleccionada ha cambiado");
                             try {
+                                lock.lock();
                                 updateSelected();
                             } catch (IOException e) {
                                 System.err.println(e.getMessage());
                                 throw new RuntimeException(e);
+                            } finally {
+                                lock.unlock();
                             }
                         }
                         circunscripciones = circunscripcionesNew;

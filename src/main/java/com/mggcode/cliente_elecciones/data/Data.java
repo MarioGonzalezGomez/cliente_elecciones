@@ -3,12 +3,12 @@ package com.mggcode.cliente_elecciones.data;
 @lombok.Data
 public class Data {
     private static Data instance = null;
-    public  String autonomiaSeleccionada = "0000000";
-    public  String circunscripcionSeleccionada = "0000000";
+    public  String autonomiaSeleccionada;
+    public  String circunscripcionSeleccionada;
 
     private Data() {
-        autonomiaSeleccionada = "0000000";
-        circunscripcionSeleccionada = "0000000";
+        autonomiaSeleccionada = "";
+        circunscripcionSeleccionada = "";
     }
 
     public static Data getInstance() {

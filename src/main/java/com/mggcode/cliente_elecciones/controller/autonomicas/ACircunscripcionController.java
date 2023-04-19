@@ -2,7 +2,6 @@ package com.mggcode.cliente_elecciones.controller.autonomicas;
 
 
 import com.mggcode.cliente_elecciones.data.Data;
-import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 @Controller
@@ -45,7 +44,7 @@ public class ACircunscripcionController {
 
 
     @GetMapping
-    public String verCircunscripciones(Model model) throws ConnectionException {
+    public String verCircunscripciones(Model model) {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
         model.addAttribute("circunscripciones", circunscripciones);
         model.addAttribute("tipo", "autonomicas");
@@ -56,8 +55,19 @@ public class ACircunscripcionController {
     public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo) {
         Data data = Data.getInstance();
         data.setAutonomiaSeleccionada(codigo);
+        try {
+            lock.lock();
+            updateSelected();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            lock.unlock();
+        }
+
         return new ResponseEntity<>(codigo, HttpStatus.OK);
     }
+
+
     //Descarga todos los csv de autonomía
     @RequestMapping(path = "/csv")
     public String findAllInCsv(RedirectAttributes redirectAttributes) throws IOException {
@@ -94,9 +104,9 @@ public class ACircunscripcionController {
     }
 
 
-    boolean hasChanged = false;
+    ReentrantLock lock = new ReentrantLock();
 
-    public void suscribeCircunscripciones() throws ConnectException {
+    public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
             System.out.println("Suscribiendo autonomicas...");
             isSuscribed.set(true);
@@ -104,34 +114,34 @@ public class ACircunscripcionController {
             exec.scheduleAtFixedRate(() -> {
                 if (circunscripciones.isEmpty()) {
                     System.out.println("Cargando partidos");
+                    lock.lock();
                     try {
                         updateAllCsv();
-                    } catch (IOException e) {
-                        System.err.println("Error de actualizacion");
+                    } finally {
+                        lock.unlock();
                     }
 
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                   // System.out.println("Comprobando cambios autonomicos");
+                    // System.out.println("Comprobando cambios autonomicos");
                     List<Circunscripcion> circunscripcionesNew = null;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
                         System.out.println("Cambios detectados");
                         try {
+                            lock.lock();
                             updateAllCsv();
-                        } catch (IOException e) {
-                            System.err.println("Error de actualizacion");
-                        }
-                        //TODO(Hacer el código necesario para ver que se hace con estos cambios)
-                        getChanges(circunscripciones, circunscripcionesNew);
-                        if(changes.contains(circunscripcionService.findById(data.getAutonomiaSeleccionada()))) {
-                            System.out.println("Seleccionada ha cambiado");
-                            try {
+                            //TODO(Hacer el código necesario para ver que se hace con estos cambios)
+                            getChanges(circunscripciones, circunscripcionesNew);
+                            if (changes.contains(circunscripcionService.findById(data.getAutonomiaSeleccionada()))) {
+                                System.out.println("Seleccionada ha cambiado");
                                 updateSelected();
-                            } catch (IOException e) {
-                                System.err.println(e.getMessage());
-                                throw new RuntimeException(e);
                             }
+                        } catch (IOException e) {
+                            System.err.println(e.getMessage());
+                            throw new RuntimeException(e);
+                        } finally {
+                            lock.unlock();
                         }
                         circunscripciones = circunscripcionesNew;
                     }
@@ -142,7 +152,7 @@ public class ACircunscripcionController {
 
     Data data = Data.getInstance();
 
-    private void updateAllCsv() throws IOException {
+    private void updateAllCsv() {
         carmenDTOService.findAllCsv();
     }
 
@@ -164,7 +174,6 @@ public class ACircunscripcionController {
 
     private boolean containsSelected(String codigo) {
         var found = circunscripcionService.findById(codigo);
-        var res = changes.contains(circunscripcionService.findById(codigo));
-        return res;
+        return changes.contains(circunscripcionService.findById(codigo));
     }
 }
