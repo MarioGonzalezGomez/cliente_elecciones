@@ -1,5 +1,7 @@
 package com.mggcode.cliente_elecciones.conexion;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 
 import static com.mggcode.cliente_elecciones.config.Config.config;

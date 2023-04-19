@@ -1,6 +1,7 @@
 package com.mggcode.cliente_elecciones.utils;
 
 import com.mggcode.cliente_elecciones.config.Config;
+import org.springframework.stereotype.Service;
 
 
 public class IPFMessageBuilder {
@@ -10,7 +11,9 @@ public class IPFMessageBuilder {
     String bd = "<databse>";
 
     private IPFMessageBuilder() {
-        this.bd = Config.config.getProperty("BDAutonomicas");
+
+        // this.bd = Config.config.getProperty("BDAutonomicas");
+        this.bd = "<FALDONES>";
     }
 
     public static IPFMessageBuilder getInstance() {

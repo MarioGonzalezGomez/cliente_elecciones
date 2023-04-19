@@ -18,6 +18,7 @@
 
 
 
+
 </script>
 <div th:if="${mensaje}">
     <div class="alert alert-success">
@@ -34,8 +35,18 @@
                 </button>
             </div>
             <div>
-                <button type="button" class="btn btn-success">Entra</button>
-                <button type="button" class="btn btn-danger">Sale</button>
+                <button type="button" class="btn btn-success"
+                        th:onclick="'location.href=\'' + @{'/autonomicas/carmen/' + ${carmen.circunscripcion.codigo} + '/entra'} + '\''">
+                    Entra
+                </button>
+                <button type="button" class="btn btn-success"
+                        th:onclick="'location.href=\'' + @{'/autonomicas/carmen/' + ${carmen.circunscripcion.codigo} + '/actualiza'} + '\''">
+                    Actualiza
+                </button>
+                <button type="button" class="btn btn-danger"
+                        th:onclick="'location.href=\'' + @{'/autonomicas/carmen/' + ${carmen.circunscripcion.codigo} + '/sale'} + '\''">
+                    Sale
+                </button>
             </div>
             <div>
                 <button type="button" class="btn btn-secondary"
