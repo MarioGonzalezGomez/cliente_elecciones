@@ -48,24 +48,6 @@ public class CarmenDTOService {
         return excel;
     }
 
-    private File comprobarCarpetas() {
-        File autonomicas = new File(ruta);
-        if (!autonomicas.exists()) {
-            autonomicas.mkdir();
-        }
-        File partidos = new File(ruta);
-        if (!partidos.exists()) {
-            partidos.mkdir();
-        }
-        File csv = new File(partidos.getPath());
-        File excel = new File(partidos.getPath());
-        if (!csv.exists()) {
-            csv.mkdir();
-            excel.mkdir();
-        }
-        return partidos;
-    }
-
     public File writeCricunscripcionSeleccionada(String codCirunscripcion) throws IOException{
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/" + codCirunscripcion + "/csv");
@@ -73,5 +55,13 @@ public class CarmenDTOService {
                 File.separator + "F_Municipales.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
+    }
+
+    private File comprobarCarpetas() {
+        File datos = new File(ruta);
+        if (!datos.exists()) {
+            datos.mkdir();
+        }
+        return datos;
     }
 }

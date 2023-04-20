@@ -64,7 +64,7 @@ public class ACarmenDTOService {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/csv");
 
-        File csv = new File(carpetaBase.getPath() + File.separator +
+        File csv = new File(carpetaBase.getPath() +
                 File.separator + "F_" + codAutonomia + ".csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
@@ -72,10 +72,10 @@ public class ACarmenDTOService {
 
 
     //Sobreescribe en el archivo F_Autonomicas con la autonomía seleccionada
-    public File writeAutonomiaSeleccionada(String codAutonomia) throws IOException{
+    public File writeAutonomiaSeleccionada(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/csv");
-        File csv = new File(carpetaBase.getPath() + File.separator +
+        File csv = new File(carpetaBase.getPath() +
                 File.separator + "F_Autonomicas.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
@@ -90,20 +90,10 @@ public class ACarmenDTOService {
     }
 
     private File comprobarCarpetas() {
-        File autonomicas = new File(ruta);
-        if (!autonomicas.exists()) {
-            autonomicas.mkdir();
+        File datos = new File(ruta);
+        if (!datos.exists()) {
+            datos.mkdir();
         }
-        File partidos = new File(ruta);
-        if (!partidos.exists()) {
-            partidos.mkdir();
-        }
-        File csv = new File(partidos.getPath());
-        File excel = new File(partidos.getPath());
-        if (!csv.exists()) {
-            csv.mkdir();
-            excel.mkdir();
-        }
-        return partidos;
+        return datos;
     }
 }
