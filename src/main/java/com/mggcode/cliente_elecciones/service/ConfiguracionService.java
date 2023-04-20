@@ -35,12 +35,11 @@ public class ConfiguracionService {
 
         configuracion.setPuerto(propiedades.getProperty("puerto"));
 
-        configuracion.setBdAutonomicas(propiedades.getProperty("BDAutonomicas"));
-        configuracion.setBdMunicipales(propiedades.getProperty("BDMunicipales"));
+        configuracion.setBdFaldones(propiedades.getProperty("BDFaldones"));
+        configuracion.setBdCartones(propiedades.getProperty("BDCartones"));
 
         configuracion.setIpServer(propiedades.getProperty("ipServer"));
         configuracion.setIpServerReserva(propiedades.getProperty("ipServerReserva"));
-        configuracion.setIpServerLocal(propiedades.getProperty("ipServerLocal"));
 
         configuracion.setRutaFicheros(propiedades.getProperty("rutaFicheros"));
         return configuracion;
@@ -59,12 +58,11 @@ public class ConfiguracionService {
 
             propiedades.setProperty("puerto", configuracion.getPuerto());
 
-            propiedades.setProperty("BDAutonomicas", configuracion.getBdAutonomicas());
-            propiedades.setProperty("BDMunicipales", configuracion.getBdMunicipales());
+            propiedades.setProperty("BDFaldones", configuracion.getBdFaldones());
+            propiedades.setProperty("BDCartones", configuracion.getBdCartones());
 
             propiedades.setProperty("ipServer", configuracion.getIpServer());
             propiedades.setProperty("ipServerReserva", configuracion.getIpServerReserva());
-            propiedades.setProperty("ipServerLocal", configuracion.getIpServerLocal());
 
             propiedades.setProperty("rutaFicheros", configuracion.getRutaFicheros());
 

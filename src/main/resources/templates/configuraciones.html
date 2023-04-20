@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <link href="../static/css/config.css" th:href="@{/css/config.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -23,71 +24,87 @@
                 </button>
             </div>
         </nav>
-        <div class="tab-pane fade show active" id="nav-ipf" role="tabpanel" aria-labelledby="nav-ipf-tab">
-            <fieldset>
-                <legend>Ajustes IPF</legend>
-                <div class="form-group">
-                    <label for="inputConexiones">Número de conexiones</label>
-                    <input type="text" class="form-control" id="inputConexiones" name="nConexiones"
-                           th:value="${configuracion.nConexiones}">
-                </div>
-                <div class="form-group">
-                    <label for="inputDireccion1">Dirección IP 1</label>
-                    <input type="text" class="form-control" id="inputDireccion1" name="direccion1"
-                           th:value="${configuracion.direccion1}">
-                </div>
-                <div class="form-group">
-                    <label for="inputDireccion2">Dirección IP 2</label>
-                    <input type="text" class="form-control" id="inputDireccion2" name="direccion2"
-                           th:value="${configuracion.direccion2}">
-                </div>
-                <div class="form-group">
-                    <label for="inputDireccion3">Dirección IP 3</label>
-                    <input type="text" class="form-control" id="inputDireccion3" name="direccion3"
-                           th:value="${configuracion.direccion3}">
-                </div>
-                <div class="form-group">
-                    <label for="inputDireccion4">Dirección IP 4</label>
-                    <input type="text" class="form-control" id="inputDireccion4" name="direccion4"
-                           th:value="${configuracion.direccion4}">
-                </div>
-                <div class="form-group">
-                    <label for="inputPuerto">Puerto de conexión</label>
-                    <input type="text" class="form-control" id="inputPuerto" name="puerto"
-                           th:value="${configuracion.puerto}">
-                </div>
-            </fieldset>
-        </div>
-        <div class="tab-pane fade" id="nav-servidores" role="tabpanel" aria-labelledby="nav-servidores-tab">
-            <fieldset>
-                <legend>Configuración de servidores</legend>
-                <div class="form-group">
-                    <label for="inputIpServer">Dirección IP del servidor principal</label>
-                    <input type="text" class="form-control" id="inputIpServer" name="ipServer"
-                           th:value="${configuracion.ipServer}">
-                </div>
-                <div class="form-group">
-                    <label for="inputIpServerReserva">Dirección IP del servidor de reserva</label>
-                    <input type="text" class="form-control" id="inputIpServerReserva" name="ipServerReserva"
-                           th:value="${configuracion.ipServerReserva}">
-                </div>
-                <div class="form-group">
-                    <label for="inputIpServerLocal">Dirección IP del servidor local</label>
-                    <input type="text" class="form-control" id="inputIpServerLocal" name="ipServerLocal"
-                           th:value="${configuracion.ipServerLocal}">
-                </div>
-            </fieldset>
-        </div>
-        <div class="tab-pane fade" id="nav-ficheros" role="tabpanel" aria-labelledby="nav-ficheros-tab">
-            <div class="form-group">
-                <label for="rutaFicherosInput">Ruta de los ficheros</label>
-                <input type="text" class="form-control" id="rutaFicherosInput" name="rutaFicheros"
-                       th:value="${configuracion.rutaFicheros}">
+        <div class="tab-content position-relative">
+            <div class="tab-pane fade show active position-absolute top-0 start-0 w-100" id="nav-ipf" role="tabpanel"
+                 aria-labelledby="nav-ipf-tab">
+                <fieldset>
+                    <legend>Ajustes IPF</legend>
+                    <div class="form-group">
+                        <label for="inputConexiones">Número de conexiones</label>
+                        <input type="text" class="form-control" id="inputConexiones" name="nConexiones"
+                               th:value="${configuracion.nConexiones}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDireccion1">Dirección IP 1</label>
+                        <input type="text" class="form-control" id="inputDireccion1" name="direccion1"
+                               th:value="${configuracion.direccion1}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDireccion2">Dirección IP 2</label>
+                        <input type="text" class="form-control" id="inputDireccion2" name="direccion2"
+                               th:value="${configuracion.direccion2}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDireccion3">Dirección IP 3</label>
+                        <input type="text" class="form-control" id="inputDireccion3" name="direccion3"
+                               th:value="${configuracion.direccion3}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDireccion4">Dirección IP 4</label>
+                        <input type="text" class="form-control" id="inputDireccion4" name="direccion4"
+                               th:value="${configuracion.direccion4}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPuerto">Puerto de conexión</label>
+                        <input type="text" class="form-control" id="inputPuerto" name="puerto"
+                               th:value="${configuracion.puerto}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBdFaldones">Base de datos de Faldones</label>
+                        <input type="text" class="form-control" id="inputBdFaldones" name="BDFaldones"
+                               th:value="${configuracion.bdFaldones}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBdCartones">Base de datos de Cartones</label>
+                        <input type="text" class="form-control" id="inputBdCartones" name="BDCartones"
+                               th:value="${configuracion.bdCartones}">
+                    </div>
+                </fieldset>
             </div>
+            <div class="tab-pane fade position-absolute top-0 start-0 w-100" id="nav-servidores" role="tabpanel"
+                 aria-labelledby="nav-servidores-tab">
+                <fieldset>
+                    <legend>Configuración de servidores</legend>
+                    <div class="form-group">
+                        <label for="inputIpServer">Dirección IP del servidor principal</label>
+                        <input type="text" class="form-control" id="inputIpServer" name="ipServer"
+                               th:value="${configuracion.ipServer}">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputIpServerReserva">Dirección IP del servidor de reserva</label>
+                        <input type="text" class="form-control" id="inputIpServerReserva" name="ipServerReserva"
+                               th:value="${configuracion.ipServerReserva}">
+                    </div>
+                </fieldset>
+            </div>
+            <div class="tab-pane fade position-absolute top-0 start-0 w-100" id="nav-ficheros" role="tabpanel"
+                 aria-labelledby="nav-ficheros-tab">
+                <fieldset>
+                    <legend>Ajustes sobre Ficheros</legend>
+                    <div class="form-group">
+                        <label for="rutaFicherosInput">Ruta de los ficheros</label>
+                        <input type="text" class="form-control" id="rutaFicherosInput" name="rutaFicheros"
+                               th:value="${configuracion.rutaFicheros}">
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit" class="btn btn-primary position-absolute top-0 start-50 w-50">Guardar</button>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+
     </form>
+
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
 <script src="/js/config.js"></script>
