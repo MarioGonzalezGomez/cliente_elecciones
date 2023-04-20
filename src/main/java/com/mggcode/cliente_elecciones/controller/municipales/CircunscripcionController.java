@@ -51,11 +51,12 @@ public class CircunscripcionController {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
-        try {lock.lock();
+        try {
+            lock.lock();
             updateSelected();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             lock.unlock();
         }
         return new ResponseEntity<>(codigo, HttpStatus.OK);
@@ -116,7 +117,7 @@ public class CircunscripcionController {
                         System.out.println("Cambios detectados");
                         //TODO(Hacer el código necesario para ver que se hace con estos cambios)
                         getChanges(circunscripciones, circunscripcionesNew);
-                        if (changes.contains(circunscripcionService.findById(data.getCircunscripcionSeleccionada()))) {
+                        if (containsSelected(data.circunscripcionSeleccionada)) {
                             System.out.println("Seleccionada ha cambiado");
                             try {
                                 lock.lock();
@@ -137,6 +138,13 @@ public class CircunscripcionController {
 
     private void updateSelected() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionada(data.getCircunscripcionSeleccionada());
+    }
+
+    private boolean containsSelected(String codigo) {
+        if (codigo.isBlank())
+            return false;
+        var found = circunscripcionService.findById(codigo);
+        return changes.contains(circunscripcionService.findById(codigo));
     }
 
     private void getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
