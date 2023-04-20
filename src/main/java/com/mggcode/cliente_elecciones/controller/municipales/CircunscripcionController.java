@@ -115,7 +115,6 @@ public class CircunscripcionController {
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
                         System.out.println("Cambios detectados");
-                        //TODO(Hacer el código necesario para ver que se hace con estos cambios)
                         getChanges(circunscripciones, circunscripcionesNew);
                         if (containsSelected(data.circunscripcionSeleccionada)) {
                             System.out.println("Seleccionada ha cambiado");
@@ -151,7 +150,6 @@ public class CircunscripcionController {
         List<Circunscripcion> differences = newList.stream()
                 .filter(element -> !oldList.contains(element))
                 .toList();
-        System.out.println(differences);
         changes = differences;
     }
 

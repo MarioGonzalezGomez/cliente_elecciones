@@ -1,6 +1,7 @@
 package com.mggcode.cliente_elecciones.controller.autonomicas;
 
 
+import com.mggcode.cliente_elecciones.conexion.WebSocketSessionHandler;
 import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
@@ -8,6 +9,8 @@ import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.converter.StringMessageConverter;
+import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,16 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.socket.client.WebSocketClient;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -131,7 +129,7 @@ public class ACircunscripcionController {
 
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios autonomicos");
+                  //  System.out.println("Comprobando cambios autonomicos");
                     List<Circunscripcion> circunscripcionesNew = null;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
@@ -172,11 +170,7 @@ public class ACircunscripcionController {
         List<Circunscripcion> differences = newList.stream()
                 .filter(element -> !oldList.contains(element))
                 .toList();
-        System.out.println(differences);
-        System.out.println(data.getAutonomiaSeleccionada());
         changes = differences;
-        //Data no funciona bien
-
         return changes;
     }
 
@@ -187,19 +181,15 @@ public class ACircunscripcionController {
         return changes.contains(circunscripcionService.findById(codigo));
     }
 
-    private void reloadPage() {
-        ScriptEngineManager manager = new ScriptEngineManager();
-        ScriptEngine engine = manager.getEngineByName("JavaScript");
-        URL resource = getClass().getClassLoader().getResource("static/js/home.js");
-        try {
-            var file = resource.getFile();
+    @GetMapping("/updates")
+    ResponseEntity<String> subscribe() {
+        String url = "ws://localhost:8080/autonomicas/updates";
+        WebSocketClient client = new StandardWebSocketClient();
+        WebSocketStompClient stompClient = new WebSocketStompClient(client);
+        stompClient.setMessageConverter(new StringMessageConverter());
 
-            engine.eval(Files.newBufferedReader(Path.of(file.substring(1)), StandardCharsets.UTF_8));
-            Invocable invocable = (Invocable) engine;
-            invocable.invokeFunction("recargarPagina");
-        } catch (ScriptException | NoSuchMethodException | IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        StompSessionHandler sessionHandler = new WebSocketSessionHandler();
+        var res = stompClient.connectAsync(url, sessionHandler);
+        return new ResponseEntity<>("Conectado", HttpStatus.OK);
     }
 }
