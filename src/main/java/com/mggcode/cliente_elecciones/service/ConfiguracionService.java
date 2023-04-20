@@ -45,7 +45,6 @@ public class ConfiguracionService {
         return configuracion;
     }
 
-
     public void guardarConfiguracion(Configuracion configuracion) {
         try {
             Properties propiedades = new Properties();

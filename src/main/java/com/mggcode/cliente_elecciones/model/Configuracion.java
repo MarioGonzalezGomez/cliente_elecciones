@@ -15,7 +15,6 @@ public class Configuracion {
     private String direccion4;
 
     private String puerto;
-
     @JsonProperty("BDFaldones")
     private String bdFaldones;
     @JsonProperty("BDCartones")
