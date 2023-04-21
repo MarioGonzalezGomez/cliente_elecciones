@@ -81,6 +81,15 @@ public class ACarmenDTOService {
         return csv;
     }
 
+    public File writeAutonomiaSeleccionadaArcoMayorias(String codAutonomia) throws IOException {
+        File carpetaBase = comprobarCarpetas();
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/csv");
+        File csv = new File(carpetaBase.getPath() +
+                File.separator + "C_MapaMayoriasSondeo.csv");
+        FileUtils.copyURLToFile(url, csv);
+        return csv;
+    }
+
     public File findByIdExcel(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/excel");
