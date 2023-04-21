@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class SedesDTO {
+    private String codigoCircunscripcion;
     private String codigoPartido;
     private String codigoPadre;
     private int escanos_desde;

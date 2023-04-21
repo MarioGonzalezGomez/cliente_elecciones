@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
           crossorigin="anonymous">
     <link href="../static/css/listas.css" th:href="@{/css/listas.css}" rel="stylesheet"/>
-    <title>Circunscripciones</title>
+    <title>Partidos</title>
 </head>
 <body>
 <script>
     setTimeout(function() {
         $('.alert').fadeOut('fast');
     }, 2000); // Oculta la alerta después de 2 segundos
-
-
-
-
 
 </script>
 <div th:if="${mensaje}">
@@ -41,10 +37,12 @@
             </div>
             <div>
                 <button type="button" class="btn btn-secondary"
-                        th:onclick="'location.href=\'' + @{${ruta} + '/csv'} + '\''">Descargar CSV
+                        th:onclick="'location.href=\'' + @{${ruta} + '/csv'} + '\''">
+                    Descargar CSV
                 </button>
                 <button type="button" class="btn btn-secondary"
-                        th:onclick="'location.href=\'' + @{${ruta} + '/excel'} + '\''">Descargar Excel
+                        th:onclick="'location.href=\'' + @{${ruta} + '/excel'} + '\''">
+                    Descargar Excel
                 </button>
             </div>
         </div>
@@ -65,37 +63,39 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Escrutado</th>
-                            <th>Escaños Totales</th>
-                            <th>Participación</th>
+                            <th>Código Partido</th>
+                            <th>Código Padre</th>
+                            <th>Escaños</th>
+                            <th>Escaños Histórico</th>
+                            <th>Porcentaje de Voto</th>
+                            <th>Porcentaje de Voto Histórico</th>
                             <th>Votantes</th>
-                            <th>Ver en detalle</th>
+                            <th>Siglas</th>
+                            <th>Literal</th>
+                            <th>Votantes Histórico</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <tr class="text-uppercase text-success" th:each="circunscripcion : ${circunscripciones}">
-                            <td th:text="${circunscripcion.codigo}"></td>
-                            <td th:text="${circunscripcion.nombreCircunscripcion}"></td>
-                            <td th:text="${circunscripcion.escrutado}"></td>
-                            <td th:text="${circunscripcion.escanios}"></td>
-                            <td th:text="${circunscripcion.participacion}"></td>
-                            <td th:text="${circunscripcion.votantes}"></td>
-                            <td>
-                                <a th:href="@{/{tipo}/circunscripciones/{codigo}      (codigo=${circunscripcion.codigo}, tipo=${tipo})}"
-                                   class="btn btn-sm btn-success"><i class="fa fa-search"></i></a>
-                            </td>
+                        <tr class="text-uppercase text-success">
+                            <td th:text="${sede.codigoPartido}"></td>
+                            <td th:text="${sede.codigoPadre}"></td>
+                            <td th:text="${sede.escanos_hasta}"></td>
+                            <td th:text="${sede.escanos_hist}"></td>
+                            <td th:text="${sede.porcentajeVoto}"></td>
+                            <td th:text="${sede.porcentajeVotoHistorico}"></td>
+                            <td th:text="${sede.numVotantes}"></td>
+                            <td th:text="${sede.siglas}"></td>
+                            <td th:text="${sede.literalPartido}"></td>
+                            <td th:text="${sede.numVotantes_hist}"></td>
                         </tr>
                         </tbody>
                     </table>
 
-
                     <div class="panel-footer">
                         <div class="row">
-                            <div class="col-sm-6 col-xs-6"><b th:text="${#lists.size(circunscripciones)}">25</b>
-                                entradas
+                            <div class="col-sm-6 col-xs-6"><b>1</b>
+                                entrada
                             </div>
                         </div>
                     </div>
@@ -104,6 +104,7 @@
         </div>
     </div>
 </div>
+
 
 <script
         src="https://code.jquery.com/jquery-3.6.4.min.js"

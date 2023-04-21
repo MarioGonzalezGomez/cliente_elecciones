@@ -24,6 +24,7 @@ public class PartidoController {
     public String verPartidos(Model model) {
         List<Partido> partidos = partidoService.findAll();
         model.addAttribute("partidos", partidos);
+        model.addAttribute("ruta", "/municipales/partidos");
         return "partidos";
     }
 

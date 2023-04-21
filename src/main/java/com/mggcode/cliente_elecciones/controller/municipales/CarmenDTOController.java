@@ -22,6 +22,7 @@ public class CarmenDTOController {
     public String findAll(@PathVariable("codigo") String codAutonomia, Model model) {
         CarmenDTO cdto = carmenDTOService.findAll(codAutonomia);
         model.addAttribute("carmen", cdto);
+        model.addAttribute("ruta", "/municipales/carmen/" + codAutonomia);
         return "carmendtos";
     }
 

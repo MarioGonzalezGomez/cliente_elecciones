@@ -23,13 +23,13 @@ public class ACarmenDTOController {
 
 
     @RequestMapping
-    public ResponseEntity<List<CarmenDTO>> findAll(){
+    public ResponseEntity<List<CarmenDTO>> findAll() {
         var res = carmenDTOService.findAll();
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @RequestMapping("/csv")
-    public ResponseEntity<String> findAllCsv(RedirectAttributes redirectAttributes){
+    public ResponseEntity<String> findAllCsv(RedirectAttributes redirectAttributes) {
         var res = carmenDTOService.findAll();
         carmenDTOService.findAllCsv();
         return new ResponseEntity<>("Archivos descargados", HttpStatus.OK);
@@ -39,6 +39,7 @@ public class ACarmenDTOController {
     public String findById(@PathVariable("codigo") String codAutonomia, Model model) {
         CarmenDTO cdto = carmenDTOService.findById(codAutonomia);
         model.addAttribute("carmen", cdto);
+        model.addAttribute("ruta", "/autonomicas/carmen/" + codAutonomia);
         return "carmendtos";
     }
 

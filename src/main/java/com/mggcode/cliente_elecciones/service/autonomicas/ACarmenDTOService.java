@@ -84,7 +84,7 @@ public class ACarmenDTOService {
     public File findByIdExcel(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/excel");
-        File excel = new File(carpetaBase.getPath() + "F_" + codAutonomia + ".xlsx");
+        File excel = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".xlsx");
         FileUtils.copyURLToFile(url, excel);
         return excel;
     }
