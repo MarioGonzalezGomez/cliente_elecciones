@@ -34,8 +34,8 @@
         <button type="button" class="btn btn-danger">Sale</button>
       </div>
       <div>
-        <button type="button" class="btn btn-secondary" onclick="location.href='/autonomicas/partidos/csv';">Descargar CSV</button>
-        <button type="button" class="btn btn-secondary" onclick="location.href='/autonomicas/partidos/excel';">Descargar Excel</button>
+        <button type="button" class="btn btn-secondary" th:onclick="'location.href=\'' + @{${ruta} + '/csv'} + '\''">>Descargar CSV</button>
+        <button type="button" class="btn btn-secondary" th:onclick="'location.href=\'' + @{${ruta} + '/excel'} + '\''">>Descargar Excel</button>
       </div>
     </div>
   </div>

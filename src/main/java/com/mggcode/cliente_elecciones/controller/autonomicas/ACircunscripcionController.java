@@ -5,6 +5,7 @@ import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
+import com.mggcode.cliente_elecciones.service.autonomicas.ASedesDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,9 @@ public class ACircunscripcionController {
     @Autowired
     private ACarmenDTOService carmenDTOService;
 
+    @Autowired
+    private ASedesDTOService sedesDTOService;
+
     List<Circunscripcion> changes;
 
 
@@ -48,6 +52,7 @@ public class ACircunscripcionController {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
         model.addAttribute("circunscripciones", circunscripciones);
         model.addAttribute("tipo", "autonomicas");
+        model.addAttribute("ruta", "/autonomicas/circunscripciones");
         return "circunscripciones";
     }
 
@@ -158,6 +163,7 @@ public class ACircunscripcionController {
 
     private void updateSelected() throws IOException {
         carmenDTOService.writeAutonomiaSeleccionada(data.getAutonomiaSeleccionada());
+        sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
     private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {

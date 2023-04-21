@@ -43,7 +43,7 @@ public class CarmenDTOService {
     public File findAllInExcel(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/" + codAutonomia + "/excel");
-        File excel = new File(carpetaBase.getPath() + "F_" + codAutonomia + ".xlsx");
+        File excel = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".xlsx");
         FileUtils.copyURLToFile(url, excel);
         return excel;
     }
@@ -53,6 +53,15 @@ public class CarmenDTOService {
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/" + codCirunscripcion + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator +
                 File.separator + "F_Municipales.csv");
+        FileUtils.copyURLToFile(url, csv);
+        return csv;
+    }
+
+    public File writeAutonomiaSeleccionadaArcoMayorias(String codAutonomia) throws IOException {
+        File carpetaBase = comprobarCarpetas();
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/csv");
+        File csv = new File(carpetaBase.getPath() +
+                File.separator + "C_MapaMayoriasSondeo.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }

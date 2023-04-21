@@ -5,6 +5,7 @@ import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.municipales.CarmenDTOService;
 import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionService;
+import com.mggcode.cliente_elecciones.service.municipales.SedesDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,9 @@ public class CircunscripcionController {
     @Autowired
     private CarmenDTOService carmenDTOService;
 
+    @Autowired
+    private SedesDTOService sedesDTOService;
+
     Data data = Data.getInstance();
 
     @GetMapping
@@ -43,6 +47,7 @@ public class CircunscripcionController {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
         model.addAttribute("circunscripciones", circunscripciones);
         model.addAttribute("tipo", "municipales");
+        model.addAttribute("ruta", "/municipales/circunscripciones");
         return "circunscripciones";
     }
 
@@ -137,6 +142,7 @@ public class CircunscripcionController {
 
     private void updateSelected() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionada(data.getCircunscripcionSeleccionada());
+        sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
     private boolean containsSelected(String codigo) {

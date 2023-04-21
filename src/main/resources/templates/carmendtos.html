@@ -15,10 +15,6 @@
     setTimeout(function() {
         $('.alert').fadeOut('fast');
     }, 2000); // Oculta la alerta después de 2 segundos
-
-
-
-
 </script>
 <div th:if="${mensaje}">
     <div class="alert alert-success">
@@ -36,25 +32,25 @@
             </div>
             <div>
                 <button type="button" class="btn btn-success"
-                        th:onclick="'location.href=\'' + @{'/autonomicas/carmen/' + ${carmen.circunscripcion.codigo} + '/entra'} + '\''">
+                        th:onclick="'location.href=\'' + @{${ruta} + '/entra'} + '\''">
                     Entra
                 </button>
                 <button type="button" class="btn btn-success"
-                        th:onclick="'location.href=\'' + @{'/autonomicas/carmen/' + ${carmen.circunscripcion.codigo} + '/actualiza'} + '\''">
+                        th:onclick="'location.href=\'' + @{${ruta} + '/actualiza'} + '\''">
                     Actualiza
                 </button>
                 <button type="button" class="btn btn-danger"
-                        th:onclick="'location.href=\'' + @{'/autonomicas/carmen/' + ${carmen.circunscripcion.codigo} + '/sale'} + '\''">
+                        th:onclick="'location.href=\'' + @{${ruta} + '/sale'} + '\''">
                     Sale
                 </button>
             </div>
             <div>
                 <button type="button" class="btn btn-secondary"
-                        th:onclick="'location.href=\'' + @{'/autonomicas/carmen/' + ${carmen.circunscripcion.codigo} + '/csv'} + '\''">
+                        th:onclick="'location.href=\'' + @{${ruta} + '/csv'} + '\''">
                     Descargar CSV
                 </button>
                 <button type="button" class="btn btn-secondary"
-                        th:onclick="'location.href=\'' + @{'/autonomicas/carmen/' + ${carmen.circunscripcion.codigo} + '/excel'} + '\''">
+                        th:onclick="'location.href=\'' + @{${ruta} + '/excel'} + '\''">
                     Descargar Excel
                 </button>
             </div>
