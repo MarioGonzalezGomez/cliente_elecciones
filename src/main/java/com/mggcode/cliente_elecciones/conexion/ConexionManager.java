@@ -1,7 +1,5 @@
 package com.mggcode.cliente_elecciones.conexion;
 
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 
 import static com.mggcode.cliente_elecciones.config.Config.config;
@@ -19,6 +17,7 @@ public class ConexionManager {
 
     private ConexionManager() {
         conexiones = new ArrayList<>();
+        System.out.println(config.getProperty("nConexiones"));
         var nConexiones = Integer.parseInt(config.getProperty("nConexiones"));
         for (int i = 1; i <= nConexiones; i++) {
             if (config.getProperty("direccion" + i).equals("0"))

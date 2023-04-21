@@ -1,7 +1,6 @@
 package com.mggcode.cliente_elecciones.config;
 
-import org.springframework.context.annotation.Configuration;
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -30,8 +29,13 @@ public class Config {
 
     public void loadConfig() {
         try {
-            config.load(new FileInputStream("src/main/resources/config.properties"));
+            var path = System.getProperty("user.dir");
+            System.out.println(path);
+            File file = new File(path + "/config.properties");
+            FileInputStream fis = new FileInputStream(file);
+            config.load(fis);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error cargando configuración");
         }
     }
