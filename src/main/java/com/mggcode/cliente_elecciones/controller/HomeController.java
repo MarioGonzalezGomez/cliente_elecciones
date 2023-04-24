@@ -6,7 +6,7 @@ import com.mggcode.cliente_elecciones.controller.autonomicas.ACircunscripcionCon
 import com.mggcode.cliente_elecciones.controller.municipales.CPController;
 import com.mggcode.cliente_elecciones.controller.municipales.CircunscripcionController;
 import com.mggcode.cliente_elecciones.data.Data;
-import com.mggcode.cliente_elecciones.utils.IPFMessageBuilder;
+import com.mggcode.cliente_elecciones.utils.IPFFaldonesMessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class HomeController {
     @Autowired
     ACPController aCPController;
 
-    IPFMessageBuilder ipfMessageBuilder = IPFMessageBuilder.getInstance();
+    IPFFaldonesMessageBuilder ipfMessageBuilder = IPFFaldonesMessageBuilder.getInstance();
 
     @RequestMapping(value = "/")
     public String index(Model model) {

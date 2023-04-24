@@ -85,7 +85,7 @@ public class ACarmenDTOService {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia + "/csv");
         File csv = new File(carpetaBase.getPath() +
-                File.separator + "C_MapaMayoriasSondeo.csv");
+                File.separator + "C_MapaMayorias.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }

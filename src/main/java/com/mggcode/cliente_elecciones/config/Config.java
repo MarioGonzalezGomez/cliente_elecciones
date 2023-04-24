@@ -1,7 +1,5 @@
 package com.mggcode.cliente_elecciones.config;
 
-import org.springframework.context.annotation.Configuration;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;

@@ -136,7 +136,7 @@ public class ACircunscripcionController {
 
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    System.out.println("Comprobando cambios autonomicos");
+                  //  System.out.println("Comprobando cambios autonomicos");
                     List<Circunscripcion> circunscripcionesNew = null;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
@@ -171,6 +171,7 @@ public class ACircunscripcionController {
 
     private void updateSelected() throws IOException {
         carmenDTOService.writeAutonomiaSeleccionada(data.getAutonomiaSeleccionada());
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayorias(data.getAutonomiaSeleccionada());
         sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
