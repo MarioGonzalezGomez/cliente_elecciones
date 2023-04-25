@@ -1,24 +1,23 @@
 package com.mggcode.cliente_elecciones.utils;
 
+
 import com.mggcode.cliente_elecciones.config.Config;
-import org.springframework.stereotype.Service;
 
+public class IPFFaldonesMessageBuilder {
 
-public class IPFMessageBuilder {
+    private static IPFFaldonesMessageBuilder instance = null;
 
-    private static IPFMessageBuilder instance = null;
+    private final String bd;
 
-    String bd = "<databse>";
-
-    private IPFMessageBuilder() {
-
-        // this.bd = Config.config.getProperty("BDAutonomicas");
-        this.bd = "<FALDONES>";
+    private IPFFaldonesMessageBuilder() {
+        Config.getConfiguracion();
+        this.bd = Config.config.getProperty("BDFaldones");
+        //this.bd = "<FALDONES>";
     }
 
-    public static IPFMessageBuilder getInstance() {
+    public static IPFFaldonesMessageBuilder getInstance() {
         if (instance == null)
-            instance = new IPFMessageBuilder();
+            instance = new IPFFaldonesMessageBuilder();
         return instance;
     }
 

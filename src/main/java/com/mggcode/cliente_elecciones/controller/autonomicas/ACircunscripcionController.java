@@ -163,6 +163,7 @@ public class ACircunscripcionController {
 
     private void updateSelected() throws IOException {
         carmenDTOService.writeAutonomiaSeleccionada(data.getAutonomiaSeleccionada());
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayorias(data.getAutonomiaSeleccionada());
         sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
