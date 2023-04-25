@@ -68,8 +68,9 @@ public class AutonomicasIPF {
                 .filter(x -> x.getEscanos_hasta() > 0.0).toList();
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
 
-        //System.out.println(ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1));
-        c.enviarMensaje(ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1));
+        String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
+        System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
         return "redirect:/";
     }
 
@@ -79,8 +80,10 @@ public class AutonomicasIPF {
                 .filter(x -> x.getEscanos_hasta() > 0.0).toList();
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
 
-        //System.out.println(ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2));
-        c.enviarMensaje(ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2));
+        String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2);
+        System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+
         return "redirect:/";
     }
 
@@ -91,11 +94,14 @@ public class AutonomicasIPF {
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
 
         // System.out.println(ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3));
-        c.enviarMensaje(ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3));
-        c.enviarMensaje(ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4));
+        String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3);
+        System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+        String resultado2 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4);
+        System.out.println(resultado2);
+        c.enviarMensaje(resultado2);
         return "redirect:/";
     }
-
 
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraDer")

@@ -31,13 +31,13 @@ public class LogicaArcos {
             apertura = df.format(aperturas.get(0));
         }
         if (tipoArco == 2) {
-            apertura = df.format(aperturas.get(1));
+            apertura = df.format(aperturas.get(0));
         }
         if (tipoArco == 3) {
-            apertura = df.format(aperturas.get(2));
+            apertura = df.format(aperturas.get(0));
         }
         if (tipoArco == 4) {
-            apertura = df.format(aperturas.get(2));
+            apertura = df.format(aperturas.get(0));
         }
         return apertura;
 
@@ -70,7 +70,7 @@ public class LogicaArcos {
 
         sumatorios.add(sumatorioHasta);
         //Se añade una segunda vez, ya que la apertura de los "Desde" tomará también como total el sumatorio de los hasta
-        sumatorios.add(sumatorioHasta);
+        sumatorios.add(sumatorioHastaSondeo);
         //sumatorios.add(sumatorioDesdeSondeo);
         sumatorios.add(sumatorioHastaSondeo);
 
