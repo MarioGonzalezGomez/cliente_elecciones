@@ -30,6 +30,7 @@ public class Config {
         try {
             config.load(new FileInputStream("src/main/resources/config.properties"));
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error cargando configuración");
         }
     }
@@ -50,7 +51,7 @@ public class Config {
         HttpURLConnection connection = null;
         try {
             URL urlObj = new URL("http://" + url + ":8080");
-            System.out.println("Conectando a: " + urlObj);
+            //System.out.println("Conectando a: " + urlObj);
             connection = (HttpURLConnection) urlObj.openConnection();
             connection.setRequestMethod("HEAD");
             connection.setConnectTimeout(5000);

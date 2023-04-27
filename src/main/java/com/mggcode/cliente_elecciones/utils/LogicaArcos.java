@@ -12,13 +12,19 @@ public class LogicaArcos {
     private final int gradosTotales = 180;
     private ArrayList<Double> posicionesIniciales;
     private ArrayList<Double> posicionesFinales;
-    private ArrayList<Double> sumatorios;
+
+
+    private double aperturaOficial = 0;
+    private double aperturaDesdeSondeo = 0;
+    private double aperturaHastaSondeo = 0;
+
 
     public static LogicaArcos getInstance() {
         if (instance == null)
             instance = new LogicaArcos();
         return instance;
     }
+
 
     //Manejaremos 3 tipos de arco: 1 = oficial ; 2=desde; 3 = hasta
     public String getApertura(List<CircunscripcionPartido> cps, CircunscripcionPartido seleccionado, int tipoArco) {
@@ -28,17 +34,25 @@ public class LogicaArcos {
         List<Double> aperturas = getAperturasArco(seleccionado);
         String apertura = "";
         if (tipoArco == 1) {
-            apertura = df.format(aperturas.get(0));
+            apertura = df.format(aperturaOficial);
+            System.out.println("1: " + apertura);
+
         }
         if (tipoArco == 2) {
-            apertura = df.format(aperturas.get(0));
+            apertura = df.format(aperturaHastaSondeo);
+            System.out.println("2: " + apertura);
+
         }
         if (tipoArco == 3) {
-            apertura = df.format(aperturas.get(0));
+            apertura = df.format(aperturaDesdeSondeo);
+            System.out.println("3: " + apertura);
         }
         if (tipoArco == 4) {
-            apertura = df.format(aperturas.get(0));
+            apertura = df.format(aperturaHastaSondeo);
+            System.out.println("4: " + apertura);
+
         }
+        System.out.println("---" + apertura);
         return apertura;
 
     }
@@ -62,32 +76,63 @@ public class LogicaArcos {
         return df;
     }
 
+    Double totalHastaOficial = 0.0;
+    Double totalHastaSondeo = 0.0;
+    Double totalDesdeSondeo = 0.0;
+    ArrayList<Double> sumatorios = new ArrayList<>();
+
     private ArrayList<Double> getSumatorios(List<CircunscripcionPartido> cps) {
-        sumatorios = new ArrayList<>();
 
-        double sumatorioHasta = cps.stream().mapToInt(CircunscripcionPartido::getEscanos_hasta).sum();
-        double sumatorioHastaSondeo = cps.stream().mapToInt(CircunscripcionPartido::getEscanos_hasta_sondeo).sum();
+        sumatorios.add(getTotalOficial(cps));
 
-        sumatorios.add(sumatorioHasta);
-        //Se añade una segunda vez, ya que la apertura de los "Desde" tomará también como total el sumatorio de los hasta
-        sumatorios.add(sumatorioHastaSondeo);
-        //sumatorios.add(sumatorioDesdeSondeo);
-        sumatorios.add(sumatorioHastaSondeo);
-
+        sumatorios.add(getTotalHastaSondeo(cps));
+        sumatorios.add(getTotalHastaSondeo(cps));
+        totalHastaOficial = getTotalOficial(cps);
+        totalDesdeSondeo = getTotalDesdeSondeo(cps);
+        totalHastaSondeo = getTotalHastaSondeo(cps);
         return sumatorios;
     }
 
+    private double getTotalOficial(List<CircunscripcionPartido> partidos) {
+        return partidos.stream().mapToInt(CircunscripcionPartido::getEscanos_hasta).sum();
+    }
+
+    private double getTotalHastaSondeo(List<CircunscripcionPartido> partidos) {
+        return partidos.stream().mapToInt(CircunscripcionPartido::getEscanos_hasta_sondeo).sum();
+    }
+
+    private double getTotalDesdeSondeo(List<CircunscripcionPartido> partidos) {
+        return partidos.stream().mapToInt(CircunscripcionPartido::getEscanos_desde_sondeo).sum();
+    }
+
+
     private ArrayList<Double> getAperturasArco(CircunscripcionPartido cp) {
         ArrayList<Double> aperturas = new ArrayList<>();
-        double aperturaOficial = cp.getEscanos_hasta() * gradosTotales / sumatorios.get(0);
+        System.out.println("ESCANOS HASTA: " + cp.getEscanos_hasta());
+        System.out.println("ESCANOS DESDE SONDEO: " + cp.getEscanos_desde_sondeo());
+        System.out.println("ESCANOS HASTA SONDE: " + cp.getEscanos_hasta_sondeo());
+        System.out.println("ESCANOS HASTA: " + cp.getEscanos_hasta());
+
+        //calcular aperturas maneniendo el 0 si se va a dividir entre 0
+        if (totalHastaOficial != 0)
+            aperturaOficial = (cp.getEscanos_hasta() * gradosTotales) / totalHastaOficial;
+
+        if (totalDesdeSondeo != 0)
+            aperturaDesdeSondeo = (cp.getEscanos_desde_sondeo() * gradosTotales) / totalDesdeSondeo;
+
+        if (totalHastaSondeo != 0)
+            aperturaHastaSondeo = (cp.getEscanos_hasta_sondeo() * gradosTotales) / totalHastaSondeo;
+
+
         posicionesFinales.set(0, posicionesIniciales.get(0) + aperturaOficial);
-        double aperturaDesdeSondeo = cp.getEscanos_desde_sondeo() * gradosTotales / sumatorios.get(1);
-        posicionesFinales.set(1, posicionesIniciales.get(1) + aperturaDesdeSondeo);
-        double aperturaHastaSondeo = cp.getEscanos_hasta_sondeo() * gradosTotales / sumatorios.get(2);
         posicionesFinales.set(2, posicionesIniciales.get(2) + aperturaHastaSondeo);
+        posicionesFinales.set(1, posicionesIniciales.get(1) + aperturaDesdeSondeo);
+
         aperturas.add(aperturaOficial);
         aperturas.add(aperturaDesdeSondeo);
         aperturas.add(aperturaHastaSondeo);
         return aperturas;
     }
+
+
 }

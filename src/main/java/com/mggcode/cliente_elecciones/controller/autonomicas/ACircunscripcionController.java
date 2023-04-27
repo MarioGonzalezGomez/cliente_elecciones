@@ -17,15 +17,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -118,6 +110,7 @@ public class ACircunscripcionController {
 
 
     ReentrantLock lock = new ReentrantLock();
+    AtomicBoolean closeListener = new AtomicBoolean(false);
 
     public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
@@ -136,7 +129,7 @@ public class ACircunscripcionController {
 
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                  //  System.out.println("Comprobando cambios autonomicos");
+                    //  System.out.println("Comprobando cambios autonomicos");
                     List<Circunscripcion> circunscripcionesNew = null;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
@@ -144,7 +137,6 @@ public class ACircunscripcionController {
                         try {
                             lock.lock();
                             updateAllCsv();
-                            //TODO(Hacer el código necesario para ver que se hace con estos cambios)
                             getChanges(circunscripciones, circunscripcionesNew);
                             if (containsSelected(data.autonomiaSeleccionada)) {
                                 System.out.println("Seleccionada ha cambiado");
@@ -159,7 +151,12 @@ public class ACircunscripcionController {
                         circunscripciones = circunscripcionesNew;
                     }
                 }
-            }, 0, 2, TimeUnit.SECONDS);
+                if (closeListener.get()) {
+                    isSuscribed.set(false);
+                    System.out.println("closing thread");
+                    return;
+                }
+            }, 0, 2, TimeUnit.SECONDS).cancel(true);
         }
     }
 
@@ -179,11 +176,7 @@ public class ACircunscripcionController {
         List<Circunscripcion> differences = newList.stream()
                 .filter(element -> !oldList.contains(element))
                 .toList();
-        System.out.println(differences);
-        System.out.println(data.getAutonomiaSeleccionada());
         changes = differences;
-        //Data no funciona bien
-
         return changes;
     }
 
@@ -194,19 +187,5 @@ public class ACircunscripcionController {
         return changes.contains(circunscripcionService.findById(codigo));
     }
 
-    private void reloadPage() {
-        ScriptEngineManager manager = new ScriptEngineManager();
-        ScriptEngine engine = manager.getEngineByName("JavaScript");
-        URL resource = getClass().getClassLoader().getResource("static/js/home.js");
-        try {
-            var file = resource.getFile();
 
-            engine.eval(Files.newBufferedReader(Path.of(file.substring(1)), StandardCharsets.UTF_8));
-            Invocable invocable = (Invocable) engine;
-            invocable.invokeFunction("recargarPagina");
-        } catch (ScriptException | NoSuchMethodException | IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
 }

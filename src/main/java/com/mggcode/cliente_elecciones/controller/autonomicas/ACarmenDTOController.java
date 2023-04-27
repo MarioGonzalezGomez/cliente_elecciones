@@ -46,7 +46,6 @@ public class ACarmenDTOController {
     @RequestMapping(path = "/{codigo}/csv")
     public String findByIdCsv(@PathVariable("codigo") String codCircunscripcion, RedirectAttributes redirectAttributes) throws IOException {
         carmenDTOService.findByIdCsv(codCircunscripcion);
-        redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         return "redirect:/autonomicas/carmen/" + codCircunscripcion;
     }
 
@@ -57,5 +56,7 @@ public class ACarmenDTOController {
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         return "redirect:/autonomicas/carmen/" + codAutonomia;
     }
+
+
 
 }
