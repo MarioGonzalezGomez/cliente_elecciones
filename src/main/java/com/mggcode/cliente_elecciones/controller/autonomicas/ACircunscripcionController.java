@@ -110,6 +110,7 @@ public class ACircunscripcionController {
 
 
     ReentrantLock lock = new ReentrantLock();
+    AtomicBoolean closeListener = new AtomicBoolean(false);
 
     public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
@@ -128,7 +129,7 @@ public class ACircunscripcionController {
 
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                  //  System.out.println("Comprobando cambios autonomicos");
+                    //  System.out.println("Comprobando cambios autonomicos");
                     List<Circunscripcion> circunscripcionesNew = null;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
@@ -136,7 +137,6 @@ public class ACircunscripcionController {
                         try {
                             lock.lock();
                             updateAllCsv();
-                            //TODO(Hacer el código necesario para ver que se hace con estos cambios)
                             getChanges(circunscripciones, circunscripcionesNew);
                             if (containsSelected(data.autonomiaSeleccionada)) {
                                 System.out.println("Seleccionada ha cambiado");
@@ -151,7 +151,12 @@ public class ACircunscripcionController {
                         circunscripciones = circunscripcionesNew;
                     }
                 }
-            }, 0, 2, TimeUnit.SECONDS);
+                if (closeListener.get()) {
+                    isSuscribed.set(false);
+                    System.out.println("closing thread");
+                    return;
+                }
+            }, 0, 2, TimeUnit.SECONDS).cancel(true);
         }
     }
 

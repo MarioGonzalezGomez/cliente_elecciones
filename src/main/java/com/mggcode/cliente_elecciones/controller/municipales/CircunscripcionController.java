@@ -2,6 +2,7 @@ package com.mggcode.cliente_elecciones.controller.municipales;
 
 
 import com.mggcode.cliente_elecciones.data.Data;
+import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.municipales.CarmenDTOService;
 import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionService;
@@ -42,8 +43,10 @@ public class CircunscripcionController {
 
     Data data = Data.getInstance();
 
+
+
     @GetMapping
-    public String verCircunscripciones(Model model) {
+    public String verCircunscripciones(Model model) throws ConnectionException {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
         model.addAttribute("circunscripciones", circunscripciones);
         model.addAttribute("tipo", "municipales");
@@ -114,10 +117,18 @@ public class CircunscripcionController {
             exec.scheduleAtFixedRate(() -> {
                 if (circunscripciones.isEmpty()) {
                     System.out.println("Cargando partidos");
-                    circunscripciones = circunscripcionService.findAll();
+                    try {
+                        circunscripciones = circunscripcionService.findAll();
+                    } catch (ConnectionException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     List<Circunscripcion> circunscripcionesNew;
-                    circunscripcionesNew = circunscripcionService.findAll();
+                    try {
+                        circunscripcionesNew = circunscripcionService.findAll();
+                    } catch (ConnectionException e) {
+                        throw new RuntimeException(e);
+                    }
                     if (!circunscripcionesNew.equals(circunscripciones)) {
                         System.out.println("Cambios detectados");
                         getChanges(circunscripciones, circunscripcionesNew);

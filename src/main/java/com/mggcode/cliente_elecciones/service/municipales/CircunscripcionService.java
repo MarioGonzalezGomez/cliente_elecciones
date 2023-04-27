@@ -1,6 +1,7 @@
 package com.mggcode.cliente_elecciones.service.municipales;
 
 import com.mggcode.cliente_elecciones.config.Config;
+import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,15 @@ public class CircunscripcionService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<Circunscripcion> findAll() {
-        ResponseEntity<Circunscripcion[]> response =
-                restTemplate.getForEntity(
-                        "http://" + Config.connectedServer + ":8080/municipales/circunscripciones",
-                        Circunscripcion[].class);
+    public List<Circunscripcion> findAll() throws ConnectionException {
+        if (!Config.checkConnection(Config.connectedServer)){
+            throw new ConnectionException();
+        }
+            ResponseEntity<Circunscripcion[]> response =
+                    restTemplate.getForEntity(
+                            "http://" + Config.connectedServer + ":8080/municipales/circunscripciones",
+                            Circunscripcion[].class);
+
         Circunscripcion[] arrayP = response.getBody();
         return Arrays.asList(arrayP);
     }

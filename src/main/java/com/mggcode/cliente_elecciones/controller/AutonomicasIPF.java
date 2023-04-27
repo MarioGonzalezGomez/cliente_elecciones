@@ -3,7 +3,6 @@ package com.mggcode.cliente_elecciones.controller;
 import com.mggcode.cliente_elecciones.conexion.ConexionIPF;
 import com.mggcode.cliente_elecciones.conexion.ConexionManager;
 import com.mggcode.cliente_elecciones.config.Config;
-import com.mggcode.cliente_elecciones.controller.autonomicas.ACPController;
 import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionPartidoService;
 import com.mggcode.cliente_elecciones.utils.IPFCartonesMessageBuilder;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -100,6 +98,7 @@ public class AutonomicasIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4);
         System.out.println(resultado2);
         c.enviarMensaje(resultado2);
+        //var fraction = "itemset(<"
         return "redirect:/";
     }
 
