@@ -35,24 +35,24 @@ public class LogicaArcos {
         String apertura = "";
         if (tipoArco == 1) {
             apertura = df.format(aperturaOficial);
-            System.out.println("1: " + apertura);
+            //  System.out.println("1: " + apertura);
 
         }
         if (tipoArco == 2) {
             apertura = df.format(aperturaHastaSondeo);
-            System.out.println("2: " + apertura);
+            // System.out.println("2: " + apertura);
 
         }
         if (tipoArco == 3) {
             apertura = df.format(aperturaDesdeSondeo);
-            System.out.println("3: " + apertura);
+            //  System.out.println("3: " + apertura);
         }
         if (tipoArco == 4) {
             apertura = df.format(aperturaHastaSondeo);
-            System.out.println("4: " + apertura);
+            //  System.out.println("4: " + apertura);
 
         }
-        System.out.println("---" + apertura);
+        //System.out.println("---" + apertura);
         return apertura;
 
     }
@@ -108,10 +108,10 @@ public class LogicaArcos {
 
     private ArrayList<Double> getAperturasArco(CircunscripcionPartido cp) {
         ArrayList<Double> aperturas = new ArrayList<>();
-        System.out.println("ESCANOS HASTA: " + cp.getEscanos_hasta());
-        System.out.println("ESCANOS DESDE SONDEO: " + cp.getEscanos_desde_sondeo());
-        System.out.println("ESCANOS HASTA SONDE: " + cp.getEscanos_hasta_sondeo());
-        System.out.println("ESCANOS HASTA: " + cp.getEscanos_hasta());
+        //System.out.println("ESCANOS HASTA: " + cp.getEscanos_hasta());
+        //System.out.println("ESCANOS DESDE SONDEO: " + cp.getEscanos_desde_sondeo());
+        //System.out.println("ESCANOS HASTA SONDE: " + cp.getEscanos_hasta_sondeo());
+        //System.out.println("ESCANOS HASTA: " + cp.getEscanos_hasta());
 
         //calcular aperturas maneniendo el 0 si se va a dividir entre 0
         if (totalHastaOficial != 0)

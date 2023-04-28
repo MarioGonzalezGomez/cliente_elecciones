@@ -91,7 +91,6 @@ public class AutonomicasIPF {
                 .filter(x -> x.getEscanos_hasta() > 0.0).toList();
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
 
-        // System.out.println(ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3));
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3);
         System.out.println(resultado1);
         c.enviarMensaje(resultado1);

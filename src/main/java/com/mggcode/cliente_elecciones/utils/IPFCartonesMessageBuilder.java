@@ -14,18 +14,16 @@ public class IPFCartonesMessageBuilder {
 
     private static IPFCartonesMessageBuilder instance = null;
     private final String bd;
-
-    private final List<Double> offsets;
-    private final List<Double> offsetsDesde;
+    private final List<Double> aperturas;
+    private final List<Double> aperturasDesde;
 
     private List<CircunscripcionPartido> partidosDentro;
 
     private IPFCartonesMessageBuilder() {
         Config.getConfiguracion();
         this.bd = Config.config.getProperty("BDCartones");
-        offsets = new ArrayList<>();
-        offsets.add(0.0);
-        offsetsDesde = new ArrayList<>();
+        aperturas = new ArrayList<>();
+        aperturasDesde = new ArrayList<>();
         partidosDentro = new ArrayList<>();
     }
 
@@ -73,12 +71,9 @@ public class IPFCartonesMessageBuilder {
         }
 
         String apertura = LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco);
-
         aperturaOficial.put(partido.getKey().getPartido(), Double.parseDouble(apertura));
-        /*if (Objects.equals(apertura, String.valueOf(NaN))) {
-            apertura = "0.0";
-        }*/
-        return eventRunBuild(object, "PRIM_BAR_LEN[2]", apertura, 1);
+        return eventRunBuild("OFFSET" + posicionPartido, "MAP_FLOAT_PAR", apertura, 1) +
+                eventRunBuild(object, "PRIM_BAR_LEN[2]", apertura, 1);
     }
 
     private String getOffsetIzq(String posicionPartido, List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
@@ -91,89 +86,35 @@ public class IPFCartonesMessageBuilder {
             default -> {
             }
         }
-
-        //String offset = "0,0.5";
-        //String resultado = eventRunBuild(object, "PRIM_BAR_OFFSET[2]", offset, 2);
         StringBuilder resultado = new StringBuilder();
         DecimalFormat df = LogicaArcos.getInstance().getFormat();
-        double sumaAperturas = 0.0;
-        String apertura;
-        if (partidosDentro.size() != 1) {
+        String offset;
 
-            double sumaTotalDesde = offsetsDesde.stream().mapToDouble(Double::doubleValue).sum();
-            double sumaTotalHasta = offsets.stream().mapToDouble(Double::doubleValue).sum();
-            for (int i = 0; i < partidosDentro.size(); i++) {
-                String posicion = String.valueOf((partidos.indexOf(partidosDentro.get(i)) + 1));
-                object = object.substring(0, object.length() - 1) + posicion;
-                if (tipoArco == 3) {
-                    if (i > 0) {
-                        var previo = offsetsDesde.get(offsetsDesde.size() - 1);
-                        offsetsDesde.add(previo + Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partidosDentro.get(i - 1), tipoArco)));
-                    } else {
-                        offsetsDesde.add(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
-                    }
-                    sumaTotalDesde += offsetsDesde.get(i);
-
-                } else {
-                    if (i > 0) {
-                        var previo = offsets.get(offsets.size() - 1);
-                        offsets.add(previo +
-                                Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partidosDentro.get(i - 1), tipoArco)));
-                    } else {
-                        offsets.add(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
-                    }
-                    sumaTotalHasta += offsets.get(i);
-
-                }
-                if (i > 0) {
-                    sumaAperturas += Double.parseDouble(
-                            LogicaArcos.getInstance().getApertura(partidos, partidosDentro.get(i - 1), tipoArco));
-                }
-                apertura = df.format(sumaAperturas);
-                System.out.println("-----");
-                System.out.println(apertura);
-
-                resultado.append(eventRunBuild(object, "PRIM_BAR_OFFSET[2]", apertura + ",0.5", 2));
-            }
+        //Esto añade a la lista de aperturas el valor del partido actual
+        if (tipoArco == 3) {
+            aperturasDesde.add(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
         } else {
-            resultado.append(eventRunBuild(object, "PRIM_BAR_OFFSET[2]", "0.0,0.5", 2));
+            aperturas.add(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
         }
 
+        //Obtenemos la suma de todas las aperturas, por ejemplo, si tenemos un partido que ocupa 60ª y otro 40ª, la variable valdría 100
+        double sumaTotalDesde = aperturasDesde.stream().mapToDouble(Double::doubleValue).sum();
+        double sumaTotalHasta = aperturas.stream().mapToDouble(Double::doubleValue).sum();
+        for (int i = 0; i < partidosDentro.size(); i++) {
+            String posicion = String.valueOf((partidos.indexOf(partidosDentro.get(i)) + 1));
+            object = object.substring(0, object.length() - 1) + posicion;
 
-        //
-        //
-        //      double sumaTotalDesde = offsetsDesde.stream().mapToDouble(Double::doubleValue).sum();
-        //      double sumaTotalHasta = offsets.stream().mapToDouble(Double::doubleValue).sum();
-        //      for (int i = partidosDentro.size() - 1; i >= 0; i--) {
-        //          String posicion = String.valueOf((partidos.indexOf(partidosDentro.get(i)) + 1));
-        //          object = object.substring(0, object.length() - 1) + posicion;
-        //          if (tipoArco == 3) {
-        //              sumaTotalDesde -= offsetsDesde.get(i);
-        //          } else {
-        //              sumaTotalHasta -= offsets.get(i);
-        //          }
-        //          apertura = df.format(sumaAperturas);
-        //          resultado.append(eventRunBuild(object, "PRIM_BAR_OFFSET[2]", apertura + ",0.5", 2));
-        //      }
-        //  } else {
-        //      resultado.append(eventRunBuild(object, "PRIM_BAR_OFFSET[2]", "0.0,0.5", 2));
-        //  }
+            List<CircunscripcionPartido> sublista = partidosDentro.subList(0, i + 1);
+            double aperturasDeAnteriores = sublista.stream().mapToDouble(x -> Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, x, tipoArco))).sum();
 
-
-        //String offset2 = df.format(offsets.stream().mapToDouble(Double::doubleValue).sum()) + ",0.5";
-        // String offsetipf2 = eventRunBuild(object, "PRIM_BAR_OFFSET[2]", offset1, 2);
-
-       /* if (tipoArco == 3) {
-            System.out.println();
-
-        } else {
-            double dApertura = ;
-            if (Double.isNaN(dApertura)) {
-                offsets.add(0.0);
+//El offset de un elemento es la suma de todas las aperturas de los elementos posteriores a ella, menos su propia apertura
+            if (tipoArco == 3) {
+                offset = df.format(sumaTotalDesde - aperturasDeAnteriores);
             } else {
-                offsets.add(dApertura);
+                offset = df.format(sumaTotalHasta - aperturasDeAnteriores);
             }
-        }*/
+            resultado.append(eventRunBuild(object, "PRIM_BAR_OFFSET[2]", offset + ",0.5", 2));
+        }
         return resultado.toString();
     }
 
@@ -182,18 +123,13 @@ public class IPFCartonesMessageBuilder {
         Map<String, Double> res = new HashMap<>();
         DecimalFormat df = LogicaArcos.getInstance().getFormat();
         LogicaArcos logicaArcos = LogicaArcos.getInstance();
-
-
         for (CircunscripcionPartido circunscripcionPartido : partidosDentro) {
-
         }
         return res;
     }
 
     private Map<String, Double> calcularAperturas(List<CircunscripcionPartido> partidos) {
         Map<String, Double> res = new HashMap<>();
-
-
         return res;
     }
 
@@ -222,8 +158,60 @@ public class IPFCartonesMessageBuilder {
         DecimalFormat df = LogicaArcos.getInstance().getFormat();
         //String offset = df.format(180.0 - offsets.stream().mapToDouble(Double::doubleValue).sum()) + ",0.5";
         String offset = "180,0.5";
-        offsets.add(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
+        // offsets.add(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
         return eventRunBuild(object, "PRIM_BAR_OFFSET[2]", offset, 2);
+    }
+
+    private String offsetReset(String posicionPartido, int tipoArco) {
+        String object = "";
+        switch (tipoArco) {
+            case 1 -> object = "ARCO_OFICIAL/PRINCIPALES/PARTIDOS/ARCO_P" + posicionPartido;
+            case 2 -> object = "ARCO_SONDEO/ARCO_PRINCIPALES/PARTIDOS/ARCO_P" + posicionPartido;
+            case 3 -> object = "ARCO_SONDEO/ARCO_DESDE/PARTIDOS/ARCO_P" + posicionPartido;
+            case 4 -> object = "ARCO_SONDEO/ARCO_HASTA/PARTIDOS/ARCO_P" + posicionPartido;
+            default -> {
+            }
+        }
+        return eventRunBuild(object, "PRIM_BAR_OFFSET[2]", "0.0", 1);
+    }
+
+    //private String bindReset(String posicionPartido, int tipoArco) {
+    //    String object = "";
+    //    switch (tipoArco) {
+    //        case 1 -> object = "ARCO_OFICIAL/ARCO_OFICIAL_P" + posicionPartido;
+    //        case 2 -> object = "ARCO_SONDEO_PRINCIPALES/ARCO_SONDEO_P" + posicionPartido;
+    //        case 3 -> object = "ARCO_SONDEO_DESDE/ARCO_SONDEO_P" + posicionPartido;
+    //        case 4 -> object = "ARCO_SONDEO_HASTA/ARCO_SONDEO_P" + posicionPartido;
+    //        default -> {
+    //        }
+    //    }
+    //    return eventRunBuild(object, "BIND_FRACTION", "0", 1);
+    //}
+
+    private String objectCull(String posicionPartido, int tipoArco) {
+        String object = "";
+        switch (tipoArco) {
+            case 1 -> object = "ARCO_OFICIAL/ARCO_OFICIAL/PRINCIPALES/ARCO_P" + posicionPartido;
+            case 2 -> object = "ARCO_SONDEO/ARCO_SONDEO/SONDEO_PRINCIPALES/ARCO_P" + posicionPartido;
+            case 3 -> object = "ARCO_SONDEO/ARCO_SONDEO/SONDEO_DESDE/ARCO_P" + posicionPartido;
+            case 4 -> object = "ARCO_SONDEO/ARCO_SONDEO/SONDEO_HASTA/ARCO_P" + posicionPartido;
+            default -> {
+            }
+        }
+        return eventRunBuild(object, "OBJ_CULL", "True", 1);
+    }
+
+    private String objectCullFalse(String posicionPartido, int tipoArco) {
+        String object = "";
+        switch (tipoArco) {
+            case 1 -> object = "ARCO_OFICIAL/ARCO_OFICIAL/PRINCIPALES/ARCO_P" + posicionPartido;
+            case 2 -> object = "ARCO_SONDEO/ARCO_SONDEO/SONDEO_PRINCIPALES/ARCO_P" + posicionPartido;
+            case 3 -> object = "ARCO_SONDEO/ARCO_SONDEO/SONDEO_DESDE/ARCO_P" + posicionPartido;
+            case 4 -> object = "ARCO_SONDEO/ARCO_SONDEO/SONDEO_HASTA/ARCO_P" + posicionPartido;
+            default -> {
+            }
+        }
+        return eventRunBuild(object, "OBJ_CULL", "False,0,0.4", 2);
     }
 
     private String bindFraction(String posicionPartido, int tipoArco) {
@@ -236,50 +224,47 @@ public class IPFCartonesMessageBuilder {
             default -> {
             }
         }
-        String values = "1,0.5";
+        String values = "1,0.5,0.4";
         return eventRunBuild(object, "BIND_FRACTION", values, 2);
     }
 
     public void reset() {
-        offsets.clear();
-        offsets.add(0.0);
-        offsetsDesde.clear();
-        offsetsDesde.add(0.0);
+        aperturas.clear();
+        aperturasDesde.clear();
         partidosDentro.clear();
     }
 
     public void borrarPartido(List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
-        offsets.remove(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
+        aperturas.remove(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
         if (tipoArco == 3) {
-            offsetsDesde.remove(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
+            aperturasDesde.remove(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
         }
         partidosDentro.remove(partido);
     }
 
     public String partidoEntraIzq(List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
-        if (tipoArco != 4) {
+        if (!partidosDentro.contains(partido)) {
             partidosDentro.add(partido);
         }
         String posicionPartido = String.valueOf((partidos.indexOf(partido) + 1));
-
+        String offsetReset = offsetReset(posicionPartido, tipoArco);
         String orientacion = orientacionIzq(posicionPartido, tipoArco);
         String apertura = getApertura(posicionPartido, partidos, partido, tipoArco);
-        //String apertura = "";
         String offset = getOffsetIzq(posicionPartido, partidos, partido, tipoArco);
         String bindFraction = bindFraction(posicionPartido, tipoArco);
 
-        return orientacion + apertura + offset + bindFraction;
+        return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
     }
 
     public String partidoEntraDer(List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
         String posicionPartido = String.valueOf((partidos.indexOf(partido) + 1));
-
+        String bindReset = offsetReset(posicionPartido, tipoArco);
         String orientacion = orientacionDer(posicionPartido, tipoArco);
         String apertura = getApertura(posicionPartido, partidos, partido, tipoArco);
         String offset = getOffsetDer(posicionPartido, partidos, partido, tipoArco);
         String bindFraction = bindFraction(posicionPartido, tipoArco);
 
-        return orientacion + apertura + offset + bindFraction;
+        return bindReset + orientacion + apertura + offset + bindFraction;
     }
 
 
