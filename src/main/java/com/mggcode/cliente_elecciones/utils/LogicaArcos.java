@@ -11,8 +11,6 @@ public class LogicaArcos {
     private static LogicaArcos instance = null;
     private final int gradosTotales = 180;
     private ArrayList<Double> posicionesIniciales;
-    private ArrayList<Double> posicionesFinales;
-
 
     private double aperturaOficial = 0;
     private double aperturaDesdeSondeo = 0;
@@ -26,33 +24,25 @@ public class LogicaArcos {
     }
 
 
-    //Manejaremos 3 tipos de arco: 1 = oficial ; 2=desde; 3 = hasta
+    //Manejaremos 4 tipos de arco: 1 = oficial ; 2=principal(Similar a Hasta sondeo); 3 = hasta; 4 = desde
     public String getApertura(List<CircunscripcionPartido> cps, CircunscripcionPartido seleccionado, int tipoArco) {
         iniciarListas();
         DecimalFormat df = getFormat();
         getSumatorios(cps);
-        List<Double> aperturas = getAperturasArco(seleccionado);
+        getAperturasArco(seleccionado);
         String apertura = "";
         if (tipoArco == 1) {
             apertura = df.format(aperturaOficial);
-            //  System.out.println("1: " + apertura);
-
         }
         if (tipoArco == 2) {
             apertura = df.format(aperturaHastaSondeo);
-            // System.out.println("2: " + apertura);
-
         }
         if (tipoArco == 3) {
             apertura = df.format(aperturaDesdeSondeo);
-            //  System.out.println("3: " + apertura);
         }
         if (tipoArco == 4) {
             apertura = df.format(aperturaHastaSondeo);
-            //  System.out.println("4: " + apertura);
-
         }
-        //System.out.println("---" + apertura);
         return apertura;
 
     }
@@ -62,10 +52,6 @@ public class LogicaArcos {
         posicionesIniciales.add(0.0);
         posicionesIniciales.add(0.0);
         posicionesIniciales.add(0.0);
-        posicionesFinales = new ArrayList<>();
-        posicionesFinales.add(0.0);
-        posicionesFinales.add(0.0);
-        posicionesFinales.add(0.0);
     }
 
     public DecimalFormat getFormat() {
@@ -113,20 +99,16 @@ public class LogicaArcos {
         //System.out.println("ESCANOS HASTA SONDE: " + cp.getEscanos_hasta_sondeo());
         //System.out.println("ESCANOS HASTA: " + cp.getEscanos_hasta());
 
+
         //calcular aperturas maneniendo el 0 si se va a dividir entre 0
         if (totalHastaOficial != 0)
             aperturaOficial = (cp.getEscanos_hasta() * gradosTotales) / totalHastaOficial;
 
         if (totalDesdeSondeo != 0)
-            aperturaDesdeSondeo = (cp.getEscanos_desde_sondeo() * gradosTotales) / totalDesdeSondeo;
+            aperturaDesdeSondeo = (cp.getEscanos_desde_sondeo() * gradosTotales) / totalHastaSondeo;
 
         if (totalHastaSondeo != 0)
             aperturaHastaSondeo = (cp.getEscanos_hasta_sondeo() * gradosTotales) / totalHastaSondeo;
-
-
-        posicionesFinales.set(0, posicionesIniciales.get(0) + aperturaOficial);
-        posicionesFinales.set(2, posicionesIniciales.get(2) + aperturaHastaSondeo);
-        posicionesFinales.set(1, posicionesIniciales.get(1) + aperturaDesdeSondeo);
 
         aperturas.add(aperturaOficial);
         aperturas.add(aperturaDesdeSondeo);

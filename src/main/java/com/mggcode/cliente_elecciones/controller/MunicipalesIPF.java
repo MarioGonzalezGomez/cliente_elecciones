@@ -3,12 +3,18 @@ package com.mggcode.cliente_elecciones.controller;
 import com.mggcode.cliente_elecciones.conexion.ConexionIPF;
 import com.mggcode.cliente_elecciones.conexion.ConexionManager;
 import com.mggcode.cliente_elecciones.config.Config;
+import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
+import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionPartidoService;
+import com.mggcode.cliente_elecciones.utils.IPFCartonesMessageBuilder;
 import com.mggcode.cliente_elecciones.utils.IPFFaldonesMessageBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 
 @Controller
@@ -16,34 +22,129 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MunicipalesIPF {
     private ConexionManager conexionManager;
     private final IPFFaldonesMessageBuilder ipfBuilder;
+
+    private final IPFCartonesMessageBuilder ipfBuilderCartones;
     private final Config conf;
     private final ConexionIPF c;
+
+    @Autowired
+    private CircunscripcionPartidoService cpSer;
 
     public MunicipalesIPF() {
         conf = Config.getConfiguracion();
         conexionManager = ConexionManager.getConexionManager();
         ipfBuilder = IPFFaldonesMessageBuilder.getInstance();
+        ipfBuilderCartones = IPFCartonesMessageBuilder.getInstance();
         c = conexionManager.getConexionByAdress(Config.config.getProperty("direccion1"));
     }
 
     @GetMapping("/carmen/{codigo}/entra")
     public String entraFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        System.out.println(ipfBuilder.lateralEntra());
+        //System.out.println(ipfBuilder.lateralEntra());
         c.enviarMensaje(ipfBuilder.lateralEntra());
         return "redirect:/municipales/carmen/" + codCircunscripcion;
     }
 
     @GetMapping("/carmen/{codigo}/actualiza")
     public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        System.out.println(ipfBuilder.lateralActualiza());
+        //System.out.println(ipfBuilder.lateralActualiza());
         c.enviarMensaje(ipfBuilder.lateralActualiza());
         return "redirect:/municipales/carmen/" + codCircunscripcion;
     }
 
     @GetMapping("/carmen/{codigo}/sale")
     public String saleFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        System.out.println(ipfBuilder.lateralSale());
+        //System.out.println(ipfBuilder.lateralSale());
         c.enviarMensaje(ipfBuilder.lateralSale());
         return "redirect:/municipales/carmen/" + codCircunscripcion;
     }
+
+    @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraIzq")
+    public String entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+        List<CircunscripcionPartido> cp = cpSer.findByIdCircunscripcion(cir).stream()
+                .filter(x -> x.getEscanos_hasta() > 0.0).toList();
+        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+
+        String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
+        //System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+        return "redirect:/";
+    }
+
+    @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraIzq")
+    public String entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+        List<CircunscripcionPartido> cp = cpSer.findByIdCircunscripcion(cir).stream()
+                .filter(x -> x.getEscanos_hasta() > 0.0).toList();
+        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+
+        String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2);
+        //System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraIzq")
+    public String entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+        List<CircunscripcionPartido> cp = cpSer.findByIdCircunscripcion(cir).stream()
+                .filter(x -> x.getEscanos_hasta() > 0.0).toList();
+        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3);
+        //  System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+        String resultado2 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4);
+        // System.out.println(resultado2);
+        c.enviarMensaje(resultado2);
+        return "redirect:/";
+    }
+
+
+    @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraDer")
+    public String entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+        List<CircunscripcionPartido> cp = cpSer.findByIdCircunscripcion(cir).stream()
+                .filter(x -> x.getEscanos_hasta() > 0.0).toList();
+        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+
+        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 1);
+        //System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+        return "redirect:/";
+    }
+
+    @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraDer")
+    public String entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+        List<CircunscripcionPartido> cp = cpSer.findByIdCircunscripcion(cir).stream()
+                .filter(x -> x.getEscanos_hasta() > 0.0).toList();
+        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+
+        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 2);
+        //System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraDer")
+    public String entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+        List<CircunscripcionPartido> cp = cpSer.findByIdCircunscripcion(cir).stream()
+                .filter(x -> x.getEscanos_hasta() > 0.0).toList();
+        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3);
+        //  System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+        String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
+        // System.out.println(resultado2);
+        c.enviarMensaje(resultado2);
+        return "redirect:/";
+    }
+
+    @GetMapping("/arco/reset")
+    public String resetArco(Model model) {
+        ipfBuilderCartones.reset();
+        System.out.println("Reset completado");
+        //c.enviarMensaje(mensajeXdeReset);
+        return "redirect:/";
+    }
+
+
 }
