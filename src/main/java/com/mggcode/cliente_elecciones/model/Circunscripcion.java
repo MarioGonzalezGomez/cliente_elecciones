@@ -1,8 +1,10 @@
 package com.mggcode.cliente_elecciones.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Circunscripcion {
 
     private String codigo;
