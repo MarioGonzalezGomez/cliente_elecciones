@@ -36,7 +36,7 @@ public class CarmenDTOService {
     public File findAllInCsvOficial(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/csv");
-        File csv = new File(carpetaBase.getPath() + "F_" + codAutonomia + ".csv");
+        File csv = new File(carpetaBase.getPath()  + File.separator +  "F_" + codAutonomia + ".csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
@@ -78,7 +78,7 @@ public class CarmenDTOService {
     public File findAllInCsvSondeo(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia + "/csv");
-        File csv = new File(carpetaBase.getPath() + "F_" + codAutonomia + ".csv");
+        File csv = new File(carpetaBase.getPath()  + File.separator +  "F_" + codAutonomia + ".csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
