@@ -1,11 +1,13 @@
 package com.mggcode.cliente_elecciones.controller;
 
+import com.mggcode.cliente_elecciones.DTO.CarmenDTO;
 import com.mggcode.cliente_elecciones.config.Config;
 import com.mggcode.cliente_elecciones.controller.autonomicas.ACPController;
 import com.mggcode.cliente_elecciones.controller.autonomicas.ACircunscripcionController;
 import com.mggcode.cliente_elecciones.controller.municipales.CPController;
 import com.mggcode.cliente_elecciones.controller.municipales.CircunscripcionController;
 import com.mggcode.cliente_elecciones.data.Data;
+import com.mggcode.cliente_elecciones.utils.CarmenDtoReader;
 import com.mggcode.cliente_elecciones.utils.IPFFaldonesMessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,11 +54,25 @@ public class HomeController {
     }
 
 
+
     private void startListeners() {
         aCircunscripcionController.suscribeCircunscripciones();
         circunscripcionController.suscribeCircunscripciones();
 
         //TODO(esto es opcional y se puede activar en la parte del cliente como una opción)
 
+    }
+
+    @RequestMapping("/testExcel/{codigo}")
+    ResponseEntity<CarmenDTO> testExcel(@PathVariable("codigo") String codigo) {
+        CarmenDtoReader carmenDtoReader = CarmenDtoReader.getInstance();
+        var res = carmenDtoReader.readExcel(codigo);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @RequestMapping("/testCsv/{codigo}")
+    ResponseEntity<CarmenDTO> testCsv(@PathVariable("codigo") String codigo){
+     CarmenDtoReader.getInstance().readCsv(codigo);
+     return null;
     }
 }

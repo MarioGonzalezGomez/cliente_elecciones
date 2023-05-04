@@ -36,6 +36,7 @@ public class ACarmenDTOService {
     }
 
     public CarmenDTO findById(String codAutonomia) {
+        System.out.println("http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia);
         ResponseEntity<CarmenDTO> response =
                 restTemplate.getForEntity(
                         "http://" + Config.connectedServer + ":8080/autonomicas/carmen/" + codAutonomia,
