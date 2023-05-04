@@ -1,5 +1,6 @@
 package com.mggcode.cliente_elecciones.model;
 
+import com.mggcode.cliente_elecciones.DTO.CpDTO;
 import lombok.Data;
 
 @Data
@@ -71,4 +72,22 @@ public class CircunscripcionPartido {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
+    public static CircunscripcionPartido mapFromCpDTO(Circunscripcion circunscripcion, CpDTO cpDTO) {
+        CircunscripcionPartido circunscripcionPartido = new CircunscripcionPartido();
+
+        Key key = new Key();
+        key.setPartido(cpDTO.getCodigoPartido());
+        key.setCircunscripcion(circunscripcion.getCodigo());
+        circunscripcionPartido.setKey(key);
+
+        circunscripcionPartido.setEscanos_desde(cpDTO.getEscanos_desde());
+        circunscripcionPartido.setEscanos_hasta(cpDTO.getEscanos_hasta());
+        circunscripcionPartido.setEscanos_hasta_hist(cpDTO.getEscanos_hasta_hist());
+        circunscripcionPartido.setPorcentajeVoto(cpDTO.getPorcentajeVoto());
+        circunscripcionPartido.setVotantesHistorico(cpDTO.getPorcentajeVotoHistorico());
+        circunscripcionPartido.setNumVotantes(cpDTO.getNumVotantes());
+        return circunscripcionPartido;
+    }
+
 }
