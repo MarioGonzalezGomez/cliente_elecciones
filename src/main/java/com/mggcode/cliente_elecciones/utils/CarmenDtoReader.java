@@ -1,8 +1,8 @@
 package com.mggcode.cliente_elecciones.utils;
 
 import com.mggcode.cliente_elecciones.DTO.CarmenDTO;
+import com.mggcode.cliente_elecciones.DTO.CircunscripcionDTO;
 import com.mggcode.cliente_elecciones.DTO.CpDTO;
-import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -68,14 +68,14 @@ public class CarmenDtoReader {
 
 
             List<String> read = data.get(1);
-            Circunscripcion circunscripcion = new Circunscripcion(
+            CircunscripcionDTO circunscripcion = new CircunscripcionDTO(
                     read.get(0), read.get(1), read.get(2),
                     read.get(3), read.get(4), Double.parseDouble(read.get(5)),
                     (int) Double.parseDouble(read.get(6)),
                     Double.parseDouble(read.get(7)), Double.parseDouble(read.get(8)),
-                    Double.parseDouble(read.get(9)), Double.parseDouble(read.get(10)),
+                    Double.parseDouble(read.get(9)), read.get(10),
                     (int) Double.parseDouble(read.get(11)), (int) Double.parseDouble(read.get(12)),
-                    (int) Double.parseDouble(read.get(13)), Double.parseDouble(read.get(14)),
+                    read.get(13), Double.parseDouble(read.get(14)),
                     Double.parseDouble(read.get(15)), Double.parseDouble(read.get(16))
             );
 
@@ -107,7 +107,7 @@ public class CarmenDtoReader {
             List<String> lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
             String lineCircunscripcion = lines.stream().skip(1).toList().get(0);
             var split = lineCircunscripcion.split(";");
-            Circunscripcion circunscripcion = new Circunscripcion(
+            CircunscripcionDTO circunscripcion = new CircunscripcionDTO(
                     split[0],
                     split[1],
                     split[2],
@@ -118,10 +118,10 @@ public class CarmenDtoReader {
                     Double.parseDouble(split[7]),
                     Double.parseDouble(split[8]),
                     Double.parseDouble(split[9]),
-                    Double.parseDouble(split[10]),
+                    split[10],
                     Integer.parseInt(split[11]),
                     Integer.parseInt(split[12]),
-                    Double.parseDouble(split[13]),
+                    split[13],
                     Double.parseDouble(split[14]),
                     Double.parseDouble(split[15]),
                     Double.parseDouble(split[16])

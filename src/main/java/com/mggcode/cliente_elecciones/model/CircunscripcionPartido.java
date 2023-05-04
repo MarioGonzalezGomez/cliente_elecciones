@@ -1,5 +1,6 @@
 package com.mggcode.cliente_elecciones.model;
 
+import com.mggcode.cliente_elecciones.DTO.CircunscripcionDTO;
 import com.mggcode.cliente_elecciones.DTO.CpDTO;
 import lombok.Data;
 
@@ -73,7 +74,7 @@ public class CircunscripcionPartido {
         return result;
     }
 
-    public static CircunscripcionPartido mapFromCpDTO(Circunscripcion circunscripcion, CpDTO cpDTO) {
+    public static CircunscripcionPartido mapFromCpDTO(CircunscripcionDTO circunscripcion, CpDTO cpDTO) {
         CircunscripcionPartido circunscripcionPartido = new CircunscripcionPartido();
 
         Key key = new Key();
