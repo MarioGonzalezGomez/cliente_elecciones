@@ -26,7 +26,7 @@ public class APartidoService {
     public List<Partido> findAll() {
         ResponseEntity<Partido[]> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/autonomicas/partidos",
+                        "http://" + Config.connectedServer + ":8080/autonomicas/partidos",
                         Partido[].class);
         Partido[] arrayP = response.getBody();
         return Arrays.asList(arrayP);
@@ -34,33 +34,33 @@ public class APartidoService {
 
     public void findAllInCsv() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/partidos/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/partidos/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\partidos.csv"));
     }
 
     public void findAllInExcel() throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/partidos/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/partidos/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\partidos.xlsx"));
     }
 
     public Partido findById(String id) {
         ResponseEntity<Partido> response =
                 restTemplate.getForEntity(
-                        "http://" + ipServer + ":8080/autonomicas/partidos/" + id,
+                        "http://" + Config.connectedServer + ":8080/autonomicas/partidos/" + id,
                         Partido.class);
         return response.getBody();
     }
 
     public void findByIdInCsv(String id) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/partidos/" + id + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/partidos/" + id + "/csv");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\CSV\\partido_" + id + ".csv"));
     }
 
     public void findByIdInExcel(String id) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + ipServer + ":8080/autonomicas/partidos/" + id + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/partidos/" + id + "/excel");
         FileUtils.copyURLToFile(url, new File(carpetaBase.getPath() + "\\EXCEL\\partido_" + id + ".xlsx"));
     }
 
