@@ -123,6 +123,8 @@ public class ACircunscripcionController {
                     lock.lock();
                     try {
                         updateAllCsv();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     } finally {
                         lock.unlock();
                     }
@@ -162,13 +164,13 @@ public class ACircunscripcionController {
 
     Data data = Data.getInstance();
 
-    private void updateAllCsv() {
-        carmenDTOService.findAllCsv();
+    private void updateAllCsv() throws IOException {
+        carmenDTOService.findAllInCsvOficial(data.getCircunscripcionSeleccionada());
     }
 
     private void updateSelected() throws IOException {
-        carmenDTOService.writeAutonomiaSeleccionada(data.getAutonomiaSeleccionada());
-        carmenDTOService.writeAutonomiaSeleccionadaArcoMayorias(data.getAutonomiaSeleccionada());
+        carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getAutonomiaSeleccionada());
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getAutonomiaSeleccionada());
         sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 

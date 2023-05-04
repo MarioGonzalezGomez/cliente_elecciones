@@ -18,25 +18,47 @@ public class CarmenDTOController {
     @Autowired
     private CarmenDTOService carmenDTOService;
 
-    @RequestMapping(path = "/{codigo}")
-    public String findAll(@PathVariable("codigo") String codAutonomia, Model model) {
-        CarmenDTO cdto = carmenDTOService.findAll(codAutonomia);
+    @RequestMapping(path = "/oficial/{codigo}")
+    public String findAllOficial(@PathVariable("codigo") String codAutonomia, Model model) {
+        CarmenDTO cdto = carmenDTOService.findAllOficial(codAutonomia);
         model.addAttribute("carmen", cdto);
-        model.addAttribute("ruta", "/municipales/carmen/" + codAutonomia);
+        model.addAttribute("ruta", "/municipales/carmen/oficial/" + codAutonomia);
         return "carmendtos";
     }
 
-    @RequestMapping(path = "/{codigo}/csv")
-    public String findAllInCsv(@PathVariable("codigo") String codCircunscripcion, RedirectAttributes redirectAttributes) throws IOException {
-        carmenDTOService.findAllInCsv(codCircunscripcion);
+    @RequestMapping(path = "/oficial/{codigo}/csv")
+    public String findAllInCsvOficial(@PathVariable("codigo") String codCircunscripcion, RedirectAttributes redirectAttributes) throws IOException {
+        carmenDTOService.findAllInCsvOficial(codCircunscripcion);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/municipales/carmen/" + codCircunscripcion;
+        return "redirect:/municipales/carmen/oficial/" + codCircunscripcion;
     }
 
-    @RequestMapping(path = "/{codigo}/excel")
-    public String findAllInExcel(@PathVariable("codigo") String codAutonomia, RedirectAttributes redirectAttributes) throws IOException {
-        carmenDTOService.findAllInExcel(codAutonomia);
+    @RequestMapping(path = "/oficial/{codigo}/excel")
+    public String findAllInExcelOficial(@PathVariable("codigo") String codAutonomia, RedirectAttributes redirectAttributes) throws IOException {
+        carmenDTOService.findAllInExcelOficial(codAutonomia);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/municipales/carmen/" + codAutonomia;
+        return "redirect:/municipales/carmen/oficial/" + codAutonomia;
+    }
+
+    @RequestMapping(path = "/sondeo/{codigo}")
+    public String findAllSondeo(@PathVariable("codigo") String codAutonomia, Model model) {
+        CarmenDTO cdto = carmenDTOService.findAllSondeo(codAutonomia);
+        model.addAttribute("carmen", cdto);
+        model.addAttribute("ruta", "/municipales/carmen/sondeo/" + codAutonomia);
+        return "carmendtos";
+    }
+
+    @RequestMapping(path = "/sondeo/{codigo}/csv")
+    public String findAllInCsvSondeo(@PathVariable("codigo") String codCircunscripcion, RedirectAttributes redirectAttributes) throws IOException {
+        carmenDTOService.findAllInCsvSondeo(codCircunscripcion);
+        redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
+        return "redirect:/municipales/carmen/sondeo/" + codCircunscripcion;
+    }
+
+    @RequestMapping(path = "/sondeo/{codigo}/excel")
+    public String findAllInExcelSondeo(@PathVariable("codigo") String codAutonomia, RedirectAttributes redirectAttributes) throws IOException {
+        carmenDTOService.findAllInExcelSondeo(codAutonomia);
+        redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
+        return "redirect:/municipales/carmen/sondeo/" + codAutonomia;
     }
 }

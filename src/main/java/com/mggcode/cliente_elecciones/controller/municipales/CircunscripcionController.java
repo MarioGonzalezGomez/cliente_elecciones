@@ -152,7 +152,7 @@ public class CircunscripcionController {
     }
 
     private void updateSelected() throws IOException {
-        carmenDTOService.writeCricunscripcionSeleccionada(data.getCircunscripcionSeleccionada());
+        carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
         sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
