@@ -43,21 +43,21 @@ public class AutonomicasIPF {
 
     @GetMapping("/carmen/{codigo}/entra")
     public String entraFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        System.out.println(ipfBuilder.lateralEntra());
+        //System.out.println(ipfBuilder.lateralEntra());
         c.enviarMensaje(ipfBuilder.lateralEntra());
         return "redirect:/autonomicas/carmen/" + codCircunscripcion;
     }
 
     @GetMapping("/carmen/{codigo}/actualiza")
     public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        System.out.println(ipfBuilder.lateralActualiza());
+        //System.out.println(ipfBuilder.lateralActualiza());
         c.enviarMensaje(ipfBuilder.lateralActualiza());
         return "redirect:/autonomicas/carmen/" + codCircunscripcion;
     }
 
     @GetMapping("/carmen/{codigo}/sale")
     public String saleFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        System.out.println(ipfBuilder.lateralSale());
+        //System.out.println(ipfBuilder.lateralSale());
         c.enviarMensaje(ipfBuilder.lateralSale());
         return "redirect:/autonomicas/carmen/" + codCircunscripcion;
     }
@@ -73,7 +73,7 @@ public class AutonomicasIPF {
 
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
-        System.out.println(resultado1);
+        //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
         return "redirect:/";
     }
@@ -89,7 +89,7 @@ public class AutonomicasIPF {
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
 
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2);
-        System.out.println(resultado1);
+        //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
 
         return "redirect:/";
@@ -104,14 +104,12 @@ public class AutonomicasIPF {
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
-
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3);
-        System.out.println(resultado1);
+        //  System.out.println(resultado1);
         c.enviarMensaje(resultado1);
         String resultado2 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4);
-        System.out.println(resultado2);
+        // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
-        //var fraction = "itemset(<"
         return "redirect:/";
     }
 
@@ -126,8 +124,9 @@ public class AutonomicasIPF {
                 .toList();
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
 
-        System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 1));
-        //c.enviarMensaje(ipfBuilder.lateralEntra());
+        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 1);
+        //System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
         return "redirect:/";
     }
 
@@ -141,8 +140,10 @@ public class AutonomicasIPF {
                 .toList();
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
 
-        System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 2));
-        //c.enviarMensaje(ipfBuilder.lateralEntra());
+        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 2);
+        //System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+
         return "redirect:/";
     }
 
@@ -173,6 +174,12 @@ public class AutonomicasIPF {
 
         System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4));
         //c.enviarMensaje(ipfBuilder.lateralEntra());
+        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3);
+        //  System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+        String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
+        // System.out.println(resultado2);
+        c.enviarMensaje(resultado2);
         return "redirect:/";
     }
 
