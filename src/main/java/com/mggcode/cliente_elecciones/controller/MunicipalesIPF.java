@@ -61,6 +61,12 @@ public class MunicipalesIPF {
         return "redirect:/municipales/carmen/" + codCircunscripcion;
     }
 
+    @GetMapping("/arco/load")
+    public String loadMapaMayorias(Model model) {
+        c.enviarMensaje(ipfBuilderCartones.loadMapaMayorias());
+        return "redirect:/";
+    }
+
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraIzq")
     public String entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);

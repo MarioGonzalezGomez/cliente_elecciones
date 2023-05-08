@@ -213,6 +213,11 @@ public class IPFCartonesMessageBuilder {
         return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
     }
 
+    public String loadMapaMayorias() {
+        String itemSet = "itemset('";
+        return itemSet + bd + "LOAD" + "','" + "EVENT_RUN" + ");";
+    }
+
 
     //Para construir la señal necesitaría el objeto o evento al que llamo, la propiedad a cambiar,
     //el valor o valores que cambian y el tipo: 1 para itemset y 2 para itemgo

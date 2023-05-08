@@ -56,8 +56,9 @@ public class ACircunscripcionController {
         return "circunscripciones";
     }
 
-    @RequestMapping("/selected/{codigo}")
-    public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo) {
+    @GetMapping("/selected/{codigo}")
+    public String selectAutonomia(@PathVariable("codigo") String codigo) {
+        System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setAutonomiaSeleccionada(codigo);
         try {
@@ -68,8 +69,7 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
-
-        return new ResponseEntity<>(codigo, HttpStatus.OK);
+        return "OK";
     }
 
 
@@ -180,7 +180,7 @@ public class ACircunscripcionController {
     private void updateSelected() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getAutonomiaSeleccionada());
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getAutonomiaSeleccionada());
-        sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
+        // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
     private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {

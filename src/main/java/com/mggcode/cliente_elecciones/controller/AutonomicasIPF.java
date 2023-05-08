@@ -58,13 +58,13 @@ public class AutonomicasIPF {
     @GetMapping("/carmen/faldon/entra")
     public String faldonEntraAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoEntra());
-        return "OK";
+        return "redirect:/";
     }
 
     @GetMapping("/carmen/faldon/sale")
     public String faldonSaleAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoEntra());
-        return "OK";
+        return "redirect:/";
 
     }
 
@@ -73,6 +73,12 @@ public class AutonomicasIPF {
         //System.out.println(ipfBuilder.lateralSale());
         c.enviarMensaje(ipfBuilder.lateralSale());
         return "redirect:/autonomicas/carmen/" + codCircunscripcion;
+    }
+
+    @GetMapping("/arco/load")
+    public String loadMapaMayorias(Model model) {
+        c.enviarMensaje(ipfBuilderCartones.loadMapaMayorias());
+        return "redirect:/";
     }
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraIzq")

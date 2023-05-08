@@ -33,6 +33,18 @@ public class IPFFaldonesMessageBuilder {
         return eventRunBuild("LATERAL/ACTUALIZO");
     }
 
+    public String lateralDespliega(String codComunidad) {
+        return eventRunBuild("LATERAL/" + codComunidad + "/Despliega");
+    }
+
+    public String lateralRepliega(String codComunidad) {
+        return eventRunBuild("LATERAL/" + codComunidad + "/Repliega");
+    }
+
+    public String lateralActualiza(String codComunidad) {
+        return eventRunBuild("LATERAL/" + codComunidad + "/Actualiza");
+    }
+
     public String faldonMuniEntra() {
         return eventRunBuild("FALDON_MUNI/ENTRA");
     }
@@ -66,6 +78,14 @@ public class IPFFaldonesMessageBuilder {
         return eventRunBuild("FALDON_AUTO/ACTUALIZO");
     }
 
+    public String deMuniAAuto() {
+        return eventRunBuild("GIRO/DeMuniAAuto");
+    }
+
+    public String deAutoAMuni() {
+        return eventRunBuild("GIRO/DeAutoAMuni");
+    }
+
     public String autoMuni() {
         return eventRunBuild("AUTO_MUNI/ACTUALIZO");
 
@@ -74,6 +94,18 @@ public class IPFFaldonesMessageBuilder {
     public String muniAuto() {
         return eventRunBuild("MUNI_AUTO/ACTUALIZO");
 
+    }
+
+    public String votantesEntra() {
+        return eventRunBuild("FALDON_MUNI_VOTANTES/ENTRA");
+    }
+
+    public String votantesHistorico() {
+        return eventRunBuild("FALDON_MUNI_VOTANTES/HISTORICO");
+    }
+
+    public String votantesSALE() {
+        return eventRunBuild("FALDON_MUNI_VOTANTES/SALE");
     }
 
     private String eventRunBuild(String eventName) {
