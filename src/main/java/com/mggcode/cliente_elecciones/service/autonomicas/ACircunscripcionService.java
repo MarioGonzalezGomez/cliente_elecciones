@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ACircunscripcionService {
@@ -84,4 +85,33 @@ public class ACircunscripcionService {
         }
         return circunscripciones;
     }
+
+    public List<Circunscripcion> findAutonomias() {
+        ResponseEntity<Circunscripcion[]> response =
+                restTemplate.getForEntity(
+                        "http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones",
+                        Circunscripcion[].class);
+        var res = Arrays.stream(Objects.requireNonNull(response.getBody()))
+                .filter(circunscripcion -> circunscripcion.getCodigo().endsWith("00000"))
+                .filter(circunscripcion -> !circunscripcion.getCodigo().startsWith("99"))
+                .toList();
+
+        return res;
+    }
+
+    public List<Circunscripcion> findCircunscripcionByAutonomia(String codAuto) {
+        ResponseEntity<Circunscripcion[]> response =
+                restTemplate.getForEntity(
+                        "http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones",
+                        Circunscripcion[].class);
+        var cod = codAuto.substring(0, 2);
+        var res = Arrays.stream(Objects.requireNonNull(response.getBody()))
+                .filter(circunscripcion -> Objects.equals(circunscripcion.getCodigoComunidad(), codAuto.substring(0, 2)))
+                .filter(circunscripcion -> !circunscripcion.getCodigo().startsWith("99"))
+                .toList();
+
+        return res;
+    }
+
+
 }

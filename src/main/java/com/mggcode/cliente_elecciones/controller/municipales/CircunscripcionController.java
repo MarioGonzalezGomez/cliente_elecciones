@@ -44,7 +44,6 @@ public class CircunscripcionController {
     Data data = Data.getInstance();
 
 
-
     @GetMapping
     public String verCircunscripciones(Model model) throws ConnectionException {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
@@ -104,6 +103,11 @@ public class CircunscripcionController {
         return "circunscripcionDetalle";
     }
 
+    @GetMapping("/municipios/{codigo}")
+    public ResponseEntity<List<Circunscripcion>> findByAutonomia(@PathVariable("codigo") String codigo) {
+        return new ResponseEntity<>(circunscripcionService.findByAutonomia(codigo), HttpStatus.OK);
+    }
+
     List<Circunscripcion> circunscripciones = new ArrayList<>();
     AtomicBoolean isSuscribed = new AtomicBoolean(false);
     List<Circunscripcion> changes;
@@ -152,7 +156,7 @@ public class CircunscripcionController {
     }
 
     private void updateSelected() throws IOException {
-        carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
+        carmenDTOService.writeCricunscripcionSeleccionada(data.getCircunscripcionSeleccionada());
         sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 

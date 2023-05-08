@@ -55,6 +55,19 @@ public class AutonomicasIPF {
         return "redirect:/autonomicas/carmen/" + codCircunscripcion;
     }
 
+    @GetMapping("/carmen/faldon/entra")
+    public String faldonEntraAuto() {
+        c.enviarMensaje(ipfBuilder.faldonAutoEntra());
+        return "OK";
+    }
+
+    @GetMapping("/carmen/faldon/sale")
+    public String faldonSaleAuto() {
+        c.enviarMensaje(ipfBuilder.faldonAutoEntra());
+        return "OK";
+
+    }
+
     @GetMapping("/carmen/{codigo}/sale")
     public String saleFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
         //System.out.println(ipfBuilder.lateralSale());
