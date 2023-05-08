@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CircunscripcionService {
@@ -85,5 +86,20 @@ public class CircunscripcionService {
             excel.mkdir();
         }
         return circunscripciones;
+    }
+
+    public List<Circunscripcion> findByAutonomia(String codAuto){
+        ResponseEntity<Circunscripcion[]> response =
+                restTemplate.getForEntity(
+                        "http://" + Config.connectedServer + ":8080/municipales/circunscripciones",
+                        Circunscripcion[].class);
+        var cod = codAuto.substring(0, 2);
+        var res = Arrays.stream(Objects.requireNonNull(response.getBody()))
+                .filter(circunscripcion -> Objects.equals(circunscripcion.getCodigoComunidad(), codAuto.substring(0, 2)))
+                .filter(circunscripcion -> !circunscripcion.getCodigo().endsWith("00000"))
+                .filter(circunscripcion -> !circunscripcion.getCodigo().startsWith("99"))
+                .toList();
+
+        return res;
     }
 }

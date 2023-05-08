@@ -27,7 +27,7 @@ public class ConexionManager {
         }
 
     }
-
+//TODO
     public ConexionIPF getConexionByAdress(String address) {
         return conexiones.stream().filter(conexionIPF -> conexionIPF.getDireccion().equals(address)).toList().get(0);
     }

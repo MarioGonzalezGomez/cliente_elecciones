@@ -22,12 +22,13 @@ public class ClienteEleccionesApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(ClienteEleccionesApplication.class, args);
-    }
+        SpringApplication.run(ClienteEleccionesApplication.class, args);}
+
 
     @EventListener({ApplicationReadyEvent.class})
     void applicationReadyEvent() {
         System.out.println("Abriendo cliente");
+
         browse("http://localhost:9090");
     }
 

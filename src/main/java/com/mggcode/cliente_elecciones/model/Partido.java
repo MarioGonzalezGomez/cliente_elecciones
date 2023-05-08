@@ -12,4 +12,8 @@ public class Partido {
     private String codigoPadre;
 
     private String nombreCompleto;
+
+    public Partido() {
+
+    }
 }

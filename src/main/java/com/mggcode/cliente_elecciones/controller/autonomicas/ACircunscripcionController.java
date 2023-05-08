@@ -108,6 +108,15 @@ public class ACircunscripcionController {
         return "circunscripcionDetalle";
     }
 
+    @GetMapping("/autonomias")
+    public ResponseEntity<List<Circunscripcion>> getAutonomias() {
+        return new ResponseEntity<>(circunscripcionService.findAutonomias(), HttpStatus.OK);
+    }
+
+    @GetMapping("/autonomias/{codigo}")
+    public ResponseEntity<List<Circunscripcion>> getCircunscripcionesByAutonomia(@PathVariable("codigo") String codigo) {
+        return new ResponseEntity<>(circunscripcionService.findCircunscripcionByAutonomia(codigo), HttpStatus.OK);
+    }
 
     ReentrantLock lock = new ReentrantLock();
     AtomicBoolean closeListener = new AtomicBoolean(false);

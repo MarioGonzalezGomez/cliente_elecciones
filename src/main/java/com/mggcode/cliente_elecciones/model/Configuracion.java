@@ -26,4 +26,8 @@ public class Configuracion {
 
     //
     private String rutaFicheros;
+
+    public Configuracion(){
+
+    }
 }

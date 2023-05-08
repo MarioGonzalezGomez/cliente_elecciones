@@ -91,4 +91,7 @@ public class CircunscripcionPartido {
         return circunscripcionPartido;
     }
 
+    public CircunscripcionPartido(){
+
+    }
 }
