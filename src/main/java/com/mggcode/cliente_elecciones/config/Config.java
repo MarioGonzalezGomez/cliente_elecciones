@@ -1,7 +1,7 @@
 package com.mggcode.cliente_elecciones.config;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,8 +27,8 @@ public class Config {
     }
 
     public void loadConfig() {
-        try {
-            config.load(new FileInputStream("src/main/resources/config.properties"));
+        try (InputStream in = getClass().getResourceAsStream("/config.properties")){
+            config.load(in);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error cargando configuración");
