@@ -40,25 +40,40 @@ public class MunicipalesIPF {
         c = conexionManager.getConexionByAdress(Config.config.getProperty("direccion1"));
     }
 
-    @GetMapping("/carmen/{codigo}/entra")
-    public String entraFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        //System.out.println(ipfBuilder.lateralEntra());
+    @GetMapping("/carmen/lateral/entra")
+    public String entraFaldonLateral(Model model) {
         c.enviarMensaje(ipfBuilder.lateralEntra());
+        return "redirect:/municipales/carmen/" + "0200000";
+    }
+
+    @GetMapping("/carmen/lateral/{codigo}/despliega")
+    public String despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
+        c.enviarMensaje(ipfBuilder.lateralDespliega(codCircunscripcion));
         return "redirect:/municipales/carmen/" + codCircunscripcion;
     }
 
-    @GetMapping("/carmen/{codigo}/actualiza")
+    @GetMapping("/carmen/lateral/{codigo}/repliega")
+    public String repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
+        c.enviarMensaje(ipfBuilder.lateralRepliega(codCircunscripcion));
+        return "redirect:/municipales/carmen/" + codCircunscripcion;
+    }
+
+    @GetMapping("/carmen/lateral/{codigo}/actualiza")
     public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        //System.out.println(ipfBuilder.lateralActualiza());
-        c.enviarMensaje(ipfBuilder.lateralActualiza());
+        c.enviarMensaje(ipfBuilder.lateralActualiza(codCircunscripcion));
         return "redirect:/municipales/carmen/" + codCircunscripcion;
     }
 
-    @GetMapping("/carmen/{codigo}/sale")
-    public String saleFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        //System.out.println(ipfBuilder.lateralSale());
+    @GetMapping("/carmen/lateral/actualiza")
+    public String actualizaFaldonLateral(Model model) {
+        c.enviarMensaje(ipfBuilder.lateralActualiza());
+        return "redirect:/municipales/carmen/" + "0200000";
+    }
+
+    @GetMapping("/carmen/lateral/sale")
+    public String saleFaldonLateral(Model model) {
         c.enviarMensaje(ipfBuilder.lateralSale());
-        return "redirect:/municipales/carmen/" + codCircunscripcion;
+        return "redirect:/municipales/carmen/" + "0200000";
     }
 
     @GetMapping("/arco/load")

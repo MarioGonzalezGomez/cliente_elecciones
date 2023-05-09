@@ -41,18 +41,40 @@ public class AutonomicasIPF {
         c = conexionManager.getConexionByAdress(Config.config.getProperty("direccion1"));
     }
 
-    @GetMapping("/carmen/{codigo}/entra")
-    public String entraFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        //System.out.println(ipfBuilder.lateralEntra());
+    @GetMapping("/carmen/lateral/entra")
+    public String entraFaldonLateral(Model model) {
         c.enviarMensaje(ipfBuilder.lateralEntra());
+        return "redirect:/autonomicas/carmen/" + "0200000";
+    }
+
+    @GetMapping("/carmen/lateral/{codigo}/despliega")
+    public String despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
+        c.enviarMensaje(ipfBuilder.lateralDespliega(codCircunscripcion));
         return "redirect:/autonomicas/carmen/" + codCircunscripcion;
     }
 
-    @GetMapping("/carmen/{codigo}/actualiza")
-    public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        //System.out.println(ipfBuilder.lateralActualiza());
-        c.enviarMensaje(ipfBuilder.lateralActualiza());
+    @GetMapping("/carmen/lateral/{codigo}/repliega")
+    public String repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
+        c.enviarMensaje(ipfBuilder.lateralRepliega(codCircunscripcion));
         return "redirect:/autonomicas/carmen/" + codCircunscripcion;
+    }
+
+    @GetMapping("/carmen/lateral/{codigo}/actualiza")
+    public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
+        c.enviarMensaje(ipfBuilder.lateralActualiza(codCircunscripcion));
+        return "redirect:/autonomicas/carmen/" + codCircunscripcion;
+    }
+
+    @GetMapping("/carmen/lateral/actualiza")
+    public String actualizaFaldonLateral(Model model) {
+        c.enviarMensaje(ipfBuilder.lateralActualiza());
+        return "redirect:/autonomicas/carmen/" + "0200000";
+    }
+
+    @GetMapping("/carmen/lateral/sale")
+    public String saleFaldonLateral(Model model) {
+        c.enviarMensaje(ipfBuilder.lateralSale());
+        return "redirect:/autonomicas/carmen/" + "0200000";
     }
 
     @GetMapping("/carmen/faldon/entra")
@@ -68,12 +90,6 @@ public class AutonomicasIPF {
 
     }
 
-    @GetMapping("/carmen/{codigo}/sale")
-    public String saleFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
-        //System.out.println(ipfBuilder.lateralSale());
-        c.enviarMensaje(ipfBuilder.lateralSale());
-        return "redirect:/autonomicas/carmen/" + codCircunscripcion;
-    }
 
     @GetMapping("/arco/load")
     public String loadMapaMayorias(Model model) {
