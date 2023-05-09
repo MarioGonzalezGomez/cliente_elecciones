@@ -53,8 +53,8 @@ public class CircunscripcionController {
         return "circunscripciones";
     }
 
-    @RequestMapping("/selected/{codigo}")
-    public ResponseEntity<String> selectCircunscripcion(@PathVariable("codigo") String codigo) {
+    @GetMapping("/selected/{codigo}")
+    public String selectCircunscripcion(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -66,7 +66,7 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return new ResponseEntity<>(codigo, HttpStatus.OK);
+        return "OK";
     }
 
     @RequestMapping(path = "/csv")
@@ -156,8 +156,9 @@ public class CircunscripcionController {
     }
 
     private void updateSelected() throws IOException {
-        carmenDTOService.writeCricunscripcionSeleccionada(data.getCircunscripcionSeleccionada());
-        sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
+        carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getAutonomiaSeleccionada());
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getAutonomiaSeleccionada());
+       // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
     private boolean containsSelected(String codigo) {

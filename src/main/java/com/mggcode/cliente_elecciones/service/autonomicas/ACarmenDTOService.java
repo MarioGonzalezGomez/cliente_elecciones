@@ -1,7 +1,6 @@
 package com.mggcode.cliente_elecciones.service.autonomicas;
 
 import com.mggcode.cliente_elecciones.DTO.CarmenDTO;
-import com.mggcode.cliente_elecciones.DTO.CarmenDtoList;
 import com.mggcode.cliente_elecciones.config.Config;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service

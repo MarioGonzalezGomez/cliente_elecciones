@@ -2,8 +2,10 @@ package com.mggcode.cliente_elecciones.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Configuracion {
     //IPF
     @JsonProperty("nConexiones")
@@ -26,8 +28,4 @@ public class Configuracion {
 
     //
     private String rutaFicheros;
-
-    public Configuracion(){
-
-    }
 }
