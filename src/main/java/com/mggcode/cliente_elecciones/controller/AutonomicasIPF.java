@@ -90,10 +90,9 @@ public class AutonomicasIPF {
 
     }
 
-
     @GetMapping("/arco/load")
-    public String loadMapaMayorias(Model model) {
-        c.enviarMensaje(ipfBuilderCartones.loadMapaMayorias());
+    public String load(Model model) {
+        c.enviarMensaje(ipfBuilderCartones.load());
         return "redirect:/";
     }
 

@@ -213,7 +213,7 @@ public class IPFCartonesMessageBuilder {
         return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
     }
 
-    public String loadMapaMayorias() {
+    public String load() {
         String itemSet = "itemset('";
         return itemSet + bd + "LOAD" + "','" + "EVENT_RUN" + ");";
     }

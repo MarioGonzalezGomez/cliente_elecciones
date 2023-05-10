@@ -78,7 +78,7 @@ public class MunicipalesIPF {
 
     @GetMapping("/arco/load")
     public String loadMapaMayorias(Model model) {
-        c.enviarMensaje(ipfBuilderCartones.loadMapaMayorias());
+        c.enviarMensaje(ipfBuilderCartones.load());
         return "redirect:/";
     }
 
