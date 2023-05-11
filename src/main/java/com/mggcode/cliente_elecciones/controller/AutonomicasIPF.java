@@ -11,11 +11,9 @@ import com.mggcode.cliente_elecciones.utils.IPFCartonesMessageBuilder;
 import com.mggcode.cliente_elecciones.utils.IPFFaldonesMessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.List;
 
 
@@ -42,62 +40,62 @@ public class AutonomicasIPF {
     }
 
     @GetMapping("/carmen/lateral/entra")
-    public String entraFaldonLateral(Model model) {
+    public String entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());
-        return "redirect:/autonomicas/carmen/" + "0200000";
+        return "ok";
     }
 
     @GetMapping("/carmen/lateral/{codigo}/despliega")
-    public String despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
+    public String despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralDespliega(codCircunscripcion));
-        return "redirect:/autonomicas/carmen/" + codCircunscripcion;
+        return "ok";
     }
 
     @GetMapping("/carmen/lateral/{codigo}/repliega")
-    public String repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
+    public String repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralRepliega(codCircunscripcion));
-        return "redirect:/autonomicas/carmen/" + codCircunscripcion;
+        return "ok";
     }
 
     @GetMapping("/carmen/lateral/{codigo}/actualiza")
-    public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion, Model model) {
+    public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralActualiza(codCircunscripcion));
-        return "redirect:/autonomicas/carmen/" + codCircunscripcion;
+        return "ok";
     }
 
     @GetMapping("/carmen/lateral/actualiza")
-    public String actualizaFaldonLateral(Model model) {
+    public String actualizaFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralActualiza());
-        return "redirect:/autonomicas/carmen/" + "0200000";
+        return "ko";
     }
 
     @GetMapping("/carmen/lateral/sale")
-    public String saleFaldonLateral(Model model) {
+    public String saleFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralSale());
-        return "redirect:/autonomicas/carmen/" + "0200000";
+        return "ok";
     }
 
     @GetMapping("/carmen/faldon/entra")
     public String faldonEntraAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoEntra());
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/carmen/faldon/sale")
     public String faldonSaleAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoEntra());
-        return "redirect:/";
+        return "ok";
 
     }
 
     @GetMapping("/arco/load")
-    public String load(Model model) {
+    public String load() {
         c.enviarMensaje(ipfBuilderCartones.load());
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+    public String entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -109,11 +107,11 @@ public class AutonomicasIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+    public String entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -126,11 +124,11 @@ public class AutonomicasIPF {
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
 
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+    public String entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -144,12 +142,12 @@ public class AutonomicasIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4);
         // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
-        return "redirect:/";
+        return "ok";
     }
 
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+    public String entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -161,11 +159,11 @@ public class AutonomicasIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+    public String entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -178,11 +176,11 @@ public class AutonomicasIPF {
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
 
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+    public String entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -193,11 +191,11 @@ public class AutonomicasIPF {
 
         System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3));
         //c.enviarMensaje(ipfBuilder.lateralEntra());
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/arco/hasta/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer4(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, Model model) {
+    public String entraPartidoDer4(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -214,14 +212,14 @@ public class AutonomicasIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
         // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/arco/reset")
-    public String resetArco(Model model) {
+    public String resetArco() {
         ipfBuilderCartones.reset();
         System.out.println("Reset completado");
         //c.enviarMensaje(mensajeXdeReset);
-        return "redirect:/";
+        return "ok";
     }
 }
