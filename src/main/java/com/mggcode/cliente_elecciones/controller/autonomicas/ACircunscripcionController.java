@@ -41,10 +41,13 @@ public class ACircunscripcionController {
     private ASedesDTOService sedesDTOService;
 
     List<Circunscripcion> changes;
-
-
     List<Circunscripcion> circunscripciones = new ArrayList<>();
     AtomicBoolean isSuscribed = new AtomicBoolean(false);
+    ReentrantLock lock = new ReentrantLock();
+    AtomicBoolean closeListener = new AtomicBoolean(false);
+
+    Data data = Data.getInstance();
+    private boolean oficiales = true;
 
 
     @GetMapping
@@ -56,16 +59,34 @@ public class ACircunscripcionController {
         return "circunscripciones";
     }
 
-    @GetMapping("/selected/{codigo}")
-    public String selectAutonomia(@PathVariable("codigo") String codigo) {
+    @GetMapping("/selected/oficial/{codigo}")
+    public String selectCircunscripcionOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
-        data.setAutonomiaSeleccionada(codigo);
+        data.setCircunscripcionSeleccionada(codigo);
+        oficiales = true;
         try {
             lock.lock();
-            updateSelected();
+            updateSelectedOficial();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+        return "OK";
+    }
+
+    @GetMapping("/selected/sondeo/{codigo}")
+    public String selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
+        System.out.println("---" + codigo);
+        Data data = Data.getInstance();
+        data.setCircunscripcionSeleccionada(codigo);
+        oficiales = false;
+        try {
+            lock.lock();
+            updateSelectedSondeo();
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             lock.unlock();
         }
@@ -118,8 +139,6 @@ public class ACircunscripcionController {
         return new ResponseEntity<>(circunscripcionService.findCircunscripcionByAutonomia(codigo), HttpStatus.OK);
     }
 
-    ReentrantLock lock = new ReentrantLock();
-    AtomicBoolean closeListener = new AtomicBoolean(false);
 
     public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
@@ -151,7 +170,11 @@ public class ACircunscripcionController {
                             getChanges(circunscripciones, circunscripcionesNew);
                             if (containsSelected(data.autonomiaSeleccionada)) {
                                 System.out.println("Seleccionada ha cambiado");
-                                updateSelected();
+                                if (oficiales) {
+                                    updateSelectedOficial();
+                                } else {
+                                    updateSelectedSondeo();
+                                }
                             }
                         } catch (IOException e) {
                             System.err.println(e.getMessage());
@@ -171,15 +194,19 @@ public class ACircunscripcionController {
         }
     }
 
-    Data data = Data.getInstance();
-
     private void updateAllCsv() throws IOException {
         carmenDTOService.findAllInCsvOficial(data.getCircunscripcionSeleccionada());
     }
 
-    private void updateSelected() throws IOException {
-        carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getAutonomiaSeleccionada());
-        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getAutonomiaSeleccionada());
+    private void updateSelectedOficial() throws IOException {
+        carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
+        // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
+    }
+
+    private void updateSelectedSondeo() throws IOException {
+        carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
         // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
