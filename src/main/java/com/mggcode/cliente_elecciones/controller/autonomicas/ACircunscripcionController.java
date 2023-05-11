@@ -60,7 +60,7 @@ public class ACircunscripcionController {
     }
 
     @GetMapping("/selected/oficial/{codigo}")
-    public String selectCircunscripcionOficial(@PathVariable("codigo") String codigo, Model model) {
+    public void selectCircunscripcionOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -73,11 +73,10 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "OK";
     }
 
     @GetMapping("/selected/sondeo/{codigo}")
-    public String selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
+    public void selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -90,7 +89,6 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "OK";
     }
 
 
@@ -188,7 +186,6 @@ public class ACircunscripcionController {
                 if (closeListener.get()) {
                     isSuscribed.set(false);
                     System.out.println("closing thread");
-                    return;
                 }
             }, 0, 2, TimeUnit.SECONDS).cancel(true);
         }

@@ -4,22 +4,20 @@ import com.mggcode.cliente_elecciones.model.Configuracion;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 @Service
 public class ConfiguracionService {
-    private final String rutaConfig = "src/main/resources/config.properties";
+    private final InputStream rutaConfig = getClass().getResourceAsStream("/config.properties");
 
 
     public Configuracion cargarConfiguracion() {
         Properties propiedades = new Properties();
         try {
-            FileInputStream archivoEntrada = new FileInputStream(rutaConfig);
-            propiedades.load(archivoEntrada);
-            archivoEntrada.close();
+            propiedades.load(rutaConfig);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -65,10 +63,11 @@ public class ConfiguracionService {
 
             propiedades.setProperty("rutaFicheros", configuracion.getRutaFicheros());
 
-            File archivoPropiedades = new File(rutaConfig);
+            File archivoPropiedades = new File(getClass().getResource("/config.properties").getFile());
             FileOutputStream archivoSalida = new FileOutputStream(archivoPropiedades);
             propiedades.store(archivoSalida, "Archivo de configuración");
             archivoSalida.close();
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }

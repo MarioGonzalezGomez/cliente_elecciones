@@ -74,4 +74,6 @@ public class CarmenDTOController {
     public ResponseEntity<CarmenDTO> findDataByIdSondeo(@PathVariable("codigo") String codigo) {
         return new ResponseEntity<>(carmenDTOService.findAllSondeo(codigo), HttpStatus.OK);
     }
+
+
 }

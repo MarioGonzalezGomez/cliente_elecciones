@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import java.util.List;
 
 
@@ -77,13 +76,12 @@ public class MunicipalesIPF {
     }
 
     @GetMapping("/arco/load")
-    public String loadMapaMayorias() {
+    public void loadMapaMayorias() {
         c.enviarMensaje(ipfBuilderCartones.load());
-        return "ok";
     }
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public void entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -95,11 +93,10 @@ public class MunicipalesIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        return "ok";
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public void entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -111,11 +108,10 @@ public class MunicipalesIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        return "ok";
     }
 
     @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public void entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -129,12 +125,11 @@ public class MunicipalesIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4);
         // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
-        return "ok";
     }
 
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public void entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -146,11 +141,10 @@ public class MunicipalesIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        return "ok";
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public void entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -163,11 +157,10 @@ public class MunicipalesIPF {
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
 
-        return "ok";
     }
 
     @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public void entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -178,11 +171,10 @@ public class MunicipalesIPF {
 
         System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3));
         //c.enviarMensaje(ipfBuilder.lateralEntra());
-        return "ok";
     }
 
     @GetMapping("/arco/hasta/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer4(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public void entraPartidoDer4(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -199,15 +191,13 @@ public class MunicipalesIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
         // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
-        return "ok";
     }
 
     @GetMapping("/arco/reset")
-    public String resetArco() {
+    public void resetArco() {
         ipfBuilderCartones.reset();
         System.out.println("Reset completado");
         //c.enviarMensaje(mensajeXdeReset);
-        return "ok";
     }
     
 
