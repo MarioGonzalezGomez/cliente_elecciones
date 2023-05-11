@@ -60,7 +60,7 @@ public class CircunscripcionController {
     }
 
     @GetMapping("/selected/oficial/{codigo}")
-    public String selectCircunscripcionOficial(@PathVariable("codigo") String codigo, Model model) {
+    public void selectCircunscripcionOficial(@PathVariable("codigo") String codigo) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -73,11 +73,10 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "OK";
     }
 
     @GetMapping("/selected/sondeo/{codigo}")
-    public String selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
+    public void selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -90,7 +89,6 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "OK";
     }
 
     @RequestMapping(path = "/csv")
@@ -132,6 +130,20 @@ public class CircunscripcionController {
         return new ResponseEntity<>(circunscripcionService.findByAutonomia(codigo), HttpStatus.OK);
     }
 
+    @GetMapping("/autonomias")
+    public ResponseEntity<List<Circunscripcion>> findAutonomiasMuni() {
+        List<Circunscripcion> res = null;
+        try {
+            res = circunscripcionService.findAll().stream()
+                    .filter(c -> c.getCodigoProvincia().equals("00") && c.getCodigoMunicipio().equals("000"))
+                    .toList();
+            return new ResponseEntity<>(res, HttpStatus.OK);
+
+        } catch (ConnectionException e) {
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
             System.out.println("Suscribiendo autonomicas...");
@@ -145,6 +157,7 @@ public class CircunscripcionController {
                     } catch (ConnectionException e) {
                         throw new RuntimeException(e);
                     }
+
                 } else {
                     List<Circunscripcion> circunscripcionesNew;
                     try {
