@@ -41,7 +41,13 @@ public class CircunscripcionController {
     @Autowired
     private SedesDTOService sedesDTOService;
 
+    List<Circunscripcion> circunscripciones = new ArrayList<>();
+    AtomicBoolean isSuscribed = new AtomicBoolean(false);
+    List<Circunscripcion> changes;
+    ReentrantLock lock = new ReentrantLock();
+
     Data data = Data.getInstance();
+    private boolean oficiales = true;
 
 
     @GetMapping
@@ -53,14 +59,32 @@ public class CircunscripcionController {
         return "circunscripciones";
     }
 
-    @GetMapping("/selected/{codigo}")
-    public String selectCircunscripcion(@PathVariable("codigo") String codigo, Model model) {
+    @GetMapping("/selected/oficial/{codigo}")
+    public String selectCircunscripcionOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
+        oficiales = true;
         try {
             lock.lock();
-            updateSelected();
+            updateSelectedOficial();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+        return "OK";
+    }
+
+    @GetMapping("/selected/sondeo/{codigo}")
+    public String selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
+        System.out.println("---" + codigo);
+        Data data = Data.getInstance();
+        data.setCircunscripcionSeleccionada(codigo);
+        oficiales = false;
+        try {
+            lock.lock();
+            updateSelectedSondeo();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -108,11 +132,6 @@ public class CircunscripcionController {
         return new ResponseEntity<>(circunscripcionService.findByAutonomia(codigo), HttpStatus.OK);
     }
 
-    List<Circunscripcion> circunscripciones = new ArrayList<>();
-    AtomicBoolean isSuscribed = new AtomicBoolean(false);
-    List<Circunscripcion> changes;
-    ReentrantLock lock = new ReentrantLock();
-
     public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
             System.out.println("Suscribiendo autonomicas...");
@@ -140,7 +159,11 @@ public class CircunscripcionController {
                             System.out.println("Seleccionada ha cambiado");
                             try {
                                 lock.lock();
-                                updateSelected();
+                                if (oficiales) {
+                                    updateSelectedOficial();
+                                } else {
+                                    updateSelectedSondeo();
+                                }
                             } catch (IOException e) {
                                 System.err.println(e.getMessage());
                                 throw new RuntimeException(e);
@@ -155,10 +178,16 @@ public class CircunscripcionController {
         }
     }
 
-    private void updateSelected() throws IOException {
+    private void updateSelectedOficial() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
-       // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
+        // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
+    }
+
+    private void updateSelectedSondeo() throws IOException {
+        carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
+        // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
     private boolean containsSelected(String codigo) {
