@@ -61,7 +61,6 @@ public class AutonomicasIPF {
     @GetMapping("/carmen/lateral/{codigo}/actualiza")
     public void actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralActualiza(codCircunscripcion));
-
     }
 
     @GetMapping("/carmen/lateral/actualiza")
@@ -72,20 +71,16 @@ public class AutonomicasIPF {
     @GetMapping("/carmen/lateral/sale")
     public void saleFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralSale());
-
     }
 
     @GetMapping("/carmen/faldon/entra")
     public void faldonEntraAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoEntra());
-
     }
 
     @GetMapping("/carmen/faldon/sale")
     public void faldonSaleAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoEntra());
-
-
     }
 
     @GetMapping("/arco/load")
@@ -235,7 +230,7 @@ public class AutonomicasIPF {
 
     @GetMapping("/participacion/cambia")
     public void participacionCambia() {
-        c.enviarMensaje(ipfBuilderCartones.participacionCambia());
+        c.enviarMensaje(ipfBuilderCartones.participacionCambiaAuto());
     }
 
 

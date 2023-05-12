@@ -40,39 +40,33 @@ public class MunicipalesIPF {
     }
 
     @GetMapping("/carmen/lateral/entra")
-    public String entraFaldonLateral() {
+    public void entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());
-        return "okmunicipales/carmen/" + "0200000";
     }
 
     @GetMapping("/carmen/lateral/{codigo}/despliega")
-    public String despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public void despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralDespliega(codCircunscripcion));
-        return "okmunicipales/carmen/" + codCircunscripcion;
     }
 
     @GetMapping("/carmen/lateral/{codigo}/repliega")
-    public String repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public void repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralRepliega(codCircunscripcion));
-        return "okmunicipales/carmen/" + codCircunscripcion;
     }
 
     @GetMapping("/carmen/lateral/{codigo}/actualiza")
-    public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public void actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralActualiza(codCircunscripcion));
-        return "okmunicipales/carmen/" + codCircunscripcion;
     }
 
     @GetMapping("/carmen/lateral/actualiza")
-    public String actualizaFaldonLateral() {
+    public void actualizaFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralActualiza());
-        return "okmunicipales/carmen/" + "0200000";
     }
 
     @GetMapping("/carmen/lateral/sale")
-    public String saleFaldonLateral() {
+    public void saleFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralSale());
-        return "okmunicipales/carmen/" + "0200000";
     }
 
     @GetMapping("/arco/load")
@@ -212,7 +206,7 @@ public class MunicipalesIPF {
 
     @GetMapping("/participacion/cambia")
     public void participacionCambia() {
-        c.enviarMensaje(ipfBuilderCartones.participacionCambia());
+        c.enviarMensaje(ipfBuilderCartones.participacionCambiaMuni());
     }
 
 }

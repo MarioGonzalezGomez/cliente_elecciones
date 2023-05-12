@@ -221,8 +221,12 @@ public class IPFCartonesMessageBuilder {
         return eventRunBuild("PARTICIPACION/SALE");
     }
 
-    public String participacionCambia() {
-        return eventRunBuild("PARTICIPACION/CAMBIA");
+    public String participacionCambiaAuto() {
+        return eventRunBuild("PARTICIPACION/CAMBIA_COMUNIDAD");
+    }
+
+    public String participacionCambiaMuni() {
+        return eventRunBuild("PARTICIPACION/CAMBIA_MUNICIPIO");
     }
 
     public String load() {
