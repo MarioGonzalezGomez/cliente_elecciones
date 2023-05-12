@@ -222,4 +222,21 @@ public class AutonomicasIPF {
         //c.enviarMensaje(mensajeXdeReset);
 
     }
+
+    @GetMapping("/participacion/entra")
+    public void participacionEntra() {
+        c.enviarMensaje(ipfBuilderCartones.participacionEntra());
+    }
+
+    @GetMapping("/participacion/sale")
+    public void participacionSale() {
+        c.enviarMensaje(ipfBuilderCartones.participacionSale());
+    }
+
+    @GetMapping("/participacion/cambia")
+    public void participacionCambia() {
+        c.enviarMensaje(ipfBuilderCartones.participacionCambia());
+    }
+
+
 }

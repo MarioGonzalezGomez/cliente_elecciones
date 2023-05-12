@@ -197,8 +197,22 @@ public class MunicipalesIPF {
     public void resetArco() {
         ipfBuilderCartones.reset();
         System.out.println("Reset completado");
-        //c.enviarMensaje(mensajeXdeReset);
+        //c.enviarMensaje(ipfBuilderCartones.reset());
     }
-    
+
+    @GetMapping("/participacion/entra")
+    public void participacionEntra() {
+        c.enviarMensaje(ipfBuilderCartones.participacionEntra());
+    }
+
+    @GetMapping("/participacion/sale")
+    public void participacionSale() {
+        c.enviarMensaje(ipfBuilderCartones.participacionSale());
+    }
+
+    @GetMapping("/participacion/cambia")
+    public void participacionCambia() {
+        c.enviarMensaje(ipfBuilderCartones.participacionCambia());
+    }
 
 }

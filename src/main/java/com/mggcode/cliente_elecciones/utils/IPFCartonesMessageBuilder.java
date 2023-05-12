@@ -39,7 +39,7 @@ public class IPFCartonesMessageBuilder {
             default -> {
             }
         }
-        return eventRunBuild(object, "OBJ_ORIENTATION[0]", "90", 1);
+        return eventBuild(object, "OBJ_ORIENTATION[0]", "90", 1);
     }
 
     private String orientacionDer(String posicionPartido, int tipoArco) {
@@ -52,7 +52,7 @@ public class IPFCartonesMessageBuilder {
             default -> {
             }
         }
-        return eventRunBuild(object, "OBJ_ORIENTATION[0]", "270", 1);
+        return eventBuild(object, "OBJ_ORIENTATION[0]", "270", 1);
     }
 
     private String getApertura(String posicionPartido, List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
@@ -67,8 +67,8 @@ public class IPFCartonesMessageBuilder {
         }
 
         String apertura = LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco);
-        return eventRunBuild("OFFSET" + posicionPartido, "MAP_FLOAT_PAR", apertura, 1) +
-                eventRunBuild(object, "PRIM_BAR_LEN[2]", apertura, 1);
+        return eventBuild("OFFSET" + posicionPartido, "MAP_FLOAT_PAR", apertura, 1) +
+                eventBuild(object, "PRIM_BAR_LEN[2]", apertura, 1);
     }
 
     private String getOffset(String posicionPartido, List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
@@ -109,9 +109,9 @@ public class IPFCartonesMessageBuilder {
                 offset = df.format(sumaTotalHasta - aperturasDeAnteriores);
             }
             if (i == partidosDentro.size() - 1) {
-                resultado.append(eventRunBuild(object, "PRIM_BAR_OFFSET[2]", offset, 1));
+                resultado.append(eventBuild(object, "PRIM_BAR_OFFSET[2]", offset, 1));
             } else {
-                resultado.append(eventRunBuild(object, "PRIM_BAR_OFFSET[2]", offset + ",0.5,0.1", 2));
+                resultado.append(eventBuild(object, "PRIM_BAR_OFFSET[2]", offset + ",0.5,0.1", 2));
             }
 
         }
@@ -128,7 +128,7 @@ public class IPFCartonesMessageBuilder {
             default -> {
             }
         }
-        return eventRunBuild(object, "PRIM_BAR_OFFSET[2]", "0.0", 1);
+        return eventBuild(object, "PRIM_BAR_OFFSET[2]", "0.0", 1);
     }
 
     private String objectCull(String posicionPartido, int tipoArco) {
@@ -141,7 +141,7 @@ public class IPFCartonesMessageBuilder {
             default -> {
             }
         }
-        return eventRunBuild(object, "OBJ_CULL", "True", 1);
+        return eventBuild(object, "OBJ_CULL", "True", 1);
     }
 
     private String objectCullFalse(String posicionPartido, int tipoArco) {
@@ -154,7 +154,7 @@ public class IPFCartonesMessageBuilder {
             default -> {
             }
         }
-        return eventRunBuild(object, "OBJ_CULL", "False,0,0.1", 2);
+        return eventBuild(object, "OBJ_CULL", "False,0,0.1", 2);
     }
 
     private String bindFraction(String posicionPartido, int tipoArco) {
@@ -168,7 +168,7 @@ public class IPFCartonesMessageBuilder {
             }
         }
         String values = "1,0.5";
-        return eventRunBuild(object, "BIND_FRACTION", values, 2);
+        return eventBuild(object, "BIND_FRACTION", values, 2);
     }
 
     public void reset() {
@@ -213,15 +213,26 @@ public class IPFCartonesMessageBuilder {
         return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
     }
 
+    public String participacionEntra() {
+        return eventRunBuild("PARTICIPACION/ENTRA");
+    }
+
+    public String participacionSale() {
+        return eventRunBuild("PARTICIPACION/SALE");
+    }
+
+    public String participacionCambia() {
+        return eventRunBuild("PARTICIPACION/CAMBIA");
+    }
+
     public String load() {
-        String itemSet = "itemset('";
-        return itemSet + bd + "LOAD" + "','" + "EVENT_RUN" + ");";
+        return eventRunBuild("LOAD");
     }
 
 
     //Para construir la señal necesitaría el objeto o evento al que llamo, la propiedad a cambiar,
     //el valor o valores que cambian y el tipo: 1 para itemset y 2 para itemgo
-    private String eventRunBuild(String objecto, String propiedad, String values, int tipoItem) {
+    private String eventBuild(String objecto, String propiedad, String values, int tipoItem) {
         String message = "";
         String itemSet = "";
         if (tipoItem == 1) {
@@ -233,5 +244,10 @@ public class IPFCartonesMessageBuilder {
         return message + itemSet +
                 bd +
                 objecto + "','" + propiedad + "'," + values + ");";
+    }
+
+    private String eventRunBuild(String objecto) {
+        String itemSet = "itemset('";
+        return itemSet + bd + objecto + "','" + "EVENT_RUN" + ");";
     }
 }
