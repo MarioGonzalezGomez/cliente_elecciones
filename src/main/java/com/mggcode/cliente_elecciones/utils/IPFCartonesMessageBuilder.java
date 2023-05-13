@@ -229,6 +229,22 @@ public class IPFCartonesMessageBuilder {
         return eventRunBuild("PARTICIPACION/CAMBIA_MUNICIPIO");
     }
 
+
+    public String resultadosEntra() {
+        return eventRunBuild("RESULTADOS/ENTRA");
+    }
+    public String resultadosSale() {
+        return eventRunBuild("RESULTADOS/SALE");
+    }
+
+    public String resultadosCambiaAuto() {
+        return eventRunBuild("RESULTADOS/CAMBIA");
+    }
+
+    public String resultadosCambiaMuni() {
+        return eventRunBuild("RESULTADOS/CAMBIA");
+    }
+
     public String load() {
         return eventRunBuild("LOAD");
     }

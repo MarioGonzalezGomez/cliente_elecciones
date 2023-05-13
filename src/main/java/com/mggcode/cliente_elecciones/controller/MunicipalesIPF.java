@@ -209,4 +209,19 @@ public class MunicipalesIPF {
         c.enviarMensaje(ipfBuilderCartones.participacionCambiaMuni());
     }
 
+    @GetMapping("/resultados/entra")
+    public void resultadosEntra() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosEntra());
+    }
+
+    @GetMapping("/resultados/sale")
+    public void resultadosSale() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosSale());
+    }
+
+    @GetMapping("/resultados/cambia")
+    public void resultadosCambia() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosCambiaMuni());
+    }
+
 }
