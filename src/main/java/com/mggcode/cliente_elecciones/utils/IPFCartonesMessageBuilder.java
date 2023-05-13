@@ -233,6 +233,7 @@ public class IPFCartonesMessageBuilder {
     public String resultadosEntra() {
         return eventRunBuild("RESULTADOS/ENTRA");
     }
+
     public String resultadosSale() {
         return eventRunBuild("RESULTADOS/SALE");
     }
@@ -268,6 +269,6 @@ public class IPFCartonesMessageBuilder {
 
     private String eventRunBuild(String objecto) {
         String itemSet = "itemset('";
-        return itemSet + bd + objecto + "','" + "EVENT_RUN" + ");";
+        return itemSet + bd + objecto + "','" + "EVENT_RUN" + "');";
     }
 }

@@ -80,7 +80,7 @@ public class AutonomicasIPF {
 
     @GetMapping("/carmen/faldon/sale")
     public void faldonSaleAuto() {
-        c.enviarMensaje(ipfBuilder.faldonAutoEntra());
+        c.enviarMensaje(ipfBuilder.faldonAutoSale());
     }
 
     @GetMapping("/arco/load")

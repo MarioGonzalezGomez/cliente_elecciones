@@ -39,6 +39,16 @@ public class MunicipalesIPF {
         c = conexionManager.getConexionByAdress(Config.config.getProperty("direccion1"));
     }
 
+    @GetMapping("/carmen/faldon/entra")
+    public void faldonEntraMuni() {
+        c.enviarMensaje(ipfBuilder.faldonMuniEntra());
+    }
+
+    @GetMapping("/carmen/faldon/sale")
+    public void faldonSaleMuni() {
+        c.enviarMensaje(ipfBuilder.faldonMuniSale());
+    }
+
     @GetMapping("/carmen/lateral/entra")
     public void entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());
