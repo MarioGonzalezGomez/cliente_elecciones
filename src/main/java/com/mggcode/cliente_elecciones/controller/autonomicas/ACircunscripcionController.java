@@ -2,6 +2,7 @@ package com.mggcode.cliente_elecciones.controller.autonomicas;
 
 
 import com.mggcode.cliente_elecciones.data.Data;
+import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
@@ -146,48 +147,38 @@ public class ACircunscripcionController {
             exec.scheduleAtFixedRate(() -> {
                 if (circunscripciones.isEmpty()) {
                     System.out.println("Cargando partidos");
-                    lock.lock();
-                    try {
-                        updateAllCsv();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } finally {
-                        lock.unlock();
-                    }
-
                     circunscripciones = circunscripcionService.findAll();
                 } else {
-                    //  System.out.println("Comprobando cambios autonomicos");
-                    List<Circunscripcion> circunscripcionesNew = null;
+                    List<Circunscripcion> circunscripcionesNew;
                     circunscripcionesNew = circunscripcionService.findAll();
                     if (!circunscripcionesNew.equals(circunscripciones)) {
                         System.out.println("Cambios detectados");
                         try {
-                            lock.lock();
                             updateAllCsv();
-                            getChanges(circunscripciones, circunscripcionesNew);
-                            if (containsSelected(data.autonomiaSeleccionada)) {
-                                System.out.println("Seleccionada ha cambiado");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        getChanges(circunscripciones, circunscripcionesNew);
+                        if (containsSelected(data.circunscripcionSeleccionada)) {
+                            System.out.println("Seleccionada ha cambiado");
+                            try {
+                                lock.lock();
                                 if (oficiales) {
                                     updateSelectedOficial();
                                 } else {
                                     updateSelectedSondeo();
                                 }
+                            } catch (IOException e) {
+                                System.err.println(e.getMessage());
+                                throw new RuntimeException(e);
+                            } finally {
+                                lock.unlock();
                             }
-                        } catch (IOException e) {
-                            System.err.println(e.getMessage());
-                            throw new RuntimeException(e);
-                        } finally {
-                            lock.unlock();
                         }
                         circunscripciones = circunscripcionesNew;
                     }
                 }
-                if (closeListener.get()) {
-                    isSuscribed.set(false);
-                    System.out.println("closing thread");
-                }
-            }, 0, 2, TimeUnit.SECONDS).cancel(true);
+            }, 0, 2, TimeUnit.SECONDS);
         }
     }
 

@@ -146,7 +146,7 @@ public class CircunscripcionController {
 
     public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
-            System.out.println("Suscribiendo autonomicas...");
+            System.out.println("Suscribiendo municipales...");
             isSuscribed.set(true);
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
             exec.scheduleAtFixedRate(() -> {
@@ -157,7 +157,6 @@ public class CircunscripcionController {
                     } catch (ConnectionException e) {
                         throw new RuntimeException(e);
                     }
-
                 } else {
                     List<Circunscripcion> circunscripcionesNew;
                     try {
