@@ -249,6 +249,10 @@ public class IPFCartonesMessageBuilder {
         return eventRunBuild("LOAD");
     }
 
+    public String resetIPF() {
+        return eventRunBuild("RESET");
+    }
+
 
     //Para construir la señal necesitaría el objeto o evento al que llamo, la propiedad a cambiar,
     //el valor o valores que cambian y el tipo: 1 para itemset y 2 para itemgo

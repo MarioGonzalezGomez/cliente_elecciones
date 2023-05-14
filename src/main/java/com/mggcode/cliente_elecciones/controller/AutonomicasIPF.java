@@ -40,6 +40,12 @@ public class AutonomicasIPF {
         c = conexionManager.getConexionByAdress(Config.config.getProperty("direccion1"));
     }
 
+    @GetMapping("/reset")
+    public void resetIPF() {
+        c.enviarMensaje(ipfBuilder.resetIPF());
+        c.enviarMensaje(ipfBuilderCartones.resetIPF());
+    }
+
     @GetMapping("/carmen/lateral/entra")
     public void entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());

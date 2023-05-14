@@ -108,6 +108,10 @@ public class IPFFaldonesMessageBuilder {
         return eventRunBuild("FALDON_MUNI_VOTANTES/SALE");
     }
 
+    public String resetIPF() {
+        return eventRunBuild("RESET");
+    }
+
     private String eventRunBuild(String eventName) {
         String message = "";
         String itemSet = "itemset('";

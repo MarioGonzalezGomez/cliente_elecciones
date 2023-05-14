@@ -59,18 +59,17 @@ public class ConexionIPF {
             crearFlujosES();
             System.out.println("Cliente->Conectado al servidor...");
         } catch (IOException ex) {
-            System.err.println("Cliente->ERROR: Al conectar al servidor " + ex.getMessage());
+            System.err.println("Cliente->ERROR: Al conectar al servidor -> " + ex.getMessage());
             try {
                 servidor = new Socket("127.0.0.1", Integer.parseInt(config.getProperty("puerto")));
+                crearFlujosES();
+                System.out.println("Cliente->Conectado en local");
             } catch (IOException e) {
-                System.err.println("Cliente->ERROR: Al conectar al IPF local" + ex.getMessage());
+                System.err.println("Cliente->ERROR: Al conectar al IPF local -> " + ex.getMessage());
             }
-            crearFlujosES();
-            System.out.println("Cliente->Conectado en local");
             // System.exit(-1);
         }
     }
-
 
     private void crearFlujosES() {
         try {
