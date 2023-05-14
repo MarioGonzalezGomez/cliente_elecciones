@@ -11,7 +11,7 @@ import java.util.Properties;
 
 @Service
 public class ConfiguracionService {
-    private final InputStream rutaConfig = getClass().getResourceAsStream("/config.properties");
+    private final InputStream rutaConfig = getClass().getResourceAsStream("C:/ELECCIONES2023/config.properties");
 
 
     public Configuracion cargarConfiguracion() {
@@ -63,10 +63,11 @@ public class ConfiguracionService {
 
             propiedades.setProperty("rutaFicheros", configuracion.getRutaFicheros());
 
-            File archivoPropiedades = new File(getClass().getResource("/config.properties").getFile());
+            File archivoPropiedades = new File("C:/ELECCIONES2023/config.properties");
             FileOutputStream archivoSalida = new FileOutputStream(archivoPropiedades);
             propiedades.store(archivoSalida, "Archivo de configuración");
             archivoSalida.close();
+
 
         } catch (IOException ex) {
             ex.printStackTrace();

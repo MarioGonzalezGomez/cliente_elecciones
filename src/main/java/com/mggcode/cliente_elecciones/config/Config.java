@@ -1,5 +1,6 @@
 package com.mggcode.cliente_elecciones.config;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -27,7 +28,7 @@ public class Config {
     }
 
     public void loadConfig() {
-        try (InputStream in = getClass().getResourceAsStream("/config.properties")){
+        try (InputStream in = new FileInputStream("C:\\ELECCIONES2023\\config.properties")){
             config.load(in);
         } catch (Exception e) {
             e.printStackTrace();
