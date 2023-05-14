@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 
@@ -19,6 +20,9 @@ public class ACarmenDTOService {
     private final Config conf = Config.getConfiguracion();
     private final String ipServer = Config.connectedServer;
     private final String ruta = Config.config.getProperty("rutaFicheros");
+
+    @Autowired
+    private ACircunscripcionService cirSer;
 
     @Autowired
     RestTemplate restTemplate;
@@ -34,10 +38,28 @@ public class ACarmenDTOService {
         return response.getBody();
     }
 
+    public void updateAllCsv() {
+        File carpetaBase = comprobarCarpetas();
+        cirSer.findAutonomias().forEach(autonomia -> {
+            URL url = null;
+            try {
+                url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/oficial/" + autonomia.getCodigo() + "/csv");
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+            File csv = new File(carpetaBase.getPath() + File.separator + "F_" + autonomia.getCodigo() + ".csv");
+            try {
+                FileUtils.copyURLToFile(url, csv);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     public File findAllInCsvOficial(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/oficial/" + codAutonomia + "/csv");
-        File csv = new File(carpetaBase.getPath()  + File.separator +  "F_" + codAutonomia + ".csv");
+        File csv = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
@@ -79,7 +101,7 @@ public class ACarmenDTOService {
     public File findAllInCsvSondeo(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/sondeo/" + codAutonomia + "/csv");
-        File csv = new File(carpetaBase.getPath()  + File.separator +  "F_" + codAutonomia + ".csv");
+        File csv = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }

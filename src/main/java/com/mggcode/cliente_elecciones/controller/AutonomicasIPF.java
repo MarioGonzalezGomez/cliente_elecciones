@@ -83,6 +83,21 @@ public class AutonomicasIPF {
         c.enviarMensaje(ipfBuilder.faldonAutoSale());
     }
 
+    @GetMapping("/carmen/faldon/actualiza")
+    public void faldonAutoActualizo() {
+        c.enviarMensaje(ipfBuilder.faldonAutoActualizo());
+    }
+
+    @GetMapping("/carmen/faldon/encadena")
+    public void faldonAutoEncadena() {
+        c.enviarMensaje(ipfBuilder.faldonAutoEncadena());
+    }
+
+    @GetMapping("/carmen/faldon/deAutoaMuni")
+    public void faldonDeMuniaAuto() {
+        c.enviarMensaje(ipfBuilder.deAutoAMuni());
+    }
+
     @GetMapping("/arco/load")
     public void load() {
         c.enviarMensaje(ipfBuilderCartones.load());

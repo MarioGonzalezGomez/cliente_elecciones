@@ -216,7 +216,6 @@ public class IPFCartonesMessageBuilder {
     public String participacionEntra() {
         return eventRunBuild("PARTICIPACION/ENTRA");
     }
-
     public String participacionSale() {
         return eventRunBuild("PARTICIPACION/SALE");
     }

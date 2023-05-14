@@ -49,6 +49,22 @@ public class MunicipalesIPF {
         c.enviarMensaje(ipfBuilder.faldonMuniSale());
     }
 
+    @GetMapping("/carmen/faldon/actualiza")
+    public void faldonMuniActualizo() {
+        c.enviarMensaje(ipfBuilder.faldonMuniActualizo());
+    }
+
+    @GetMapping("/carmen/faldon/encadena")
+    public void faldonMuniEncadena() {
+        c.enviarMensaje(ipfBuilder.faldonMuniEncadena());
+    }
+
+    @GetMapping("/carmen/faldon/deMuniaAuto")
+    public void faldonDeMuniaAuto() {
+        c.enviarMensaje(ipfBuilder.deMuniAAuto());
+    }
+
+
     @GetMapping("/carmen/lateral/entra")
     public void entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());
