@@ -39,6 +39,11 @@ public class MunicipalesIPF {
         c = conexionManager.getConexionByAdress(Config.config.getProperty("direccion1"));
     }
 
+    @GetMapping("/reset")
+    public void resetIPF() {
+        c.enviarMensaje(ipfBuilder.resetIPF());
+        c.enviarMensaje(ipfBuilderCartones.resetIPF());
+    }
     @GetMapping("/carmen/faldon/entra")
     public void faldonEntraMuni() {
         c.enviarMensaje(ipfBuilder.faldonMuniEntra());
@@ -48,6 +53,22 @@ public class MunicipalesIPF {
     public void faldonSaleMuni() {
         c.enviarMensaje(ipfBuilder.faldonMuniSale());
     }
+
+    @GetMapping("/carmen/faldon/actualiza")
+    public void faldonMuniActualizo() {
+        c.enviarMensaje(ipfBuilder.faldonMuniActualizo());
+    }
+
+    @GetMapping("/carmen/faldon/encadena")
+    public void faldonMuniEncadena() {
+        c.enviarMensaje(ipfBuilder.faldonMuniEncadena());
+    }
+
+    @GetMapping("/carmen/faldon/deMuniaAuto")
+    public void faldonDeMuniaAuto() {
+        c.enviarMensaje(ipfBuilder.deMuniAAuto());
+    }
+
 
     @GetMapping("/carmen/lateral/entra")
     public void entraFaldonLateral() {

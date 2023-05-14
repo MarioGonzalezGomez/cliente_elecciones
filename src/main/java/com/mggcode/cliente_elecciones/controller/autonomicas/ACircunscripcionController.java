@@ -183,7 +183,7 @@ public class ACircunscripcionController {
     }
 
     private void updateAllCsv() throws IOException {
-        carmenDTOService.findAllInCsvOficial(data.getCircunscripcionSeleccionada());
+        carmenDTOService.updateAllCsv();
     }
 
     private void updateSelectedOficial() throws IOException {

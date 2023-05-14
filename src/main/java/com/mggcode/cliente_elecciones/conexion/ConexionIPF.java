@@ -21,7 +21,8 @@ public class ConexionIPF {
     public ConexionIPF(String address) {
         iniciarControl(address);
     }
-    public String getDireccion(){
+
+    public String getDireccion() {
         return direccion;
     }
 
@@ -58,11 +59,17 @@ public class ConexionIPF {
             crearFlujosES();
             System.out.println("Cliente->Conectado al servidor...");
         } catch (IOException ex) {
-            System.err.println("Cliente->ERROR: Al conectar al servidor " + ex.getMessage());
-           // System.exit(-1);
+            System.err.println("Cliente->ERROR: Al conectar al servidor -> " + ex.getMessage());
+            try {
+                servidor = new Socket("127.0.0.1", Integer.parseInt(config.getProperty("puerto")));
+                crearFlujosES();
+                System.out.println("Cliente->Conectado en local");
+            } catch (IOException e) {
+                System.err.println("Cliente->ERROR: Al conectar al IPF local -> " + ex.getMessage());
+            }
+            // System.exit(-1);
         }
     }
-
 
     private void crearFlujosES() {
         try {
@@ -85,7 +92,7 @@ public class ConexionIPF {
         }
     }
 
-    public void prueba(){
+    public void prueba() {
         System.out.println("FUNCIONA");
     }
 }

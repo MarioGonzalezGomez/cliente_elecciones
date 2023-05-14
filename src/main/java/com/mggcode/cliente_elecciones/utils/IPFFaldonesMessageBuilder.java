@@ -104,8 +104,12 @@ public class IPFFaldonesMessageBuilder {
         return eventRunBuild("FALDON_MUNI_VOTANTES/HISTORICO");
     }
 
-    public String votantesSALE() {
+    public String votantesSale() {
         return eventRunBuild("FALDON_MUNI_VOTANTES/SALE");
+    }
+
+    public String resetIPF() {
+        return eventRunBuild("RESET");
     }
 
     private String eventRunBuild(String eventName) {

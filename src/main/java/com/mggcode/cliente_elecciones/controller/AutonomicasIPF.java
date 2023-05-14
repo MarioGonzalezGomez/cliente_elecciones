@@ -40,6 +40,12 @@ public class AutonomicasIPF {
         c = conexionManager.getConexionByAdress(Config.config.getProperty("direccion1"));
     }
 
+    @GetMapping("/reset")
+    public void resetIPF() {
+        c.enviarMensaje(ipfBuilder.resetIPF());
+        c.enviarMensaje(ipfBuilderCartones.resetIPF());
+    }
+
     @GetMapping("/carmen/lateral/entra")
     public void entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());
@@ -81,6 +87,21 @@ public class AutonomicasIPF {
     @GetMapping("/carmen/faldon/sale")
     public void faldonSaleAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoSale());
+    }
+
+    @GetMapping("/carmen/faldon/actualiza")
+    public void faldonAutoActualizo() {
+        c.enviarMensaje(ipfBuilder.faldonAutoActualizo());
+    }
+
+    @GetMapping("/carmen/faldon/encadena")
+    public void faldonAutoEncadena() {
+        c.enviarMensaje(ipfBuilder.faldonAutoEncadena());
+    }
+
+    @GetMapping("/carmen/faldon/deAutoaMuni")
+    public void faldonDeMuniaAuto() {
+        c.enviarMensaje(ipfBuilder.deAutoAMuni());
     }
 
     @GetMapping("/arco/load")
