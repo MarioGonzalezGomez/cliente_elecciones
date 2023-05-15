@@ -216,6 +216,7 @@ public class IPFCartonesMessageBuilder {
     public String participacionEntra() {
         return eventRunBuild("PARTICIPACION/ENTRA");
     }
+
     public String participacionSale() {
         return eventRunBuild("PARTICIPACION/SALE");
     }
@@ -243,6 +244,22 @@ public class IPFCartonesMessageBuilder {
 
     public String resultadosCambiaMuni() {
         return eventRunBuild("RESULTADOS/CAMBIA");
+    }
+
+    public String resultadosSondeoEntra() {
+        return eventRunBuild("RESULTADOS_SONDEO/ENTRA");
+    }
+
+    public String resultadosSondeoSale() {
+        return eventRunBuild("RESULTADOS_SONDEO/SALE");
+    }
+
+    public String resultadosSondeoCambiaAuto() {
+        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA");
+    }
+
+    public String resultadosSondeoCambiaMuni() {
+        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA");
     }
 
     public String load() {

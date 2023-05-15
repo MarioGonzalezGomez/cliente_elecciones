@@ -2,6 +2,7 @@ package com.mggcode.cliente_elecciones.service.autonomicas;
 
 import com.mggcode.cliente_elecciones.DTO.CarmenDTO;
 import com.mggcode.cliente_elecciones.config.Config;
+import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 
 @Service
@@ -40,7 +42,8 @@ public class ACarmenDTOService {
 
     public void updateAllCsv() {
         File carpetaBase = comprobarCarpetas();
-        cirSer.findAutonomias().forEach(autonomia -> {
+        List<Circunscripcion> list = cirSer.findAutonomias();
+        list.forEach(autonomia -> {
             URL url = null;
             try {
                 url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/oficial/" + autonomia.getCodigo() + "/csv");
@@ -117,8 +120,7 @@ public class ACarmenDTOService {
     public File writeCricunscripcionSeleccionadaSondeo(String codCirunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/sondeo/" + codCirunscripcion + "/csv");
-        File csv = new File(carpetaBase.getPath() + File.separator +
-                File.separator + "F_autonomicas.csv");
+        File csv = new File(carpetaBase.getPath() + File.separator + "F_SondeoAutonomicas.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }

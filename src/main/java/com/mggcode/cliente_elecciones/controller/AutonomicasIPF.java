@@ -270,5 +270,20 @@ public class AutonomicasIPF {
         c.enviarMensaje(ipfBuilderCartones.resultadosCambiaAuto());
     }
 
+    @GetMapping("/resultados/sondeo/entra")
+    public void resultadosSondeoEntra() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosEntra());
+    }
+
+    @GetMapping("/resultados/sondeo/sale")
+    public void resultadosSondeoSale() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosSale());
+    }
+
+    @GetMapping("/resultados/sondeo/cambia")
+    public void resultadosSondeoCambia() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosCambiaAuto());
+    }
+
 
 }

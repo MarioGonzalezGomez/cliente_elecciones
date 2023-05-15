@@ -23,7 +23,6 @@ import java.util.List;
 public class MunicipalesIPF {
     private ConexionManager conexionManager;
     private final IPFFaldonesMessageBuilder ipfBuilder;
-
     private final IPFCartonesMessageBuilder ipfBuilderCartones;
     private final Config conf;
     private final ConexionIPF c;
@@ -44,6 +43,7 @@ public class MunicipalesIPF {
         c.enviarMensaje(ipfBuilder.resetIPF());
         c.enviarMensaje(ipfBuilderCartones.resetIPF());
     }
+
     @GetMapping("/carmen/faldon/entra")
     public void faldonEntraMuni() {
         c.enviarMensaje(ipfBuilder.faldonMuniEntra());
@@ -253,6 +253,21 @@ public class MunicipalesIPF {
     @GetMapping("/resultados/cambia")
     public void resultadosCambia() {
         c.enviarMensaje(ipfBuilderCartones.resultadosCambiaMuni());
+    }
+
+    @GetMapping("/resultados/sondeo/entra")
+    public void resultadosSondeoEntra() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosEntra());
+    }
+
+    @GetMapping("/resultados/sondeo/sale")
+    public void resultadosSondeoSale() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosSale());
+    }
+
+    @GetMapping("/resultados/sondeo/cambia")
+    public void resultadosSondeoCambia() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosCambiaAuto());
     }
 
 }
