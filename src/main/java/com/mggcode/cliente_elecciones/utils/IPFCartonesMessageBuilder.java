@@ -213,9 +213,20 @@ public class IPFCartonesMessageBuilder {
         return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
     }
 
-    public String participacionEntra() {
-        return eventRunBuild("PARTICIPACION/ENTRA");
+    public String arcoEntra() {return eventRunBuild("ARCO/ENTRA");}
+    public String arcoSale() {
+        return eventRunBuild("ARCO/SALE");
     }
+    public String arcoPactos() {
+        return eventRunBuild("ARCO/PACTOS");
+    }
+    public String arcoSondeoEntra() {return eventRunBuild("ARCO_SONDEO/ENTRA");}
+    public String arcoSondeoSale() {
+        return eventRunBuild("ARCO_SONDEO/SALE");
+    }
+    public String arcoSondeoPactos() {return eventRunBuild("ARCO_SONDEO/PACTOS");}
+
+    public String participacionEntra() {return eventRunBuild("PARTICIPACION/ENTRA");}
 
     public String participacionSale() {
         return eventRunBuild("PARTICIPACION/SALE");
@@ -228,7 +239,6 @@ public class IPFCartonesMessageBuilder {
     public String participacionCambiaMuni() {
         return eventRunBuild("PARTICIPACION/CAMBIA_MUNICIPIO");
     }
-
 
     public String resultadosEntra() {
         return eventRunBuild("RESULTADOS/ENTRA");

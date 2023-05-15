@@ -104,6 +104,7 @@ public class AutonomicasIPF {
         c.enviarMensaje(ipfBuilder.deAutoAMuni());
     }
 
+    //ARCOS
     @GetMapping("/arco/load")
     public void load() {
         c.enviarMensaje(ipfBuilderCartones.load());
@@ -239,6 +240,37 @@ public class AutonomicasIPF {
 
     }
 
+    @GetMapping("/arco/entra")
+    public void arcoEntra() {
+        c.enviarMensaje(ipfBuilderCartones.arcoEntra());
+    }
+
+    @GetMapping("/arco/sale")
+    public void arcoSale() {
+        c.enviarMensaje(ipfBuilderCartones.arcoSale());
+    }
+
+    @GetMapping("/arco/pactos")
+    public void arcoPactos() {
+        c.enviarMensaje(ipfBuilderCartones.arcoPactos());
+    }
+
+    @GetMapping("/arco/sondeo/entra")
+    public void arcoSondeoEntra() {
+        c.enviarMensaje(ipfBuilderCartones.arcoSondeoEntra());
+    }
+
+    @GetMapping("/arco/sondeo/sale")
+    public void arcoSondeoSale() {
+        c.enviarMensaje(ipfBuilderCartones.arcoSondeoSale());
+    }
+
+    @GetMapping("/arco/sondeo/pactos")
+    public void arcoSondeoPactos() {
+        c.enviarMensaje(ipfBuilderCartones.arcoSondeoPactos());
+    }
+
+    //PARTICIPACION
     @GetMapping("/participacion/entra")
     public void participacionEntra() {
         c.enviarMensaje(ipfBuilderCartones.participacionEntra());
@@ -254,6 +286,7 @@ public class AutonomicasIPF {
         c.enviarMensaje(ipfBuilderCartones.participacionCambiaAuto());
     }
 
+    //RESULTADOS
 
     @GetMapping("/resultados/entra")
     public void resultadosEntra() {
@@ -272,17 +305,17 @@ public class AutonomicasIPF {
 
     @GetMapping("/resultados/sondeo/entra")
     public void resultadosSondeoEntra() {
-        c.enviarMensaje(ipfBuilderCartones.resultadosEntra());
+        c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntra());
     }
 
     @GetMapping("/resultados/sondeo/sale")
     public void resultadosSondeoSale() {
-        c.enviarMensaje(ipfBuilderCartones.resultadosSale());
+        c.enviarMensaje(ipfBuilderCartones.resultadosSondeoSale());
     }
 
     @GetMapping("/resultados/sondeo/cambia")
     public void resultadosSondeoCambia() {
-        c.enviarMensaje(ipfBuilderCartones.resultadosCambiaAuto());
+        c.enviarMensaje(ipfBuilderCartones.resultadosSondeoCambiaAuto());
     }
 
 

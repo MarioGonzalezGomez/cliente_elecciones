@@ -53,8 +53,7 @@ public class CarmenDTOService {
     public File writeCricunscripcionSeleccionadaOficial(String codCirunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codCirunscripcion + "/csv");
-        File csv = new File(carpetaBase.getPath() + File.separator +
-                File.separator + "F_municipales.csv");
+        File csv = new File(carpetaBase.getPath() + File.separator  + "F_municipales.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
@@ -62,8 +61,7 @@ public class CarmenDTOService {
     public File writeAutonomiaSeleccionadaArcoMayoriasOficial(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/csv");
-        File csv = new File(carpetaBase.getPath() +
-                File.separator + "C_MapaMayorias.csv");
+        File csv = new File(carpetaBase.getPath() + File.separator + "C_MapaMayorias.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
@@ -103,8 +101,7 @@ public class CarmenDTOService {
     public File writeAutonomiaSeleccionadaArcoMayoriasSondeo(String codCirunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codCirunscripcion + "/csv");
-        File csv = new File(carpetaBase.getPath() +
-                File.separator + "C_MapaMayoriasSondeo.csv");
+        File csv = new File(carpetaBase.getPath() + File.separator + "C_MapaMayoriasSondeo.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }

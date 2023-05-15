@@ -87,7 +87,7 @@ public class CarmenDtoReader {
                         (int) Double.parseDouble(read.get(2)), (int) Double.parseDouble(read.get(3)),
                         (int) Double.parseDouble(read.get(4)), Double.parseDouble(read.get(5)),
                         Double.parseDouble(read.get(6)), (int) Double.parseDouble(read.get(7)),
-                        read.get(8), read.get(9));
+                        read.get(8), read.get(9), (int) Double.parseDouble(read.get(10)), (int) Double.parseDouble(read.get(11)), Double.parseDouble(read.get(12)));
                 listaCp.add(cpDTO);
             }
             CarmenDTO carmenDTO = new CarmenDTO(circunscripcion, nPartidos, listaCp);
@@ -142,6 +142,6 @@ public class CarmenDtoReader {
                 (int) Double.parseDouble(split[2]), (int) Double.parseDouble(split[3]),
                 (int) Double.parseDouble(split[4]), Double.parseDouble(split[5]),
                 Double.parseDouble(split[6]), (int) Double.parseDouble(split[7]),
-                split[8], split[9]);
+                split[8], split[9], (int) Double.parseDouble(split[10]), (int) Double.parseDouble(split[11]), Double.parseDouble(split[12]));
     }
 }

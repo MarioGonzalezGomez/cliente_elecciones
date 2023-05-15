@@ -193,12 +193,14 @@ public class CircunscripcionController {
     private void updateSelectedOficial() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
+        carmenDTOService.findAllInCsvOficial(data.getCircunscripcionSeleccionada());
         // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 
     private void updateSelectedSondeo() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
+        carmenDTOService.findAllInCsvSondeo(data.getCircunscripcionSeleccionada());
         // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
     }
 

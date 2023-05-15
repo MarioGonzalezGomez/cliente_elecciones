@@ -18,5 +18,8 @@ public class CpDTO {
     private int numVotantes;
     private String siglas;
     private String literalPartido;
+    private int escanos_desde_sondeo;
+    private int escanos_hasta_sondeo;
+    private double porcentajeVotoSondeo;
 
 }
