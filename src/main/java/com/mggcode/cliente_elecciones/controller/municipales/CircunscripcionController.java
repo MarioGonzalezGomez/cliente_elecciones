@@ -60,7 +60,7 @@ public class CircunscripcionController {
     }
 
     @GetMapping("/selected/oficial/{codigo}")
-    public void selectCircunscripcionOficial(@PathVariable("codigo") String codigo) {
+    public String selectCircunscripcionOficial(@PathVariable("codigo") String codigo) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -73,10 +73,12 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
+        return "redirect:";
+
     }
 
     @GetMapping("/selected/sondeo/{codigo}")
-    public void selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
+    public String selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -89,6 +91,8 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
+        return "redirect:";
+
     }
 
     @RequestMapping(path = "/csv")
