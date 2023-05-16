@@ -213,71 +213,83 @@ public class IPFCartonesMessageBuilder {
         return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
     }
 
-    public String arcoEntra() {return eventRunBuild("ARCO/ENTRA");}
+    public String arcoEntra() {return eventRunBuild("ARCO/ENTRA", false);}
+
+    public String arcoEntraDelay() {return eventRunBuild("ARCO/ENTRA", true);}
+
     public String arcoSale() {
-        return eventRunBuild("ARCO/SALE");
+        return eventRunBuild("ARCO/SALE", false);
     }
     public String arcoPactos() {
-        return eventRunBuild("ARCO/PACTOS");
+        return eventRunBuild("ARCO/PACTOS", false);
     }
-    public String arcoSondeoEntra() {return eventRunBuild("ARCO_SONDEO/ENTRA");}
-    public String arcoSondeoSale() {
-        return eventRunBuild("ARCO_SONDEO/SALE");
-    }
-    public String arcoSondeoPactos() {return eventRunBuild("ARCO_SONDEO/PACTOS");}
+    public String arcoSondeoEntra() {return eventRunBuild("ARCO_SONDEO/ENTRA", false);}
+    public String arcoSondeoEntraDelay() {return eventRunBuild("ARCO_SONDEO/ENTRA", true);}
 
-    public String participacionEntra() {return eventRunBuild("PARTICIPACION/ENTRA");}
+    public String arcoSondeoSale() {
+        return eventRunBuild("ARCO_SONDEO/SALE", false);
+    }
+    public String arcoSondeoPactos() {return eventRunBuild("ARCO_SONDEO/PACTOS", false);}
+
+    public String participacionEntra() {return eventRunBuild("PARTICIPACION/ENTRA", false);}
+    public String participacionEntraDelay() {return eventRunBuild("PARTICIPACION/ENTRA", true);}
 
     public String participacionSale() {
-        return eventRunBuild("PARTICIPACION/SALE");
+        return eventRunBuild("PARTICIPACION/SALE", false);
     }
 
     public String participacionCambiaAuto() {
-        return eventRunBuild("PARTICIPACION/CAMBIA_COMUNIDAD");
+        return eventRunBuild("PARTICIPACION/CAMBIA_COMUNIDAD", false);
     }
 
     public String participacionCambiaMuni() {
-        return eventRunBuild("PARTICIPACION/CAMBIA_MUNICIPIO");
+        return eventRunBuild("PARTICIPACION/CAMBIA_MUNICIPIO", false);
     }
 
     public String resultadosEntra() {
-        return eventRunBuild("RESULTADOS/ENTRA");
+        return eventRunBuild("RESULTADOS/ENTRA", false);
+    }
+    public String resultadosEntraDelay() {
+        return eventRunBuild("RESULTADOS/ENTRA", true);
     }
 
     public String resultadosSale() {
-        return eventRunBuild("RESULTADOS/SALE");
+        return eventRunBuild("RESULTADOS/SALE", false);
     }
 
     public String resultadosCambiaAuto() {
-        return eventRunBuild("RESULTADOS/CAMBIA");
+        return eventRunBuild("RESULTADOS/CAMBIA", false);
     }
 
     public String resultadosCambiaMuni() {
-        return eventRunBuild("RESULTADOS/CAMBIA");
+        return eventRunBuild("RESULTADOS/CAMBIA", false);
     }
 
     public String resultadosSondeoEntra() {
-        return eventRunBuild("RESULTADOS_SONDEO/ENTRA");
+        return eventRunBuild("RESULTADOS_SONDEO/ENTRA", false);
+    }
+    public String resultadosSondeoEntraDelay() {
+        return eventRunBuild("RESULTADOS_SONDEO/ENTRA", true);
     }
 
     public String resultadosSondeoSale() {
-        return eventRunBuild("RESULTADOS_SONDEO/SALE");
+        return eventRunBuild("RESULTADOS_SONDEO/SALE", false);
     }
 
     public String resultadosSondeoCambiaAuto() {
-        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA");
+        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA", false);
     }
 
     public String resultadosSondeoCambiaMuni() {
-        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA");
+        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA", false);
     }
 
     public String load() {
-        return eventRunBuild("LOAD");
+        return eventRunBuild("LOAD", false);
     }
 
     public String resetIPF() {
-        return eventRunBuild("RESET");
+        return eventRunBuild("RESET", false);
     }
 
 
@@ -297,8 +309,15 @@ public class IPFCartonesMessageBuilder {
                 objecto + "','" + propiedad + "'," + values + ");";
     }
 
-    private String eventRunBuild(String objecto) {
-        String itemSet = "itemset('";
-        return itemSet + bd + objecto + "','" + "EVENT_RUN" + "');";
+    private String eventRunBuild(String objecto, boolean delay) {
+        if(!delay ){
+            String itemSet = "itemset('";
+            return itemSet + bd + objecto + "','" + "EVENT_RUN" + "');";
+        }else {
+            String itemSet = "itemgo('";
+            return itemSet + bd + objecto + "','" + "EVENT_RUN',0,1.5" + ");";
+        }
     }
+
+
 }

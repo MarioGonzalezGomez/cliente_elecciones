@@ -245,6 +245,11 @@ public class AutonomicasIPF {
         c.enviarMensaje(ipfBuilderCartones.arcoEntra());
     }
 
+    @GetMapping("/arco/entra/delay")
+    public void arcoEntraDelay() {
+        c.enviarMensaje(ipfBuilderCartones.arcoEntraDelay());
+    }
+
     @GetMapping("/arco/sale")
     public void arcoSale() {
         c.enviarMensaje(ipfBuilderCartones.arcoSale());
@@ -259,6 +264,12 @@ public class AutonomicasIPF {
     public void arcoSondeoEntra() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoEntra());
     }
+
+    @GetMapping("/arco/sondeo/entra/delay")
+    public void arcoSondeoEntraDelayed() {
+        c.enviarMensaje(ipfBuilderCartones.arcoSondeoEntraDelay());
+    }
+
 
     @GetMapping("/arco/sondeo/sale")
     public void arcoSondeoSale() {
@@ -275,6 +286,13 @@ public class AutonomicasIPF {
     public void participacionEntra() {
         c.enviarMensaje(ipfBuilderCartones.participacionEntra());
     }
+
+
+    @GetMapping("/participacion/entra/delay")
+    public void participacionEntraDelay() {
+        c.enviarMensaje(ipfBuilderCartones.participacionEntraDelay());
+    }
+
 
     @GetMapping("/participacion/sale")
     public void participacionSale() {
@@ -293,6 +311,11 @@ public class AutonomicasIPF {
         c.enviarMensaje(ipfBuilderCartones.resultadosEntra());
     }
 
+    @GetMapping("/resultados/entra/delay")
+    public void resultadosEntraDelay() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosEntraDelay());
+    }
+
     @GetMapping("/resultados/sale")
     public void resultadosSale() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSale());
@@ -306,6 +329,11 @@ public class AutonomicasIPF {
     @GetMapping("/resultados/sondeo/entra")
     public void resultadosSondeoEntra() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntra());
+    }
+
+    @GetMapping("/resultados/sondeo/entra/delay")
+    public void resultadosSondeoEntraDelay() {
+        c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntraDelay());
     }
 
     @GetMapping("/resultados/sondeo/sale")
