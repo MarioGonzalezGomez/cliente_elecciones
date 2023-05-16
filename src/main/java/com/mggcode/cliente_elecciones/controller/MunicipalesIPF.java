@@ -52,9 +52,21 @@ public class MunicipalesIPF {
         return "redirect:";
     }
 
+    @GetMapping("/carmen/faldon/sondeo/entra")
+    public String faldonEntraMuniSondeo() {
+        c.enviarMensaje(ipfBuilder.faldonMuniSondeoEntra());
+        return "redirect:";
+    }
+
     @GetMapping("/carmen/faldon/sale")
     public String faldonSaleMuni() {
         c.enviarMensaje(ipfBuilder.faldonMuniSale());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/faldon/sondeo/sale")
+    public String faldonSaleMuniSondeo() {
+        c.enviarMensaje(ipfBuilder.faldonMuniSondeoSale());
         return "redirect:";
     }
 
@@ -151,7 +163,7 @@ public class MunicipalesIPF {
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
         return "redirect:";
-        
+
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraIzq")
@@ -328,6 +340,7 @@ public class MunicipalesIPF {
         c.enviarMensaje(ipfBuilderCartones.participacionEntra());
         return "redirect:";
     }
+
     @GetMapping("/participacion/entra/delay")
     public String participacionEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.participacionEntraDelay());
@@ -375,6 +388,7 @@ public class MunicipalesIPF {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntra());
         return "redirect:";
     }
+
     @GetMapping("/resultados/sondeo/entra/delay")
     public String resultadosSondeoEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntraDelay());

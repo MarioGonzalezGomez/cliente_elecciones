@@ -75,5 +75,10 @@ public class CarmenDTOController {
         return new ResponseEntity<>(carmenDTOService.findAllSondeo(codigo), HttpStatus.OK);
     }
 
+    @GetMapping("/sondeo/especial/{codigo}/data")
+    public ResponseEntity<CarmenDTO> findDtoSondeoEspecial(@PathVariable("codigo") String codigo) {
+        return new ResponseEntity<>(carmenDTOService.getSondeoEspecial(codigo), HttpStatus.OK);
+    }
+
 
 }

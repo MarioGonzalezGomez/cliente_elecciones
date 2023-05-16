@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 
@@ -53,7 +54,7 @@ public class CarmenDTOService {
     public File writeCricunscripcionSeleccionadaOficial(String codCirunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codCirunscripcion + "/csv");
-        File csv = new File(carpetaBase.getPath() + File.separator  + "F_municipales.csv");
+        File csv = new File(carpetaBase.getPath() + File.separator + "F_municipales.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
@@ -70,6 +71,14 @@ public class CarmenDTOService {
         ResponseEntity<CarmenDTO> response =
                 restTemplate.getForEntity(
                         "http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia,
+                        CarmenDTO.class);
+        return response.getBody();
+    }
+
+    public CarmenDTO getSondeoEspecial(String codAutonomia) {
+        ResponseEntity<CarmenDTO> response =
+                restTemplate.getForEntity(
+                        "http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codAutonomia,
                         CarmenDTO.class);
         return response.getBody();
     }
@@ -92,7 +101,7 @@ public class CarmenDTOService {
 
     public File writeCricunscripcionSeleccionadaSondeo(String codCirunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codCirunscripcion + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codCirunscripcion + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "F_SondeoMunicipales.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;

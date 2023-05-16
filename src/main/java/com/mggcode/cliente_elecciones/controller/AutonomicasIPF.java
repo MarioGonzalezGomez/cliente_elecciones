@@ -97,9 +97,21 @@ public class AutonomicasIPF {
         return "redirect:";
     }
 
+    @GetMapping("/carmen/faldon/sondeo/entra")
+    public String faldonEntraAutoSondeo() {
+        c.enviarMensaje(ipfBuilder.faldonAutoSondeoEntra());
+        return "redirect:";
+    }
+
     @GetMapping("/carmen/faldon/sale")
     public String faldonSaleAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoSale());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/faldon/sondeo/sale")
+    public String faldonSaleAutoSondeo() {
+        c.enviarMensaje(ipfBuilder.faldonAutoSondeoSale());
         return "redirect:";
     }
 
@@ -181,7 +193,6 @@ public class AutonomicasIPF {
         return "redirect:";
 
 
-
     }
 
     @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraIzq")
@@ -237,7 +248,6 @@ public class AutonomicasIPF {
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
         return "redirect:";
-
 
 
     }
