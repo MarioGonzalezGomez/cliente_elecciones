@@ -46,6 +46,8 @@ public class AutonomicasIPF {
         c.enviarMensaje(ipfBuilderCartones.resetIPF());
     }
 
+    //LATERAL
+
     @GetMapping("/carmen/lateral/entra")
     public void entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());
@@ -79,6 +81,8 @@ public class AutonomicasIPF {
         c.enviarMensaje(ipfBuilder.lateralSale());
     }
 
+    //INFERIOR
+
     @GetMapping("/carmen/faldon/entra")
     public void faldonEntraAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoEntra());
@@ -103,6 +107,22 @@ public class AutonomicasIPF {
     public void faldonDeMuniaAuto() {
         c.enviarMensaje(ipfBuilder.deAutoAMuni());
     }
+
+    @GetMapping("/carmen/faldon/deAutoSondeoAMuniSondeo")
+    public void deAutoSondeoAMuniSondeo() {
+        c.enviarMensaje(ipfBuilder.deAutoSondeoAMuniSondeo());
+    }
+
+    @GetMapping("/carmen/faldon/deAutoSondeoAMuni")
+    public void deAutoSondeoAMuni() {
+        c.enviarMensaje(ipfBuilder.deAutoSondeoAMuni());
+    }
+
+    @GetMapping("/carmen/faldon/deAutoSondeoAAuto")
+    public void deAutoSondeoAAuto() {
+        c.enviarMensaje(ipfBuilder.deAutoSondeoAAuto());
+    }
+
 
     //ARCOS
     @GetMapping("/arco/load")
