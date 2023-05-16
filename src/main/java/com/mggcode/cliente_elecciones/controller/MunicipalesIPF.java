@@ -44,6 +44,7 @@ public class MunicipalesIPF {
         c.enviarMensaje(ipfBuilderCartones.resetIPF());
     }
 
+    //INFERIOR
     @GetMapping("/carmen/faldon/entra")
     public void faldonEntraMuni() {
         c.enviarMensaje(ipfBuilder.faldonMuniEntra());
@@ -69,7 +70,22 @@ public class MunicipalesIPF {
         c.enviarMensaje(ipfBuilder.deMuniAAuto());
     }
 
+    @GetMapping("/carmen/faldon/deMuniSondeoAAutoSondeo")
+    public void deMuniSondeoAAutoSondeo() {
+        c.enviarMensaje(ipfBuilder.deMuniSondeoAAutoSondeo());
+    }
 
+    @GetMapping("/carmen/faldon/deMuniSondeoAMuni")
+    public void deMuniSondeoAMuni() {
+        c.enviarMensaje(ipfBuilder.deMuniSondeoAMuni());
+    }
+
+    @GetMapping("/carmen/faldon/deMuniSondeoAAuto")
+    public void deMuniSondeoAAuto() {
+        c.enviarMensaje(ipfBuilder.deMuniSondeoAAuto());
+    }
+
+    //LATERAL
     @GetMapping("/carmen/lateral/entra")
     public void entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());

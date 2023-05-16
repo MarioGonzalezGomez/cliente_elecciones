@@ -86,31 +86,49 @@ public class IPFFaldonesMessageBuilder {
         return eventRunBuild("GIRO/DeAutoAMuni");
     }
 
-    public String autoMuni() {
-        return eventRunBuild("AUTO_MUNI/ACTUALIZO");
+    //ESTANDO EN MUNI
 
+    public String deMuniSondeoAAutoSondeo() {
+        return eventRunBuild("GIRO/DeSondeoMuniASondeoAuto");
     }
 
-    public String muniAuto() {
-        return eventRunBuild("MUNI_AUTO/ACTUALIZO");
-
+    public String deMuniSondeoAMuni() {
+        return eventRunBuild("GIRO/DeSondeoMuniAMuni");
     }
 
-    public String votantesEntra() {
-        return eventRunBuild("FALDON_MUNI_VOTANTES/ENTRA");
+    public String deMuniSondeoAAuto() {
+        return eventRunBuild("GIRO/DeSondeoMuniAAuto");
     }
 
-    public String votantesHistorico() {
-        return eventRunBuild("FALDON_MUNI_VOTANTES/HISTORICO");
+    //ESTANDO EN AUTO
+
+    public String deAutoSondeoAMuniSondeo() {
+        return eventRunBuild("GIRO/DeSondeoAutoASondeoMuni");
     }
 
-    public String votantesSale() {
-        return eventRunBuild("FALDON_MUNI_VOTANTES/SALE");
+    public String deAutoSondeoAMuni() {
+        return eventRunBuild("GIRO/DeSondeoAutoAMuni");
     }
 
-    public String resetIPF() {
-        return eventRunBuild("RESET");
+    public String deAutoSondeoAAuto() {
+        return eventRunBuild("GIRO/DeSondeoAutoAAuto");
     }
+
+    //ACTUALIZAS
+
+    public String autoMuniActualizo() {return eventRunBuild("AUTO_MUNI/ACTUALIZO");}
+
+    public String muniAutoActualizo() {return eventRunBuild("MUNI_AUTO/ACTUALIZO");}
+
+    //VOTANTES
+
+    public String votantesEntra() {return eventRunBuild("FALDON_MUNI_VOTANTES/ENTRA");}
+
+    public String votantesHistorico() {return eventRunBuild("FALDON_MUNI_VOTANTES/HISTORICO");}
+
+    public String votantesSale() {return eventRunBuild("FALDON_MUNI_VOTANTES/SALE");}
+
+    public String resetIPF() {return eventRunBuild("RESET");}
 
     private String eventRunBuild(String eventName) {
         String message = "";
