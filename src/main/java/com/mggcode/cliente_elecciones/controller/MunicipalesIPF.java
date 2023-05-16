@@ -39,90 +39,106 @@ public class MunicipalesIPF {
     }
 
     @GetMapping("/reset")
-    public void resetIPF() {
+    public String resetIPF() {
         c.enviarMensaje(ipfBuilder.resetIPF());
         c.enviarMensaje(ipfBuilderCartones.resetIPF());
+        return "redirect:";
     }
 
     //INFERIOR
     @GetMapping("/carmen/faldon/entra")
-    public void faldonEntraMuni() {
+    public String faldonEntraMuni() {
         c.enviarMensaje(ipfBuilder.faldonMuniEntra());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/faldon/sale")
-    public void faldonSaleMuni() {
+    public String faldonSaleMuni() {
         c.enviarMensaje(ipfBuilder.faldonMuniSale());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/faldon/actualiza")
-    public void faldonMuniActualizo() {
+    public String faldonMuniActualizo() {
         c.enviarMensaje(ipfBuilder.faldonMuniActualizo());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/faldon/encadena")
-    public void faldonMuniEncadena() {
+    public String faldonMuniEncadena() {
         c.enviarMensaje(ipfBuilder.faldonMuniEncadena());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/faldon/deMuniaAuto")
-    public void faldonDeMuniaAuto() {
+    public String faldonDeMuniaAuto() {
         c.enviarMensaje(ipfBuilder.deMuniAAuto());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/faldon/deMuniSondeoAAutoSondeo")
-    public void deMuniSondeoAAutoSondeo() {
+    public String deMuniSondeoAAutoSondeo() {
         c.enviarMensaje(ipfBuilder.deMuniSondeoAAutoSondeo());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/faldon/deMuniSondeoAMuni")
-    public void deMuniSondeoAMuni() {
+    public String deMuniSondeoAMuni() {
         c.enviarMensaje(ipfBuilder.deMuniSondeoAMuni());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/faldon/deMuniSondeoAAuto")
-    public void deMuniSondeoAAuto() {
+    public String deMuniSondeoAAuto() {
         c.enviarMensaje(ipfBuilder.deMuniSondeoAAuto());
+        return "redirect:";
     }
 
     //LATERAL
     @GetMapping("/carmen/lateral/entra")
-    public void entraFaldonLateral() {
+    public String entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/lateral/{codigo}/despliega")
-    public void despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public String despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralDespliega(codCircunscripcion));
+        return "redirect:";
     }
 
     @GetMapping("/carmen/lateral/{codigo}/repliega")
-    public void repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public String repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralRepliega(codCircunscripcion));
+        return "redirect:";
     }
 
     @GetMapping("/carmen/lateral/{codigo}/actualiza")
-    public void actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralActualiza(codCircunscripcion));
+        return "redirect:";
     }
 
     @GetMapping("/carmen/lateral/actualiza")
-    public void actualizaFaldonLateral() {
+    public String actualizaFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralActualiza());
+        return "redirect:";
     }
 
     @GetMapping("/carmen/lateral/sale")
-    public void saleFaldonLateral() {
+    public String saleFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralSale());
+        return "redirect:";
     }
 
     @GetMapping("/arco/load")
-    public void loadMapaMayorias() {
+    public String loadMapaMayorias() {
         c.enviarMensaje(ipfBuilderCartones.load());
+        return "redirect:";
     }
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraIzq")
-    public void entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public String entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -134,10 +150,12 @@ public class MunicipalesIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
+        return "redirect:";
+        
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraIzq")
-    public void entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public String entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -149,10 +167,12 @@ public class MunicipalesIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
+        return "redirect:";
+
     }
 
     @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraIzq")
-    public void entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public String entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -166,11 +186,13 @@ public class MunicipalesIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4);
         // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
+        return "redirect:";
+
     }
 
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraDer")
-    public void entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public String entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -182,10 +204,12 @@ public class MunicipalesIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
+        return "redirect:";
+
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraDer")
-    public void entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public String entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -197,11 +221,13 @@ public class MunicipalesIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 2);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
+        return "redirect:";
+
 
     }
 
     @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraDer")
-    public void entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public String entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -211,11 +237,13 @@ public class MunicipalesIPF {
         CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
 
         System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3));
+        return "redirect:";
+
         //c.enviarMensaje(ipfBuilder.lateralEntra());
     }
 
     @GetMapping("/arco/hasta/{circunscripcion}/{partido}/entraDer")
-    public void entraPartidoDer4(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public String entraPartidoDer4(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -232,113 +260,137 @@ public class MunicipalesIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
         // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
+        return "redirect:";
+
     }
 
     @GetMapping("/arco/reset")
-    public void resetArco() {
+    public String resetArco() {
         ipfBuilderCartones.reset();
         System.out.println("Reset completado");
+        return "redirect:";
+
         //c.enviarMensaje(ipfBuilderCartones.reset());
     }
 
     @GetMapping("/arco/entra")
-    public void arcoEntra() {
+    public String arcoEntra() {
         c.enviarMensaje(ipfBuilderCartones.arcoEntra());
+        return "redirect:";
     }
 
     @GetMapping("/arco/entra/delay")
-    public void arcoEntraDelay() {
+    public String arcoEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.arcoEntraDelay());
+        return "redirect:";
     }
 
     @GetMapping("/arco/sale")
-    public void arcoSale() {
+    public String arcoSale() {
         c.enviarMensaje(ipfBuilderCartones.arcoSale());
+        return "redirect:";
     }
 
     @GetMapping("/arco/pactos")
-    public void arcoPactos() {
+    public String arcoPactos() {
         c.enviarMensaje(ipfBuilderCartones.arcoPactos());
+        return "redirect:";
     }
 
     @GetMapping("/arco/sondeo/entra")
-    public void arcoSondeoEntra() {
+    public String arcoSondeoEntra() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoEntra());
+        return "redirect:";
     }
 
     @GetMapping("/arco/sondeo/entra/delay")
-    public void arcoSondeoEntraDelay() {
+    public String arcoSondeoEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoEntraDelay());
+        return "redirect:";
     }
 
     @GetMapping("/arco/sondeo/sale")
-    public void arcoSondeoSale() {
+    public String arcoSondeoSale() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoSale());
+        return "redirect:";
     }
 
     @GetMapping("/arco/sondeo/pactos")
-    public void arcoSondeoPactos() {
+    public String arcoSondeoPactos() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoPactos());
+        return "redirect:";
     }
 
     //PARTICIPACION
 
     @GetMapping("/participacion/entra")
-    public void participacionEntra() {
+    public String participacionEntra() {
         c.enviarMensaje(ipfBuilderCartones.participacionEntra());
+        return "redirect:";
     }
     @GetMapping("/participacion/entra/delay")
-    public void participacionEntraDelay() {
+    public String participacionEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.participacionEntraDelay());
+        return "redirect:";
     }
 
     @GetMapping("/participacion/sale")
-    public void participacionSale() {
+    public String participacionSale() {
         c.enviarMensaje(ipfBuilderCartones.participacionSale());
+        return "redirect:";
     }
 
     @GetMapping("/participacion/cambia")
-    public void participacionCambia() {
+    public String participacionCambia() {
         c.enviarMensaje(ipfBuilderCartones.participacionCambiaMuni());
+        return "redirect:";
     }
 
     @GetMapping("/resultados/entra")
-    public void resultadosEntra() {
+    public String resultadosEntra() {
         c.enviarMensaje(ipfBuilderCartones.resultadosEntra());
+        return "redirect:";
     }
 
     @GetMapping("/resultados/entra/delay")
-    public void resultadosEntraDelay() {
+    public String resultadosEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.resultadosEntraDelay());
+        return "redirect:";
     }
 
     @GetMapping("/resultados/sale")
-    public void resultadosSale() {
+    public String resultadosSale() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSale());
+        return "redirect:";
     }
 
     @GetMapping("/resultados/cambia")
-    public void resultadosCambia() {
+    public String resultadosCambia() {
         c.enviarMensaje(ipfBuilderCartones.resultadosCambiaMuni());
+        return "redirect:";
     }
 
     @GetMapping("/resultados/sondeo/entra")
-    public void resultadosSondeoEntra() {
+    public String resultadosSondeoEntra() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntra());
+        return "redirect:";
     }
     @GetMapping("/resultados/sondeo/entra/delay")
-    public void resultadosSondeoEntraDelay() {
+    public String resultadosSondeoEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntraDelay());
+        return "redirect:";
     }
 
     @GetMapping("/resultados/sondeo/sale")
-    public void resultadosSondeoSale() {
+    public String resultadosSondeoSale() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoSale());
+        return "redirect:";
     }
 
     @GetMapping("/resultados/sondeo/cambia")
-    public void resultadosSondeoCambia() {
+    public String resultadosSondeoCambia() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoCambiaMuni());
+        return "redirect:";
     }
 
 }

@@ -2,7 +2,6 @@ package com.mggcode.cliente_elecciones.controller.autonomicas;
 
 
 import com.mggcode.cliente_elecciones.data.Data;
-import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
@@ -61,7 +60,7 @@ public class ACircunscripcionController {
     }
 
     @GetMapping("/selected/oficial/{codigo}")
-    public void selectCircunscripcionOficial(@PathVariable("codigo") String codigo, Model model) {
+    public String selectCircunscripcionOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -74,10 +73,12 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
+        return "redirect:";
+
     }
 
     @GetMapping("/selected/sondeo/{codigo}")
-    public void selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
+    public String selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -90,6 +91,8 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
+        return "redirect:";
+
     }
 
 

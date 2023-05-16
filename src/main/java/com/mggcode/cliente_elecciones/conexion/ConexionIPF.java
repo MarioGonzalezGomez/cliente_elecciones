@@ -37,6 +37,7 @@ public class ConexionIPF {
         try {
             //No lo reconoce IPF al mandarlo como UTF. Añade caracteres especiales al inicio del String
             datoSalida.writeBytes(mensaje);
+            System.out.println("Enviando: "+ mensaje);
         } catch (IOException ex) {
             System.err.println("Cliente->ERROR: Al enviar mensaje " + ex.getMessage());
         }
