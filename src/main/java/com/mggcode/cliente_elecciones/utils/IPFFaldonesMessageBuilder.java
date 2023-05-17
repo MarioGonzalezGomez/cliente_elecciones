@@ -21,6 +21,8 @@ public class IPFFaldonesMessageBuilder {
         return instance;
     }
 
+    //LATERAL
+
     public String lateralEntra() {
         return eventRunBuild("LATERAL/ENTRA");
     }
@@ -44,6 +46,8 @@ public class IPFFaldonesMessageBuilder {
     public String lateralActualiza(String codComunidad) {
         return eventRunBuild("LATERAL/" + codComunidad + "/Actualiza");
     }
+
+    //FALDON INFERIOR
 
     public String faldonMuniEntra() {
         return eventRunBuild("FALDON_MUNI/ENTRA");
@@ -139,9 +143,14 @@ public class IPFFaldonesMessageBuilder {
 
     public String votantesEntra() {return eventRunBuild("FALDON_MUNI_VOTANTES/ENTRA");}
 
-    public String votantesHistorico() {return eventRunBuild("FALDON_MUNI_VOTANTES/HISTORICO");}
+    public String votantesHistorico() {return eventRunBuild("FALDON_MUNI_VOTANTES/ENCADENA");}
 
     public String votantesSale() {return eventRunBuild("FALDON_MUNI_VOTANTES/SALE");}
+
+    //SEDES
+
+    public String sedesEntra() {return eventRunBuild("FALDON_SEDES/ENTRA");}
+    public String sedesSale() {return eventRunBuild("FALDON_SEDES/SALE");}
 
     public String resetIPF() {return eventRunBuild("RESET");}
 

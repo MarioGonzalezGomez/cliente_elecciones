@@ -143,6 +143,42 @@ public class MunicipalesIPF {
         return "redirect:";
     }
 
+    //SEDES
+
+    @GetMapping("/carmen/sedes/entra")
+    public String faldonSedesEntra() {
+        c.enviarMensaje(ipfBuilder.sedesEntra());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/sedes/sale")
+    public String faldonSedesSale() {
+        c.enviarMensaje(ipfBuilder.sedesSale());
+        return "redirect:";
+    }
+
+    //VOTANTES
+
+    @GetMapping("/carmen/votantes/entra")
+    public String faldonVotantesEntra() {
+        c.enviarMensaje(ipfBuilder.votantesEntra());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/votantes/historico")
+    public String faldonVotantesHistEntra() {
+        c.enviarMensaje(ipfBuilder.votantesHistorico());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/votantes/sale")
+    public String faldonVotantesSale() {
+        c.enviarMensaje(ipfBuilder.votantesSale());
+        return "redirect:";
+    }
+
+    //ARCOS
+
     @GetMapping("/arco/load")
     public String loadMapaMayorias() {
         c.enviarMensaje(ipfBuilderCartones.load());

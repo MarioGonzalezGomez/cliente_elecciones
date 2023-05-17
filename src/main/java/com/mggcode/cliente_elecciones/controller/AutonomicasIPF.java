@@ -151,6 +151,19 @@ public class AutonomicasIPF {
         return "redirect:";
     }
 
+    //SEDES
+
+    @GetMapping("/carmen/sedes/entra")
+    public String faldonSedesEntra() {
+        c.enviarMensaje(ipfBuilder.sedesEntra());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/sedes/sale")
+    public String faldonSedesSale() {
+        c.enviarMensaje(ipfBuilder.sedesSale());
+        return "redirect:";
+    }
 
     //ARCOS
     @GetMapping("/arco/load")
