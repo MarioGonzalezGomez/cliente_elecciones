@@ -258,11 +258,11 @@ public class IPFCartonesMessageBuilder {
     }
 
     public String resultadosCambiaAuto() {
-        return eventRunBuild("RESULTADOS/CAMBIA", false);
+        return eventRunBuild("RESULTADOS/CAMBIA_COMUNIDAD", false);
     }
 
     public String resultadosCambiaMuni() {
-        return eventRunBuild("RESULTADOS/CAMBIA", false);
+        return eventRunBuild("RESULTADOS/CAMBIA_MUNICIPIO", false);
     }
 
     public String resultadosSondeoEntra() {
