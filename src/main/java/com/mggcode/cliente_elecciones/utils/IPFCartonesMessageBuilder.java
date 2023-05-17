@@ -213,26 +213,63 @@ public class IPFCartonesMessageBuilder {
         return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
     }
 
-    public String arcoEntra() {return eventRunBuild("ARCO/ENTRA", false);}
+    public String arcoEntra() {
+        return eventRunBuild("ARCO/ENTRA", false);
+    }
 
-    public String arcoEntraDelay() {return eventRunBuild("ARCO/ENTRA", true);}
+    public String arcoEntraDelay() {
+        return eventRunBuild("ARCO/ENTRA", true);
+    }
 
     public String arcoSale() {
         return eventRunBuild("ARCO/SALE", false);
     }
+
     public String arcoPactos() {
         return eventRunBuild("ARCO/PACTOS", false);
     }
-    public String arcoSondeoEntra() {return eventRunBuild("ARCO_SONDEO/ENTRA", false);}
-    public String arcoSondeoEntraDelay() {return eventRunBuild("ARCO_SONDEO/ENTRA", true);}
+
+    public String arcoSondeoEntra() {
+        return eventRunBuild("ARCO_SONDEO/ENTRA", false);
+    }
+
+    public String arcoSondeoEntraDelay() {
+        return eventRunBuild("ARCO_SONDEO/ENTRA", true);
+    }
 
     public String arcoSondeoSale() {
         return eventRunBuild("ARCO_SONDEO/SALE", false);
     }
-    public String arcoSondeoPactos() {return eventRunBuild("ARCO_SONDEO/PACTOS", false);}
 
-    public String participacionEntra() {return eventRunBuild("PARTICIPACION/ENTRA", false);}
-    public String participacionEntraDelay() {return eventRunBuild("PARTICIPACION/ENTRA", true);}
+    public String arcoSondeoPactos() {
+        return eventRunBuild("ARCO_SONDEO/PACTOS", false);
+    }
+
+    public String participacionEntra() {
+        return eventRunBuild("PARTICIPACION/ENTRA", false);
+    }
+
+    public String participacionEspAuto() {
+        return eventRunBuild("ENTRA_ESP_AUTONOMICA", false);
+    }
+    public String participacionEspAutoDelay() {
+        return eventRunBuild("ENTRA_ESP_AUTONOMICA", true);
+    }
+
+    public String participacionEspMuni() {
+        return eventRunBuild("ENTRA_ESP_MUNICIPAL", false);
+    }
+    public String participacionEspMuniDelay() {
+        return eventRunBuild("ENTRA_ESP_MUNICIPAL", true);
+    }
+
+    public String saleParticipacionEsp() {
+        return eventRunBuild("SALE_ESP", false);
+    }
+
+    public String participacionEntraDelay() {
+        return eventRunBuild("PARTICIPACION/ENTRA", true);
+    }
 
     public String participacionSale() {
         return eventRunBuild("PARTICIPACION/SALE", false);
@@ -249,6 +286,7 @@ public class IPFCartonesMessageBuilder {
     public String resultadosEntra() {
         return eventRunBuild("RESULTADOS/ENTRA", false);
     }
+
     public String resultadosEntraDelay() {
         return eventRunBuild("RESULTADOS/ENTRA", true);
     }
@@ -268,6 +306,7 @@ public class IPFCartonesMessageBuilder {
     public String resultadosSondeoEntra() {
         return eventRunBuild("RESULTADOS_SONDEO/ENTRA", false);
     }
+
     public String resultadosSondeoEntraDelay() {
         return eventRunBuild("RESULTADOS_SONDEO/ENTRA", true);
     }
@@ -310,10 +349,10 @@ public class IPFCartonesMessageBuilder {
     }
 
     private String eventRunBuild(String objecto, boolean delay) {
-        if(!delay ){
+        if (!delay) {
             String itemSet = "itemset('";
             return itemSet + bd + objecto + "','" + "EVENT_RUN" + "');";
-        }else {
+        } else {
             String itemSet = "itemgo('";
             return itemSet + bd + objecto + "','" + "EVENT_RUN',0,1.5" + ");";
         }

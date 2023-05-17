@@ -93,7 +93,7 @@ public class ACircunscripcionService {
                         Circunscripcion[].class);
         var res = Arrays.stream(Objects.requireNonNull(response.getBody()))
                 .filter(circunscripcion -> circunscripcion.getCodigo().endsWith("00000"))
-                .filter(circunscripcion -> !circunscripcion.getCodigo().startsWith("99"))
+                //.filter(circunscripcion -> !circunscripcion.getCodigo().startsWith("99"))
                 .toList();
 
         return res;

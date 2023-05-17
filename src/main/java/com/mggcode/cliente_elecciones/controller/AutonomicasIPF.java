@@ -390,6 +390,19 @@ public class AutonomicasIPF {
         return "redirect:";
     }
 
+
+    @GetMapping("/participacion/entra/esp")
+    public String entraParticipacionEsp() {
+        c.enviarMensaje(ipfBuilderCartones.participacionEspAuto());
+        return "redirect:";
+    }
+
+    @GetMapping("/participacion/sale/esp")
+    public String saleParticipacionEsp() {
+        c.enviarMensaje(ipfBuilderCartones.saleParticipacionEsp());
+        return "redirect:";
+    }
+
     //RESULTADOS
 
     @GetMapping("/resultados/entra")
