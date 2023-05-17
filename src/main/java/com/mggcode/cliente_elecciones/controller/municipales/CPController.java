@@ -3,6 +3,8 @@ package com.mggcode.cliente_elecciones.controller.municipales;
 import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
 import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionPartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,6 +70,12 @@ public class CPController {
         model.addAttribute("ruta", "/municipales/cp/circunscripcion/" + cod);
         model.addAttribute("tipo", "municipales");
         return "cps";
+    }
+
+    @GetMapping("/espania")
+    public ResponseEntity<List<CircunscripcionPartido>> getCpsEspania() {
+        List<CircunscripcionPartido> cps = cpService.findByIdCircunscripcion("9900000");
+        return new ResponseEntity<>(cpService.findByIdCircunscripcion("9900000"), HttpStatus.OK);
     }
 
     //Grupo de Mayorías (A nivel Nacional y Autonómico)

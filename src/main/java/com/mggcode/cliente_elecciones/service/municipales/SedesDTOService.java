@@ -22,17 +22,17 @@ public class SedesDTOService {
     @Autowired
     RestTemplate restTemplate;
 
-    public SedesDTO findById(String circunscripcion, String partido) {
+    public SedesDTO findById(String partido) {
         ResponseEntity<SedesDTO> response =
                 restTemplate.getForEntity(
-                        "http://" + Config.connectedServer + ":8080/municipales/sedes/" + circunscripcion + "/" + partido,
+                        "http://" + Config.connectedServer + ":8080/municipales/sedes/" + partido,
                         SedesDTO.class);
         return response.getBody();
     }
 
-    public File findByIdCsv(String circunscripcion, String partido) throws IOException {
+    public File findByIdCsv(String partido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/sedes/" + circunscripcion + "/" + partido + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/sedes/" + partido + "/csv");
 
         File csv = new File(carpetaBase.getPath() +
                 File.separator + "F_sedes.csv");
@@ -40,14 +40,15 @@ public class SedesDTOService {
         return csv;
     }
 
-    public File findByIdExcel(String circunscripcion, String partido) throws IOException {
+    public File findByIdExcel(String partido) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/sedes/" + circunscripcion + "/" + partido + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/sedes/" + partido + "/excel");
         File excel = new File(carpetaBase.getPath() +
                 File.separator + "F_sedes.xlsx");
         FileUtils.copyURLToFile(url, excel);
         return excel;
     }
+
     private File comprobarCarpetas() {
         File datos = new File(ruta);
         if (!datos.exists()) {

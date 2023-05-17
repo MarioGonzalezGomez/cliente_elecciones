@@ -18,26 +18,25 @@ public class ASedesDTOController {
     @Autowired
     private ASedesDTOService sedesDTOService;
 
-    @RequestMapping(path = "/{circunscripcion}/{partido}")
-    public String findById(@PathVariable("circunscripcion") String circunscripcion, @PathVariable("partido") String partido, Model model) {
-        SedesDTO dto = sedesDTOService.findById(circunscripcion, partido);
+    @RequestMapping(path = "/{partido}")
+    public String findById(@PathVariable("partido") String partido, Model model) {
+        SedesDTO dto = sedesDTOService.findById(partido);
         model.addAttribute("sede", dto);
-        model.addAttribute("ruta", "/autonomicas/sedes/" + circunscripcion + "/" + partido);
+        model.addAttribute("ruta", "/autonomicas/sedes/" + partido);
         return "sede";
     }
 
-    @RequestMapping(path = "/{circunscripcion}/{partido}/csv")
-    public String findByIdCsv(@PathVariable("circunscripcion") String circunscripcion, @PathVariable("partido") String partido, RedirectAttributes redirectAttributes) throws IOException {
-        sedesDTOService.findByIdCsv(circunscripcion, partido);
+    @RequestMapping(path = "/{partido}/csv")
+    public void findByIdCsv(@PathVariable("partido") String partido, RedirectAttributes redirectAttributes) throws IOException {
+        sedesDTOService.findByIdCsv(partido);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/autonomicas/sedes/" + circunscripcion + "/" + partido;
     }
 
 
-    @RequestMapping(path = "/{circunscripcion}/{partido}/excel")
-    public String findByIdExcel(@PathVariable("circunscripcion") String circunscripcion, @PathVariable("partido") String partido, RedirectAttributes redirectAttributes) throws IOException {
-        sedesDTOService.findByIdExcel(circunscripcion, partido);
+    @RequestMapping(path = "/{partido}/excel")
+    public String findByIdExcel(@PathVariable("partido") String partido, RedirectAttributes redirectAttributes) throws IOException {
+        sedesDTOService.findByIdExcel(partido);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/autonomicas/sedes/" + circunscripcion + "/" + partido;
+        return "redirect:/autonomicas/sedes/" + partido;
     }
 }
