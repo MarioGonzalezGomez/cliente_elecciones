@@ -395,6 +395,19 @@ public class MunicipalesIPF {
         return "redirect:";
     }
 
+    @GetMapping("/participacion/entra/esp")
+    public String entraParticipacionEsp() {
+        c.enviarMensaje(ipfBuilderCartones.participacionEspMuni());
+        return "redirect:";
+    }
+
+    @GetMapping("/participacion/sale/esp")
+    public String saleParticipacionEsp() {
+        c.enviarMensaje(ipfBuilderCartones.saleParticipacionEsp());
+        return "redirect:";
+    }
+
+
     @GetMapping("/resultados/entra")
     public String resultadosEntra() {
         c.enviarMensaje(ipfBuilderCartones.resultadosEntra());
