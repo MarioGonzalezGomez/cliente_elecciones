@@ -66,12 +66,12 @@ public class CarmenDTOController {
     }
 
     @GetMapping("/oficial/{codigo}/data")
-    public ResponseEntity<CarmenDTO> findDataById(@PathVariable("codigo") String codigo) {
+    public ResponseEntity<CarmenDTO> findDtoByCodigo(@PathVariable("codigo") String codigo) {
         return new ResponseEntity<>(carmenDTOService.findAllOficial(codigo), HttpStatus.OK);
     }
 
     @GetMapping("/sondeo/{codigo}/data")
-    public ResponseEntity<CarmenDTO> findDataByIdSondeo(@PathVariable("codigo") String codigo) {
+    public ResponseEntity<CarmenDTO> findDtoOficial(@PathVariable("codigo") String codigo) {
         return new ResponseEntity<>(carmenDTOService.findAllSondeo(codigo), HttpStatus.OK);
     }
 

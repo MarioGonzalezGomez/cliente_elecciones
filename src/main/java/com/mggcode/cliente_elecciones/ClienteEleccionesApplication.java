@@ -11,10 +11,14 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
 
 @SpringBootApplication
 public class ClienteEleccionesApplication {
+
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     @Bean
     public RestTemplate getresttemplate() {
@@ -27,10 +31,33 @@ public class ClienteEleccionesApplication {
 
 
     @EventListener({ApplicationReadyEvent.class})
-    void applicationReadyEvent() {
+    void applicationReadyEvent() throws InterruptedException {
         //System.out.println("Abriendo cliente");
-         browse("http://localhost:9090");
+        browse("http://localhost:9090");
+        Thread.sleep(1000);
+        System.out.println(ANSI_GREEN + "INICIANDO INTERFAZ" + ANSI_RESET);
+        runClient();
     }
+
+    public static void runClient() {
+        String ruta = Paths.get("").toAbsolutePath().toString() + "\\script.bat";
+        try {
+            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", ruta);
+            pb.inheritIO();
+            Process proceso = pb.start();
+
+            int resultado = proceso.waitFor();
+
+            if (resultado == 0) {
+                System.out.println("El archivo .bat se ejecutó correctamente.");
+            } else {
+                System.out.println("Se produjo un error al ejecutar el archivo .bat.");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void browse(String url) {
         if (Desktop.isDesktopSupported()) {

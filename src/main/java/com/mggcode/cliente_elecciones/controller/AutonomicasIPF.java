@@ -182,7 +182,11 @@ public class AutonomicasIPF {
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
 
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
+
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
@@ -198,7 +202,10 @@ public class AutonomicasIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2);
         //System.out.println(resultado1);
@@ -208,7 +215,7 @@ public class AutonomicasIPF {
 
     }
 
-    @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraIzq")
+    @GetMapping("/arco/sondeo/{circunscripcion}/{partido}/entraIzq")
     public String entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
@@ -216,7 +223,10 @@ public class AutonomicasIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3);
         //  System.out.println(resultado1);
         c.enviarMensaje(resultado1);
@@ -237,7 +247,10 @@ public class AutonomicasIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 1);
         //System.out.println(resultado1);
@@ -255,14 +268,15 @@ public class AutonomicasIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 2);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
         return "redirect:";
-
-
     }
 
     @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraDer")
@@ -273,36 +287,14 @@ public class AutonomicasIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3));
         //c.enviarMensaje(ipfBuilder.lateralEntra());
         return "redirect:";
-
-
-    }
-
-    @GetMapping("/arco/hasta/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer4(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
-        CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
-        List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
-                .stream().map(
-                        c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
-                .filter(x -> x.getEscanos_hasta() > 0.0)
-                .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
-
-        System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4));
-        //c.enviarMensaje(ipfBuilder.lateralEntra());
-        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3);
-        //  System.out.println(resultado1);
-        c.enviarMensaje(resultado1);
-        String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
-        // System.out.println(resultado2);
-        c.enviarMensaje(resultado2);
-        return "redirect:";
-
-
     }
 
     @GetMapping("/arco/reset")
@@ -310,7 +302,6 @@ public class AutonomicasIPF {
         ipfBuilderCartones.reset();
         System.out.println("Reset completado");
         return "redirect:";
-        //c.enviarMensaje(mensajeXdeReset);
 
     }
 

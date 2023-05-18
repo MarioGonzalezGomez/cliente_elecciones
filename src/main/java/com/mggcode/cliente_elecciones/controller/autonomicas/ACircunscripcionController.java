@@ -197,7 +197,6 @@ public class ACircunscripcionController {
     private void updateSelectedOficial() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
-        ipf.faldonAutoActualizo();
         //carmenDTOService.findAllInCsvOficial(data.getCircunscripcionSeleccionada());
 
 
@@ -207,7 +206,6 @@ public class ACircunscripcionController {
         carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
         //carmenDTOService.findAllInCsvSondeo(data.getCircunscripcionSeleccionada());
-        ipf.faldonAutoActualizo();
     }
 
     private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {

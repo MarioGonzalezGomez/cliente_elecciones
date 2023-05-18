@@ -194,7 +194,10 @@ public class MunicipalesIPF {
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
 
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
@@ -210,7 +213,10 @@ public class MunicipalesIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2);
         //System.out.println(resultado1);
@@ -227,7 +233,10 @@ public class MunicipalesIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 3);
         //  System.out.println(resultado1);
         c.enviarMensaje(resultado1);
@@ -247,7 +256,10 @@ public class MunicipalesIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 1);
         //System.out.println(resultado1);
@@ -264,7 +276,10 @@ public class MunicipalesIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 2);
         //System.out.println(resultado1);
@@ -282,7 +297,10 @@ public class MunicipalesIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3));
         return "redirect:";
@@ -298,7 +316,10 @@ public class MunicipalesIPF {
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
-        CircunscripcionPartido seleccionado = cpSer.findById(cir, par);
+        CircunscripcionPartido seleccionado = cp.stream()
+                .filter(partido -> partido.getKey().getPartido().equals(par))
+                .findFirst()
+                .orElse(null);
 
         System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4));
         //c.enviarMensaje(ipfBuilder.lateralEntra());

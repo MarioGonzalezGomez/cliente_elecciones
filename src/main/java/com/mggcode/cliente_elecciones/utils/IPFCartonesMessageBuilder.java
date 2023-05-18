@@ -189,6 +189,7 @@ public class IPFCartonesMessageBuilder {
         if (!partidosDentro.contains(partido)) {
             partidosDentro.add(partido);
         }
+        String x = partidos.indexOf(partido) + "";
         String posicionPartido = String.valueOf((partidos.indexOf(partido) + 1));
         String offsetReset = offsetReset(posicionPartido, tipoArco);
         String orientacion = orientacionIzq(posicionPartido, tipoArco);
@@ -250,21 +251,23 @@ public class IPFCartonesMessageBuilder {
     }
 
     public String participacionEspAuto() {
-        return eventRunBuild("ENTRA_ESP_AUTONOMICA", false);
+        return eventRunBuild("PARTICIPACION/ENTRA_ESP_AUTONOMICA", false);
     }
+
     public String participacionEspAutoDelay() {
-        return eventRunBuild("ENTRA_ESP_AUTONOMICA", true);
+        return eventRunBuild("PARTICIPACION/ENTRA_ESP_AUTONOMICA", true);
     }
 
     public String participacionEspMuni() {
-        return eventRunBuild("ENTRA_ESP_MUNICIPAL", false);
+        return eventRunBuild("PARTICIPACION/ENTRA_ESP_MUNICIPAL", false);
     }
+
     public String participacionEspMuniDelay() {
-        return eventRunBuild("ENTRA_ESP_MUNICIPAL", true);
+        return eventRunBuild("PARTICIPACION/ENTRA_ESP_MUNICIPAL", true);
     }
 
     public String saleParticipacionEsp() {
-        return eventRunBuild("SALE_ESP", false);
+        return eventRunBuild("PARTICIPACION/SALE_ESP", false);
     }
 
     public String participacionEntraDelay() {
