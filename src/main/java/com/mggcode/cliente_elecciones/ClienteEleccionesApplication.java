@@ -29,8 +29,12 @@ public class ClienteEleccionesApplication {
     @EventListener({ApplicationReadyEvent.class})
     void applicationReadyEvent() {
         //System.out.println("Abriendo cliente");
-         browse("http://localhost:9090");
+      //  runClient();
+        browse("http://localhost:9090");
     }
+
+
+
 
     public static void browse(String url) {
         if (Desktop.isDesktopSupported()) {
