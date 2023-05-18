@@ -29,7 +29,20 @@ public class ClienteEleccionesApplication {
     @EventListener({ApplicationReadyEvent.class})
     void applicationReadyEvent() {
         //System.out.println("Abriendo cliente");
-         browse("http://localhost:9090");
+        runUI();
+        browse("http://localhost:9090");
+    }
+
+    public static void runUI() {
+        String rutaExe = "C:\\Users\\RTVE\\Desktop\\InterfazApp\\interfaz.exe";
+        try {
+            // Construir el proceso para ejecutar el archivo .exe
+            ProcessBuilder pb = new ProcessBuilder(rutaExe);
+            pb.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void browse(String url) {
