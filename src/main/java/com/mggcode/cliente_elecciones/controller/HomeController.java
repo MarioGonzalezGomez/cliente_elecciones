@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
+
 @Controller
 public class HomeController {
 
@@ -39,12 +41,36 @@ public class HomeController {
         if (Config.checkConnectionWithRetry()) {
             System.out.println("Servidor conectado: " + Config.connectedServer);
             startListeners();
+            runClient();
             return "index";
         }
         return "index";
 
     }
 
+    public void runClient() {
+        String ruta = System.getProperty("user.dir") + "\\script.bat";
+        System.out.println(System.getProperty("user.dir"));
+        System.out.println(ruta);
+
+
+        try {
+            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", ruta);
+            pb.inheritIO();
+            Process proceso = pb.start();
+
+            int resultado = proceso.waitFor();
+
+            if (resultado == 0) {
+                System.out.println("El archivo .bat se ejecutó correctamente.");
+            } else {
+                System.out.println("Se produjo un error al ejecutar el archivo .bat.");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
     @RequestMapping("/selected/{codigo}")
     public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo) {
         System.out.println("---" + codigo);
