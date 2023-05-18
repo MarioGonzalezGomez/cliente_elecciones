@@ -1,6 +1,7 @@
 package com.mggcode.cliente_elecciones.controller.autonomicas;
 
 
+import com.mggcode.cliente_elecciones.controller.AutonomicasIPF;
 import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
@@ -39,6 +40,9 @@ public class ACircunscripcionController {
 
     @Autowired
     private ASedesDTOService sedesDTOService;
+
+    @Autowired
+    private AutonomicasIPF ipf;
 
     List<Circunscripcion> changes;
     List<Circunscripcion> circunscripciones = new ArrayList<>();
@@ -158,6 +162,7 @@ public class ACircunscripcionController {
                         System.out.println("Cambios detectados");
                         try {
                             updateAllCsv();
+                            ipf.actualizaFaldonLateral();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -192,15 +197,17 @@ public class ACircunscripcionController {
     private void updateSelectedOficial() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
-        carmenDTOService.findAllInCsvOficial(data.getCircunscripcionSeleccionada());
-        // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
+        ipf.faldonAutoActualizo();
+        //carmenDTOService.findAllInCsvOficial(data.getCircunscripcionSeleccionada());
+
+
     }
 
     private void updateSelectedSondeo() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
-        carmenDTOService.findAllInCsvSondeo(data.getCircunscripcionSeleccionada());
-        // sedesDTOService.findByIdCsv(data.getCircunscripcionSeleccionada(), data.getPartidoSeleccionado());
+        //carmenDTOService.findAllInCsvSondeo(data.getCircunscripcionSeleccionada());
+        ipf.faldonAutoActualizo();
     }
 
     private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
