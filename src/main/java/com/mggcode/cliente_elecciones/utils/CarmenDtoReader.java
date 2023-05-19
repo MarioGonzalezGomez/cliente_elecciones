@@ -10,7 +10,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -34,16 +33,22 @@ public class CarmenDtoReader {
         return instance;
     }
 
-    public CarmenDTO readCarmenDto(String codigo) {
-        CarmenDTO res = readCsv(codigo);
+    public CarmenDTO readCarmenDto(int tipoElecciones) {
+        CarmenDTO res = readCsv(tipoElecciones);
         if (res == null)
-            res = readExcel(codigo);
+            res = readExcel(tipoElecciones);
         return res;
     }
 
-    public CarmenDTO readExcel(String codigo) {
+    public CarmenDTO readExcel(int tipoElecciones) {
         try {
-            FileInputStream fileInputStream = new FileInputStream("C:\\Elecciones2023\\DATOS\\F_" + codigo + ".xlsx");
+            FileInputStream fileInputStream;
+            if (tipoElecciones == 1 || tipoElecciones == 2) {
+                fileInputStream = new FileInputStream("C:\\Elecciones2023\\DATOS\\C_MapaMayorias.xlsx");
+            } else {
+                fileInputStream = new FileInputStream("C:\\Elecciones2023\\DATOS\\C_MapaMayoriasSondeo.xlsx");
+            }
+
             Workbook workbook = new XSSFWorkbook(fileInputStream);
 
             Sheet sheet = workbook.getSheetAt(0);
@@ -100,10 +105,17 @@ public class CarmenDtoReader {
         }
     }
 
-    public CarmenDTO readCsv(String codigo) {
+    public CarmenDTO readCsv(int tipoElecciones) {
         try {
-            File test = new File("C:\\Elecciones2023\\DATOS\\F_" + codigo + ".csv");
-            Path path = Path.of("C:\\Elecciones2023\\DATOS\\F_" + codigo + ".csv");
+            // File test = new File("C:\\Elecciones2023\\DATOS\\F_" + codigo + ".csv");
+            // Path path = Path.of("C:\\Elecciones2023\\DATOS\\F_" + codigo + ".csv");
+            Path path;
+            if (tipoElecciones == 1 || tipoElecciones == 2) {
+                path = Path.of("C:\\Elecciones2023\\DATOS\\C_MapaMayorias.csv");
+            } else {
+                path = Path.of("C:\\Elecciones2023\\DATOS\\C_MapaMayoriasSondeo.csv");
+            }
+
             List<String> lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
             String lineCircunscripcion = lines.stream().skip(1).toList().get(0);
             var split = lineCircunscripcion.split(";");

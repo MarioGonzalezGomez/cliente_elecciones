@@ -71,6 +71,7 @@ public class HomeController {
         }
 
     }
+
     @RequestMapping("/selected/{codigo}")
     public ResponseEntity<String> selectAutonomia(@PathVariable("codigo") String codigo) {
         System.out.println("---" + codigo);
@@ -78,7 +79,6 @@ public class HomeController {
         data.setAutonomiaSeleccionada(codigo);
         return new ResponseEntity<>(codigo, HttpStatus.OK);
     }
-
 
 
     private void startListeners() {
@@ -89,16 +89,16 @@ public class HomeController {
 
     }
 
-    @RequestMapping("/testExcel/{codigo}")
-    ResponseEntity<CarmenDTO> testExcel(@PathVariable("codigo") String codigo) {
+    @RequestMapping("/testExcel/{tipoElecciones}")
+    ResponseEntity<CarmenDTO> testExcel(@PathVariable("tipoElecciones") int tipoElecciones) {
         CarmenDtoReader carmenDtoReader = CarmenDtoReader.getInstance();
-        var res = carmenDtoReader.readExcel(codigo);
+        var res = carmenDtoReader.readExcel(tipoElecciones);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @RequestMapping("/testCsv/{codigo}")
-    ResponseEntity<CarmenDTO> testCsv(@PathVariable("codigo") String codigo){
-     CarmenDtoReader.getInstance().readCsv(codigo);
-     return null;
+    @RequestMapping("/testCsv/{tipoElecciones}")
+    ResponseEntity<CarmenDTO> testCsv(@PathVariable("tipoElecciones") int tipoElecciones) {
+        CarmenDtoReader.getInstance().readCsv(tipoElecciones);
+        return null;
     }
 }

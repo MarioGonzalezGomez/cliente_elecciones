@@ -36,7 +36,7 @@ public class ClienteEleccionesApplication {
         browse("http://localhost:9090");
         Thread.sleep(1000);
         System.out.println(ANSI_GREEN + "INICIANDO INTERFAZ" + ANSI_RESET);
-        runClient();
+        //runClient();
     }
 
     public static void runClient() {
