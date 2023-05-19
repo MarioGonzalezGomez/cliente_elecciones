@@ -358,11 +358,11 @@ public class IPFCartonesMessageBuilder {
         return eventRunBuild("RESULTADOS/SALE", false);
     }
 
-    public String resultadosCambiaAuto() {
+    public String resultadosCambiaComunidad() {
         return eventRunBuild("RESULTADOS/CAMBIA_COMUNIDAD", false);
     }
 
-    public String resultadosCambiaMuni() {
+    public String resultadosCambiaMunicipio() {
         return eventRunBuild("RESULTADOS/CAMBIA_MUNICIPIO", false);
     }
 

@@ -456,7 +456,7 @@ public class MunicipalesIPF {
 
     @GetMapping("/resultados/cambia")
     public String resultadosCambia() {
-        c.enviarMensaje(ipfBuilderCartones.resultadosCambiaMuni());
+        c.enviarMensaje(ipfBuilderCartones.resultadosCambiaMunicipio());
         return "redirect:";
     }
 

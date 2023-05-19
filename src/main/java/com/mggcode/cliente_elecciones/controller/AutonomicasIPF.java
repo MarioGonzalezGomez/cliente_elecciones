@@ -449,7 +449,7 @@ public class AutonomicasIPF {
 
     @GetMapping("/resultados/cambia")
     public String resultadosCambia() {
-        c.enviarMensaje(ipfBuilderCartones.resultadosCambiaAuto());
+        c.enviarMensaje(ipfBuilderCartones.resultadosCambiaComunidad());
         return "redirect:";
     }
 
