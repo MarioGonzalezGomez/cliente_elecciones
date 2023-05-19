@@ -308,29 +308,24 @@ public class MunicipalesIPF {
         //c.enviarMensaje(ipfBuilder.lateralEntra());
     }
 
-    @GetMapping("/arco/hasta/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer4(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    @GetMapping("/arco/{circunscripcion}/{partido}/{tipoArco}/borrar")
+    public String borrarPartido(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(cir);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
                 .filter(x -> x.getEscanos_hasta() > 0.0)
                 .toList();
+
         CircunscripcionPartido seleccionado = cp.stream()
                 .filter(partido -> partido.getKey().getPartido().equals(par))
                 .findFirst()
                 .orElse(null);
 
-        System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4));
-        //c.enviarMensaje(ipfBuilder.lateralEntra());
-        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3);
-        //  System.out.println(resultado1);
+        String resultado1 = ipfBuilderCartones.borrarPartido(cp, seleccionado, 1);
+        //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
-        // System.out.println(resultado2);
-        c.enviarMensaje(resultado2);
         return "redirect:";
-
     }
 
     @GetMapping("/arco/reset")

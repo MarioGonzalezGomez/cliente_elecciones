@@ -177,12 +177,14 @@ public class IPFCartonesMessageBuilder {
         partidosDentro.clear();
     }
 
-    public void borrarPartido(List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
+    public String borrarPartido(List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
         aperturas.remove(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
         if (tipoArco == 3) {
             aperturasDesde.remove(Double.parseDouble(LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco)));
         }
         partidosDentro.remove(partido);
+        String posicionPartido = String.valueOf((partidos.indexOf(partido) + 1));
+        return getOffset(posicionPartido, partidos, partido, tipoArco);
     }
 
     public String partidoEntraIzq(List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
