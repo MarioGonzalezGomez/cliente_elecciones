@@ -201,7 +201,6 @@ public class IPFCartonesMessageBuilder {
     }
 
     private String moverRestoPartidos(String posicionPartido, List<CircunscripcionPartido> cp, int tipoArco) {
-
         String object = switch (tipoArco) {
             case 1 -> "ARCO_OFICIAL/PRINCIPALES/PARTIDOS/ARCO_P" + posicionPartido;
             case 2 -> "ARCO_SONDEO/ARCO_PRINCIPALES/PARTIDOS/ARCO_P" + posicionPartido;
@@ -216,10 +215,6 @@ public class IPFCartonesMessageBuilder {
 
         double sumaTotalDesde = aperturasDesde.stream().mapToDouble(Double::doubleValue).sum();
         double sumaTotalHasta = aperturas.stream().mapToDouble(Double::doubleValue).sum();
-        //Si solo hay un elemento dentro, simplemente lleva su bind a 0;
-        if (partidosDentro.size() == 0) {
-            resultado.append(reverseBindFraction(posicionPartido, tipoArco));
-        }
 
         for (int i = 0; i < partidosDentro.size(); i++) {
             String posicion = String.valueOf((cp.indexOf(partidosDentro.get(i)) + 1));
@@ -228,19 +223,14 @@ public class IPFCartonesMessageBuilder {
             List<CircunscripcionPartido> sublista = partidosDentro.subList(0, i + 1);
             double aperturasDeAnteriores = sublista.stream().mapToDouble(x -> Double.parseDouble(LogicaArcos.getInstance().getApertura(cp, x, tipoArco))).sum();
 
-//El offset de un elemento es la suma de todas las aperturas de los elementos posteriores a ella, menos su propia apertura
             if (tipoArco == 3) {
                 offset = df.format(sumaTotalDesde - aperturasDeAnteriores);
             } else {
                 offset = df.format(sumaTotalHasta - aperturasDeAnteriores);
             }
-            if (i == partidosDentro.size() - 1) {
-                resultado.append(eventBuild(object, "PRIM_BAR_OFFSET[2]", offset, 1));
-            } else {
-                resultado.append(eventBuild(object, "PRIM_BAR_OFFSET[2]", offset + ",0.5,0.1", 2));
-            }
-
+            resultado.append(eventBuild(object, "PRIM_BAR_OFFSET[2]", offset + ",0.5", 2));
         }
+        resultado.append(reverseBindFraction(posicionPartido, tipoArco));
         return resultado.toString();
     }
 
@@ -249,7 +239,6 @@ public class IPFCartonesMessageBuilder {
         if (!partidosDentro.contains(partido)) {
             partidosDentro.add(partido);
         }
-        String x = partidos.indexOf(partido) + "";
         String posicionPartido = String.valueOf((partidos.indexOf(partido) + 1));
         String offsetReset = offsetReset(posicionPartido, tipoArco);
         String orientacion = orientacionIzq(posicionPartido, tipoArco);
