@@ -1,5 +1,6 @@
 package com.mggcode.cliente_elecciones;
 
+import com.mggcode.cliente_elecciones.config.Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -7,10 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.client.RestTemplate;
 
-import java.awt.*;
+
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
 
@@ -32,11 +31,12 @@ public class ClienteEleccionesApplication {
 
     @EventListener({ApplicationReadyEvent.class})
     void applicationReadyEvent() throws InterruptedException {
-        //System.out.println("Abriendo cliente");
-        browse("http://localhost:9090");
+        //browse("http://localhost:9090");
+        System.out.println("Servidor conectado: " + Config.connectedServer);
+        //startListeners();
         Thread.sleep(1000);
         System.out.println(ANSI_GREEN + "INICIANDO INTERFAZ" + ANSI_RESET);
-        //runClient();
+        runClient();
     }
 
     public static void runClient() {
@@ -55,25 +55,6 @@ public class ClienteEleccionesApplication {
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-        }
-    }
-
-
-    public static void browse(String url) {
-        if (Desktop.isDesktopSupported()) {
-            Desktop desktop = Desktop.getDesktop();
-            try {
-                desktop.browse(new URI(url));
-            } catch (IOException | URISyntaxException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Runtime runtime = Runtime.getRuntime();
-            try {
-                runtime.exec("rundll32 url.dll,FileProtocolHandler " + url);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

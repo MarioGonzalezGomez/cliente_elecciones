@@ -38,38 +38,30 @@ public class HomeController {
 
     @RequestMapping(value = "/")
     public String index(Model model) {
-        if (Config.checkConnectionWithRetry()) {
-            System.out.println("Servidor conectado: " + Config.connectedServer);
-            startListeners();
-            runClient();
-            return "index";
-        }
+        //if (Config.checkConnectionWithRetry()) {
+        // System.out.println("Servidor conectado: " + Config.connectedServer);
+        // startListeners();
+        // runClient();
+        //    return "index";
+        // }
         return "index";
 
     }
 
-    public void runClient() {
-        String ruta = System.getProperty("user.dir") + "\\script.bat";
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println(ruta);
+    private void startListeners() {
+        aCircunscripcionController.suscribeCircunscripciones();
+        circunscripcionController.suscribeCircunscripciones();
 
+        //TODO(esto es opcional y se puede activar en la parte del cliente como una opción)
 
-        try {
-            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", ruta);
-            pb.inheritIO();
-            Process proceso = pb.start();
+    }
 
-            int resultado = proceso.waitFor();
-
-            if (resultado == 0) {
-                System.out.println("El archivo .bat se ejecutó correctamente.");
-            } else {
-                System.out.println("Se produjo un error al ejecutar el archivo .bat.");
-            }
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+    @RequestMapping("init/listeners")
+    public String initListeners(Model model) {
+        if (Config.checkConnectionWithRetry()) {
+            startListeners();
         }
-
+        return "redirect:";
     }
 
     @RequestMapping("/selected/{codigo}")
@@ -80,14 +72,6 @@ public class HomeController {
         return new ResponseEntity<>(codigo, HttpStatus.OK);
     }
 
-
-    private void startListeners() {
-        aCircunscripcionController.suscribeCircunscripciones();
-        circunscripcionController.suscribeCircunscripciones();
-
-        //TODO(esto es opcional y se puede activar en la parte del cliente como una opción)
-
-    }
 
     @RequestMapping("/testExcel/{tipoElecciones}")
     ResponseEntity<CarmenDTO> testExcel(@PathVariable("tipoElecciones") int tipoElecciones) {
