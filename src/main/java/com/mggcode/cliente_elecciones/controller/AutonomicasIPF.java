@@ -67,13 +67,13 @@ public class AutonomicasIPF {
         return "redirect:";
     }
 
-    @GetMapping("/carmen/pactos/{posicion}/entraDer")
+    @GetMapping("/carmen/pactos/{posicion}/entraIzq")
     public String entraIzqPactos(@PathVariable("posicion") int posicion) {
         c.enviarMensaje(ipfBuilder.pactosEntraIzquierda(posicion));
         return "redirect:";
     }
 
-    @GetMapping("/carmen/pactos/{posicion}/entraIzq")
+    @GetMapping("/carmen/pactos/{posicion}/entraDer")
     public String entraDerPactos(@PathVariable("posicion") int posicion) {
         c.enviarMensaje(ipfBuilder.pactosEntraDerecha(posicion));
         return "redirect:";
@@ -156,6 +156,12 @@ public class AutonomicasIPF {
     @GetMapping("/carmen/faldon/encadena")
     public String faldonAutoEncadena() {
         c.enviarMensaje(ipfBuilder.faldonAutoEncadena());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/faldon/sondeo/encadena")
+    public String faldonAutoSondeoEncadena() {
+        c.enviarMensaje(ipfBuilder.faldonAutoSondeoEncadena());
         return "redirect:";
     }
 

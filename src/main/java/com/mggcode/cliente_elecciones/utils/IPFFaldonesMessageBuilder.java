@@ -65,6 +65,10 @@ public class IPFFaldonesMessageBuilder {
         return eventRunBuild("FALDON_MUNI_SONDEO/SALE");
     }
 
+    public String faldonMuniSondeoEncadena() {
+        return eventRunBuild("FALDON_MUNI_SONDEO/ENCADENA");
+    }
+
     public String faldonMuniEncadena() {
         return eventRunBuild("FALDON_MUNI/ENCADENA");
     }
@@ -89,7 +93,7 @@ public class IPFFaldonesMessageBuilder {
     public String faldonAutoSondeoSale() {
         return eventRunBuild("FALDON_AUTO_SONDEO/SALE");
     }
-
+    public String faldonAutoSondeoEncadena() {return eventRunBuild("FALDON_AUTO_SONDEO/ENCADENA");}
     public String faldonAutoEncadena() {
         return eventRunBuild("FALDON_AUTO/ENCADENA");
     }
@@ -180,17 +184,17 @@ public class IPFFaldonesMessageBuilder {
     }
 
     public String pactosSale() {
-        return eventRunBuild("ALDON_PACTOS/SalePactometro");
+        return eventRunBuild("FALDON_PACTOS/SalePactometro");
     }
 
     public String pactosEntraDerecha(int posicionPartido) {
-        String signal = eventBuild("Pactometro/PongoQuitoDcha", "MAP_INT_PAR", String.valueOf(posicionPartido), 1);
+        String signal = eventBuild("Pactometro/CualDcha", "MAP_INT_PAR", String.valueOf(posicionPartido), 1);
         signal += eventRunBuild("FALDON_PACTOS/SumaPorDcha");
         return signal;
     }
 
     public String pactosEntraIzquierda(int posicionPartido) {
-        String signal = eventBuild("Pactometro/PongoQuitoIzda", "MAP_INT_PAR", String.valueOf(posicionPartido), 1);
+        String signal = eventBuild("Pactometro/CualIzda", "MAP_INT_PAR", String.valueOf(posicionPartido), 1);
         signal += eventRunBuild("FALDON_PACTOS/SumaPorIzda");
         return signal;
     }

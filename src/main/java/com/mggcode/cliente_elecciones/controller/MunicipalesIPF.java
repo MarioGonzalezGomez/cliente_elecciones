@@ -113,6 +113,12 @@ public class MunicipalesIPF {
         return "redirect:";
     }
 
+    @GetMapping("/carmen/faldon/sondeo/encadena")
+    public String faldonMuniSondeoEncadena() {
+        c.enviarMensaje(ipfBuilder.faldonMuniSondeoEncadena());
+        return "redirect:";
+    }
+
     @GetMapping("/carmen/faldon/deMuniaAuto")
     public String faldonDeMuniaAuto() {
         c.enviarMensaje(ipfBuilder.deMuniAAuto());
