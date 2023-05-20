@@ -88,10 +88,13 @@ public class CircunscripcionPartido {
         circunscripcionPartido.setPorcentajeVoto(cpDTO.getPorcentajeVoto());
         circunscripcionPartido.setVotantesHistorico(cpDTO.getPorcentajeVotoHistorico());
         circunscripcionPartido.setNumVotantes(cpDTO.getNumVotantes());
+        circunscripcionPartido.setEscanos_desde_sondeo(cpDTO.getEscanos_desde_sondeo());
+        circunscripcionPartido.setEscanos_hasta_sondeo(cpDTO.getEscanos_hasta_sondeo());
+        circunscripcionPartido.setPorcentajeVotoSondeo(cpDTO.getPorcentajeVotoSondeo());
         return circunscripcionPartido;
     }
 
-    public CircunscripcionPartido(){
+    public CircunscripcionPartido() {
 
     }
 }

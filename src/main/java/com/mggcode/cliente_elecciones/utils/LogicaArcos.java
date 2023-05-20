@@ -70,7 +70,6 @@ public class LogicaArcos {
     private ArrayList<Double> getSumatorios(List<CircunscripcionPartido> cps) {
 
         sumatorios.add(getTotalOficial(cps));
-
         sumatorios.add(getTotalHastaSondeo(cps));
         sumatorios.add(getTotalHastaSondeo(cps));
         totalHastaOficial = getTotalOficial(cps);

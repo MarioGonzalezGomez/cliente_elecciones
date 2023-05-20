@@ -152,8 +152,8 @@ public class CarmenDtoReader {
         var split = line.split(";");
         return new CpDTO(split[0], split[1],
                 (int) Double.parseDouble(split[2]), (int) Double.parseDouble(split[3]),
-                (int) Double.parseDouble(split[4]), Double.parseDouble(split[5]),
+                (int) Double.parseDouble(split[4]),  Double.parseDouble(split[5]),
                 Double.parseDouble(split[6]), (int) Double.parseDouble(split[7]),
-                split[8], split[9], (int) Double.parseDouble(split[10]), (int) Double.parseDouble(split[11]), Double.parseDouble(split[12]));
+                split[8], split[9], (int) Double.parseDouble(split[16]), (int) Double.parseDouble(split[17]), Double.parseDouble(split[18]));
     }
 }

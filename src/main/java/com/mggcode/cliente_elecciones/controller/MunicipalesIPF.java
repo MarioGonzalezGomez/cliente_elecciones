@@ -262,13 +262,13 @@ public class MunicipalesIPF {
 
     }
 
-    @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraIzq")
+    @GetMapping("/arco/sondeo/{circunscripcion}/{partido}/entraIzq")
     public String entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(3);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
-                .filter(x -> x.getEscanos_hasta() > 0.0)
+                .filter(x -> x.getEscanos_hasta_sondeo() > 0.0)
                 .toList();
         CircunscripcionPartido seleccionado = cp.stream()
                 .filter(partido -> partido.getKey().getPartido().equals(par))
@@ -326,7 +326,7 @@ public class MunicipalesIPF {
 
     }
 
-    @GetMapping("/arco/desde_hasta/{circunscripcion}/{partido}/entraDer")
+    @GetMapping("/arco/sondeo/{circunscripcion}/{partido}/entraDer")
     public String entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(3);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()

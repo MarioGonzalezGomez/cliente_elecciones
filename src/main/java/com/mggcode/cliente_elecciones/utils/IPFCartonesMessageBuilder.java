@@ -67,8 +67,8 @@ public class IPFCartonesMessageBuilder {
         }
 
         String apertura = LogicaArcos.getInstance().getApertura(partidos, partido, tipoArco);
-        return eventBuild("OFFSET" + posicionPartido, "MAP_FLOAT_PAR", apertura, 1) +
-                eventBuild(object, "PRIM_BAR_LEN[2]", apertura, 1);
+        //return eventBuild("OFFSET" + posicionPartido, "MAP_FLOAT_PAR", apertura, 1) +
+        return eventBuild(object, "PRIM_BAR_LEN[2]", apertura, 1);
     }
 
     private String getOffset(String posicionPartido, List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
