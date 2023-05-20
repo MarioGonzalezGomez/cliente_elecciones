@@ -48,7 +48,7 @@ public class HomeController {
 
     }
 
-    private void startListeners() {
+    public void startListeners() {
         aCircunscripcionController.suscribeCircunscripciones();
         circunscripcionController.suscribeCircunscripciones();
 

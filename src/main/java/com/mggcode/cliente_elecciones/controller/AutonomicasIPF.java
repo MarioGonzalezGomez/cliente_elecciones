@@ -48,6 +48,38 @@ public class AutonomicasIPF {
 
     }
 
+    //PACTOS
+    @GetMapping("/carmen/pactos/entra")
+    public String entraPactos() {
+        c.enviarMensaje(ipfBuilder.pactosEntra());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/pactos/sale")
+    public String salePactos() {
+        c.enviarMensaje(ipfBuilder.pactosSale());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/pactos/reinicio")
+    public String reinicioPactos() {
+        c.enviarMensaje(ipfBuilder.pactosReinicio());
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/pactos/{posicion}/entraDer")
+    public String entraIzqPactos(@PathVariable("posicion") int posicion) {
+        c.enviarMensaje(ipfBuilder.pactosEntraIzquierda(posicion));
+        return "redirect:";
+    }
+
+    @GetMapping("/carmen/pactos/{posicion}/entraIzq")
+    public String entraDerPactos(@PathVariable("posicion") int posicion) {
+        c.enviarMensaje(ipfBuilder.pactosEntraDerecha(posicion));
+        return "redirect:";
+    }
+
+
     //LATERAL
 
     @GetMapping("/carmen/lateral/entra")

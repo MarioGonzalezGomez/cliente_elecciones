@@ -56,6 +56,7 @@ public class IPFFaldonesMessageBuilder {
     public String faldonMuniSale() {
         return eventRunBuild("FALDON_MUNI/SALE");
     }
+
     public String faldonMuniSondeoEntra() {
         return eventRunBuild("FALDON_MUNI_SONDEO/ENTRA");
     }
@@ -135,24 +136,69 @@ public class IPFFaldonesMessageBuilder {
 
     //ACTUALIZAS
 
-    public String autoMuniActualizo() {return eventRunBuild("AUTO_MUNI/ACTUALIZO");}
+    public String autoMuniActualizo() {
+        return eventRunBuild("AUTO_MUNI/ACTUALIZO");
+    }
 
-    public String muniAutoActualizo() {return eventRunBuild("MUNI_AUTO/ACTUALIZO");}
+    public String muniAutoActualizo() {
+        return eventRunBuild("MUNI_AUTO/ACTUALIZO");
+    }
 
     //VOTANTES
 
-    public String votantesEntra() {return eventRunBuild("FALDON_MUNI_VOTANTES/ENTRA");}
+    public String votantesEntra() {
+        return eventRunBuild("FALDON_MUNI_VOTANTES/ENTRA");
+    }
 
-    public String votantesHistorico() {return eventRunBuild("FALDON_MUNI_VOTANTES/ENCADENA");}
+    public String votantesHistorico() {
+        return eventRunBuild("FALDON_MUNI_VOTANTES/ENCADENA");
+    }
 
-    public String votantesSale() {return eventRunBuild("FALDON_MUNI_VOTANTES/SALE");}
+    public String votantesSale() {
+        return eventRunBuild("FALDON_MUNI_VOTANTES/SALE");
+    }
 
     //SEDES
 
-    public String sedesEntra() {return eventRunBuild("FALDON_SEDES/ENTRA");}
-    public String sedesSale() {return eventRunBuild("FALDON_SEDES/SALE");}
+    public String sedesEntra() {
+        return eventRunBuild("FALDON_SEDES/ENTRA");
+    }
 
-    public String resetIPF() {return eventRunBuild("RESET");}
+    public String sedesSale() {
+        return eventRunBuild("FALDON_SEDES/SALE");
+    }
+
+
+    //PACTOS
+
+    public String pactosEntra() {
+        return eventRunBuild("FALDON_PACTOS/EntraPactometro");
+    }
+
+    public String pactosReinicio() {
+        return eventRunBuild("FALDON_PACTOS/INICIO");
+    }
+
+    public String pactosSale() {
+        return eventRunBuild("ALDON_PACTOS/SalePactometro");
+    }
+
+    public String pactosEntraDerecha(int posicionPartido) {
+        String signal = eventBuild("Pactometro/PongoQuitoDcha", "MAP_INT_PAR", String.valueOf(posicionPartido), 1);
+        signal += eventRunBuild("FALDON_PACTOS/SumaPorDcha");
+        return signal;
+    }
+
+    public String pactosEntraIzquierda(int posicionPartido) {
+        String signal = eventBuild("Pactometro/PongoQuitoIzda", "MAP_INT_PAR", String.valueOf(posicionPartido), 1);
+        signal += eventRunBuild("FALDON_PACTOS/SumaPorIzda");
+        return signal;
+    }
+
+    //RESET
+    public String resetIPF() {
+        return eventRunBuild("RESET");
+    }
 
     private String eventRunBuild(String eventName) {
         String message = "";
@@ -161,5 +207,19 @@ public class IPFFaldonesMessageBuilder {
         return message + itemSet +
                 bd +
                 eventName + "','" + eventRun + "');";
+    }
+
+    private String eventBuild(String objecto, String propiedad, String values, int tipoItem) {
+        String message = "";
+        String itemSet = "";
+        if (tipoItem == 1) {
+            itemSet = "itemset('";
+        }
+        if (tipoItem == 2) {
+            itemSet = "itemgo('";
+        }
+        return message + itemSet +
+                bd +
+                objecto + "','" + propiedad + "'," + values + ");";
     }
 }

@@ -37,7 +37,7 @@ public class ConexionIPF {
         try {
             //No lo reconoce IPF al mandarlo como UTF. Añade caracteres especiales al inicio del String
             datoSalida.writeBytes(mensaje);
-            System.out.println("Enviando: "+ mensaje);
+            System.out.println("Enviando: " + mensaje);
         } catch (IOException ex) {
             System.err.println("Cliente->ERROR: Al enviar mensaje " + ex.getMessage());
         }
@@ -60,7 +60,7 @@ public class ConexionIPF {
             crearFlujosES();
             System.out.println("Cliente->Conectado al servidor...");
         } catch (IOException ex) {
-            System.err.println("Cliente->ERROR: Al conectar al servidor -> " + ex.getMessage());
+            System.err.println("Cliente->ERROR: Al conectar al servidor en " + direccion + " > " + ex.getMessage());
             try {
                 servidor = new Socket("127.0.0.1", Integer.parseInt(config.getProperty("puerto")));
                 crearFlujosES();
