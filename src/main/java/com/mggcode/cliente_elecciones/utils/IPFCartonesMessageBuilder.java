@@ -385,7 +385,7 @@ public class IPFCartonesMessageBuilder {
         }
         DecimalFormat df = new DecimalFormat("#.####");
 
-        String value = df.format(bind).replace(",", ".") + ",1";
+        String value = df.format(bind).replace(",", ".") + ",0.5";
         return eventBuild(object, "BIND_FRACTION", value, 2);
     }
 
