@@ -6,6 +6,7 @@ import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IPFCartonesMessageBuilder {
 
@@ -169,6 +170,26 @@ public class IPFCartonesMessageBuilder {
         return eventBuild(object, "BIND_FRACTION", values, 2);
     }
 
+    public String pintaFicha(String posicionPartido, int tipoArco) {
+        String object = switch (tipoArco) {
+            case 1 -> "ARCO_OFICIAL/FICHAS/FICHA" + posicionPartido + "/FICHA";
+            case 2, 3, 4 -> "ARCO_SONDEO/PRINCIPALES/FICHAS/FICHA" + posicionPartido + "/FICHA";
+            default -> "";
+        };
+        String values = "False,1";
+        return eventBuild(object, "OBJ_CULL", values, 2);
+    }
+
+    public String despintaFicha(String posicionPartido, int tipoArco) {
+        String object = switch (tipoArco) {
+            case 1 -> "ARCO_OFICIAL/FICHAS/FICHA" + posicionPartido + "/FICHA";
+            case 2, 3, 4 -> "ARCO_SONDEO/PRINCIPALES/FICHAS/FICHA" + posicionPartido + "/FICHA";
+            default -> "";
+        };
+        String values = "True,1";
+        return eventBuild(object, "OBJ_CULL", values, 2);
+    }
+
     private String reverseBindFraction(String posicionPartido, int tipoArco) {
         String object = "";
         switch (tipoArco) {
@@ -189,7 +210,7 @@ public class IPFCartonesMessageBuilder {
         partidosDentro.clear();
     }
 
-    public String borrarPartido(List<CircunscripcionPartido> cp, CircunscripcionPartido partido, int tipoArco) {
+    public String borrarPartido(List<CircunscripcionPartido> cp, CircunscripcionPartido partido, int tipoArco, boolean izq) {
         aperturas.remove(Double.parseDouble(LogicaArcos.getInstance().getApertura(cp, partido, tipoArco)));
         if (tipoArco == 3) {
             aperturasDesde.remove(Double.parseDouble(LogicaArcos.getInstance().getApertura(cp, partido, tipoArco)));
@@ -197,7 +218,21 @@ public class IPFCartonesMessageBuilder {
             partidosDentro.remove(partido);
         }
         String posicionPartido = String.valueOf((cp.indexOf(partido) + 1));
-        return moverRestoPartidos(posicionPartido, cp, tipoArco);
+        String quitarColor = despintaFicha(posicionPartido, tipoArco);
+        String escanios = mayoriasEscanios(cp, tipoArco);
+        String mover = moverRestoPartidos(posicionPartido, cp, tipoArco);
+        int totalEscanios = getEscaniosTotales(cp, tipoArco);
+        String quitaMayoria = "";
+        if (tipoArco != 3) {
+            if (((totalEscanios / 2) + 1) > getEscaniosSumados(tipoArco)) {
+                if (izq) {
+                    quitaMayoria = mayoriasIzqSale();
+                } else {
+                    quitaMayoria = mayoriasDerSale();
+                }
+            }
+        }
+        return mover + escanios + quitaMayoria + quitarColor;
     }
 
     private String moverRestoPartidos(String posicionPartido, List<CircunscripcionPartido> cp, int tipoArco) {
@@ -234,19 +269,29 @@ public class IPFCartonesMessageBuilder {
         return resultado.toString();
     }
 
-
     public String partidoEntraIzq(List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
         if (!partidosDentro.contains(partido)) {
             partidosDentro.add(partido);
         }
+
         String posicionPartido = String.valueOf((partidos.indexOf(partido) + 1));
         String offsetReset = offsetReset(posicionPartido, tipoArco);
         String orientacion = orientacionIzq(posicionPartido, tipoArco);
         String apertura = getApertura(posicionPartido, partidos, partido, tipoArco);
         String offset = getOffset(posicionPartido, partidos, partido, tipoArco);
         String bindFraction = bindFraction(posicionPartido, tipoArco);
+        String colores = pintaFicha(posicionPartido, tipoArco);
+        String escanios = mayoriasEscanios(partidos, tipoArco);
+        int totalEscanios = getEscaniosTotales(partidos, tipoArco);
+        String mayoria = "";
+        if (tipoArco != 3) {
+            if (((totalEscanios / 2) + 1) <= getEscaniosSumados(tipoArco)) {
+                mayoria = mayoriasIzqEntra();
+            }
+        }
 
-        return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
+
+        return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction + escanios + colores + mayoria;
     }
 
     public String partidoEntraDer(List<CircunscripcionPartido> partidos, CircunscripcionPartido partido, int tipoArco) {
@@ -259,8 +304,17 @@ public class IPFCartonesMessageBuilder {
         String apertura = getApertura(posicionPartido, partidos, partido, tipoArco);
         String offset = getOffset(posicionPartido, partidos, partido, tipoArco);
         String bindFraction = bindFraction(posicionPartido, tipoArco);
+        String colores = pintaFicha(posicionPartido, tipoArco);
+        String escanios = mayoriasEscanios(partidos, tipoArco);
+        int totalEscanios = getEscaniosTotales(partidos, tipoArco);
+        String mayoria = "";
+        if (tipoArco != 3) {
+            if (((totalEscanios / 2) + 1) <= getEscaniosSumados(tipoArco)) {
+                mayoria = mayoriasDerEntra();
+            }
+        }
 
-        return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction;
+        return objectCull(posicionPartido, tipoArco) + offsetReset + orientacion + apertura + offset + objectCullFalse(posicionPartido, tipoArco) + bindFraction + escanios + colores + mayoria;
     }
 
     public String arcoEntra() {
@@ -294,6 +348,82 @@ public class IPFCartonesMessageBuilder {
     public String arcoSondeoPactos() {
         return eventRunBuild("ARCO_SONDEO/PACTOS", false);
     }
+
+    //MANDAR ESCANIOS
+
+    private String mayoriasEscanios(List<CircunscripcionPartido> partidos, int tipoArco) {
+        int totalEscanios = getEscaniosTotales(partidos, tipoArco);
+        String setTotales = "";
+        if (partidosDentro.size() == 0) {
+            setTotales = setTotalEscanios(totalEscanios, tipoArco);
+        }
+        String fraction = fractionEscanios(totalEscanios, tipoArco);
+
+        return setTotales + fraction;
+    }
+
+    private String setTotalEscanios(int totalEscanios, int tipoArco) {
+        String object = switch (tipoArco) {
+            case 1, 2 -> "OFICIALES/HASTA_PACTOS";
+            case 3 -> "SONDEO/DESDE_SONDO_PACTOS";
+            case 4 -> "SONDEO/HASTA_SONDO_PACTOS";
+            default -> "";
+        };
+        String total = String.valueOf(totalEscanios);
+
+        return eventBuild(object, "MAP_INT_PAR", total, 1);
+    }
+
+    private String fractionEscanios(int totalEscanios, int tipoArco) {
+        String object = switch (tipoArco) {
+            case 1, 2 -> "HASTA_PACTOS";
+            case 3 -> "SONDEO/DESDE_SONDO_PACTOS";
+            case 4 -> "SONDEO/HASTA_SONDO_PACTOS";
+            default -> "";
+        };
+        double bind = (double) totalEscanios / (double) getEscaniosSumados(tipoArco);
+        DecimalFormat df = new DecimalFormat("#.####");
+        String value = df.format(bind) + ",1";
+        return eventBuild(object, "BIND_FRACTION", value, 2);
+    }
+
+    private int getEscaniosTotales(List<CircunscripcionPartido> partidos, int tipoArco) {
+        return switch (tipoArco) {
+            case 1, 2 -> partidos.stream().mapToInt(CircunscripcionPartido::getEscanos_hasta).sum();
+            case 3 -> partidos.stream().mapToInt(CircunscripcionPartido::getEscanos_hasta_sondeo).sum();
+            case 4 -> partidos.stream().mapToInt(CircunscripcionPartido::getEscanos_desde_sondeo).sum();
+            default -> 0;
+        };
+    }
+
+    private int getEscaniosSumados(int tipoArco) {
+        return switch (tipoArco) {
+            case 1, 2 -> partidosDentro.stream().mapToInt(CircunscripcionPartido::getEscanos_hasta).sum();
+            case 3 -> partidosDentro.stream().mapToInt(CircunscripcionPartido::getEscanos_hasta_sondeo).sum();
+            case 4 -> partidosDentro.stream().mapToInt(CircunscripcionPartido::getEscanos_desde_sondeo).sum();
+            default -> 0;
+        };
+    }
+
+    public String mayoriasIzqEntra() {
+        return eventRunBuild("ARCO/MAYORIA/IZQ/ENTRA", false);
+    }
+
+    public String mayoriasIzqSale() {
+        return eventRunBuild("ARCO/MAYORIA/IZQ/SALE", false);
+    }
+
+    public String mayoriasDerEntra() {
+        return eventRunBuild("ARCO/MAYORIA/DCHA/ENTRA", false);
+    }
+
+    public String mayoriasDerSale() {
+        return eventRunBuild("ARCO/MAYORIA/DCHA/SALE", false);
+    }
+
+    /*
+    PARTICIPACION
+     */
 
     public String participacionEntra() {
         return eventRunBuild("PARTICIPACION/ENTRA", false);

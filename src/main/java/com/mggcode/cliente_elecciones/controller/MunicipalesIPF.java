@@ -345,8 +345,8 @@ public class MunicipalesIPF {
         //c.enviarMensaje(ipfBuilder.lateralEntra());
     }
 
-    @GetMapping("/arco/{circunscripcion}/{partido}/{tipoElecciones}/borrar")
-    public String borrarPartido(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, @PathVariable("tipoElecciones") int tipoElecciones) {
+    @GetMapping("/arco/{circunscripcion}/{partido}/{tipoElecciones}/{izquierda}/borrar")
+    public String borrarPartido(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, @PathVariable("tipoElecciones") int tipoElecciones, @PathVariable("izquierda") int izquierda) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(tipoElecciones);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -364,13 +364,14 @@ public class MunicipalesIPF {
             case 3, 4 -> 3;
             default -> throw new IllegalStateException("Unexpected value: " + tipoElecciones);
         };
+        boolean izq = izquierda == 1;
         String resultado;
         if (tipoArco == 3) {
-            resultado = ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco);
-            resultado += ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco + 1);
+            resultado = ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco, izq);
+            resultado += ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco + 1, izq);
 
         } else {
-            resultado = ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco);
+            resultado = ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco, izq);
         }
         //System.out.println(resultado);
         c.enviarMensaje(resultado);
