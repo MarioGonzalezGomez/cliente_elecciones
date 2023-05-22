@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.client.RestTemplate;
 
-
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -36,7 +35,7 @@ public class ClienteEleccionesApplication {
         //startListeners();
         Thread.sleep(1000);
         System.out.println(ANSI_GREEN + "INICIANDO INTERFAZ" + ANSI_RESET);
-        runClient();
+        //runClient();
     }
 
     public static void runClient() {

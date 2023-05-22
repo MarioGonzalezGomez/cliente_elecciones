@@ -69,13 +69,19 @@ public class ACircunscripcionController {
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
         oficiales = true;
+        long ini = 0;
         try {
             lock.lock();
+            ini = System.currentTimeMillis();
+
+            System.out.println("Descargando: " + ini);
             updateSelectedOficial();
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
+            System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
         }
         return "redirect:";
 
@@ -87,13 +93,19 @@ public class ACircunscripcionController {
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
         oficiales = false;
+        long ini = 0;
         try {
             lock.lock();
+            ini = System.currentTimeMillis();
+
+            System.out.println("Descargando: " + ini);
             updateSelectedSondeo();
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
+            System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
         }
         return "redirect:";
 
