@@ -328,18 +328,22 @@ public class MunicipalesIPF {
 
     @GetMapping("/arco/sondeo/{circunscripcion}/{partido}/entraDer")
     public String entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
-        CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(3);
+        CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(4);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
                         c -> CircunscripcionPartido.mapFromCpDTO(carmenDTO.getCircunscripcion(), c))
-                .filter(x -> x.getEscanos_hasta() > 0.0)
+                .filter(x -> x.getEscanos_hasta_sondeo() > 0.0)
                 .toList();
         CircunscripcionPartido seleccionado = cp.stream()
                 .filter(partido -> partido.getKey().getPartido().equals(par))
                 .findFirst()
                 .orElse(null);
-
-        System.out.println(ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3));
+        String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 3);
+        //  System.out.println(resultado1);
+        c.enviarMensaje(resultado1);
+        String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
+        // System.out.println(resultado2);
+        c.enviarMensaje(resultado2);
         return "redirect:";
 
         //c.enviarMensaje(ipfBuilder.lateralEntra());
@@ -367,9 +371,8 @@ public class MunicipalesIPF {
         boolean izq = izquierda == 1;
         String resultado;
         if (tipoArco == 3) {
-            resultado = ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco, izq);
-            resultado += ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco + 1, izq);
-
+            resultado = ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco + 1, izq);
+            resultado += ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco, izq);
         } else {
             resultado = ipfBuilderCartones.borrarPartido(cp, seleccionado, tipoArco, izq);
         }

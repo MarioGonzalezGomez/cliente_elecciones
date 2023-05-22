@@ -173,7 +173,7 @@ public class IPFCartonesMessageBuilder {
     public String pintaFicha(String posicionPartido, int tipoArco) {
         String object = switch (tipoArco) {
             case 1 -> "ARCO_OFICIAL/FICHAS/FICHA" + posicionPartido + "/FICHA";
-            case 2, 3, 4 -> "ARCO_SONDEO/PRINCIPALES/FICHAS/FICHA" + posicionPartido + "/FICHA";
+            case 2, 3, 4 -> "ARCO_SONDEO/FICHAS/FICHA" + posicionPartido + "/FICHA";
             default -> "";
         };
         String values = "False,1";
@@ -183,7 +183,7 @@ public class IPFCartonesMessageBuilder {
     public String despintaFicha(String posicionPartido, int tipoArco) {
         String object = switch (tipoArco) {
             case 1 -> "ARCO_OFICIAL/FICHAS/FICHA" + posicionPartido + "/FICHA";
-            case 2, 3, 4 -> "ARCO_SONDEO/PRINCIPALES/FICHAS/FICHA" + posicionPartido + "/FICHA";
+            case 2, 3, 4 -> "ARCO_SONDEO/FICHAS/FICHA" + posicionPartido + "/FICHA";
             default -> "";
         };
         String values = "True,1";
@@ -274,6 +274,9 @@ public class IPFCartonesMessageBuilder {
         int totalEscanios = getEscaniosTotales(partidos, tipoArco);
         if (partidosDentro.size() == 0) {
             setTotal = setTotalEscanios(totalEscanios, tipoArco);
+            if (tipoArco == 3) {
+                setTotal += setTotalEscanios(getEscaniosTotales(partidos, tipoArco + 1), tipoArco + 1);
+            }
         }
         if (!partidosDentro.contains(partido)) {
             partidosDentro.add(partido);
@@ -302,6 +305,9 @@ public class IPFCartonesMessageBuilder {
         int totalEscanios = getEscaniosTotales(partidos, tipoArco);
         if (partidosDentro.size() == 0) {
             setTotal = setTotalEscanios(totalEscanios, tipoArco);
+            if (tipoArco == 3) {
+                setTotal += getEscaniosTotales(partidos, tipoArco);
+            }
         }
         if (!partidosDentro.contains(partido)) {
             partidosDentro.add(partido);
@@ -361,8 +367,8 @@ public class IPFCartonesMessageBuilder {
     public String setTotalEscanios(int totalEscanios, int tipoArco) {
         String object = switch (tipoArco) {
             case 1, 2 -> "OFICIALES/HASTA_PACTOS";
-            case 3 -> "SONDEO/DESDE_SONDO_PACTOS";
-            case 4 -> "SONDEO/HASTA_SONDO_PACTOS";
+            case 3 -> "SONDEO/DESDE_SONDEO_PACTOS";
+            case 4 -> "SONDEO/HASTA_SONDEO_PACTOS";
             default -> "";
         };
         String total = String.valueOf(totalEscanios);
@@ -373,8 +379,8 @@ public class IPFCartonesMessageBuilder {
     private String fractionEscanios(int totalEscanios, int tipoArco) {
         String object = switch (tipoArco) {
             case 1, 2 -> "HASTA_PACTOS";
-            case 3 -> "SONDEO/DESDE_SONDO_PACTOS";
-            case 4 -> "SONDEO/HASTA_SONDO_PACTOS";
+            case 3 -> "DESDE_SONDEO_PACTOS";
+            case 4 -> "HASTA_SONDEO_PACTOS";
             default -> "";
         };
         double bind;
