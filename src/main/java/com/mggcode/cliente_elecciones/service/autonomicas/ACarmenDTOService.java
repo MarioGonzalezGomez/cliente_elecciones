@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -63,7 +66,22 @@ public class ACarmenDTOService {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/oficial/" + codAutonomia + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".csv");
-        FileUtils.copyURLToFile(url, csv);
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        // Configurar otras propiedades de conexión si es necesario
+
+        try (InputStream inputStream = connection.getInputStream();
+             FileOutputStream outputStream = new FileOutputStream(csv)) {
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+
         return csv;
     }
 
@@ -111,7 +129,22 @@ public class ACarmenDTOService {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/sondeo/" + codAutonomia + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".csv");
-        FileUtils.copyURLToFile(url, csv);
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        // Configurar otras propiedades de conexión si es necesario
+
+        try (InputStream inputStream = connection.getInputStream();
+             FileOutputStream outputStream = new FileOutputStream(csv)) {
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+
         return csv;
     }
 
