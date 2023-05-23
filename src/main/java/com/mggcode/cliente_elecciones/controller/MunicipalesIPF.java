@@ -470,6 +470,12 @@ public class MunicipalesIPF {
         return "redirect:";
     }
 
+    @GetMapping("/participacion/entra/esp/delay")
+    public String entraParticipacionEspDelay() {
+        c.enviarMensaje(ipfBuilderCartones.participacionEspMuniDelay());
+        return "redirect:";
+    }
+
     @GetMapping("/participacion/sale/esp")
     public String saleParticipacionEsp() {
         c.enviarMensaje(ipfBuilderCartones.saleParticipacionEsp());

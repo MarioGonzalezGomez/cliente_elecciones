@@ -35,7 +35,7 @@ public class ClienteEleccionesApplication {
         //startListeners();
         Thread.sleep(1000);
         System.out.println(ANSI_GREEN + "INICIANDO INTERFAZ" + ANSI_RESET);
-        //runClient();
+        runClient();
     }
 
     public static void runClient() {
