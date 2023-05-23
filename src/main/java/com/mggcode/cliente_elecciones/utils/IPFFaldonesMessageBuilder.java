@@ -176,7 +176,7 @@ public class IPFFaldonesMessageBuilder {
     //PACTOS
 
     public String pactosEntra() {
-        return eventRunBuild("FALDON_PACTOS/EntraPactometro");
+        return eventRunBuild("FALDON_PACTOS/ENTRA");
     }
 
     public String pactosReinicio() {
@@ -184,7 +184,7 @@ public class IPFFaldonesMessageBuilder {
     }
 
     public String pactosSale() {
-        return eventRunBuild("FALDON_PACTOS/SalePactometro");
+        return eventRunBuild("FALDON_PACTOS/SALE");
     }
 
     public String pactosEntraDerecha(int posicionPartido) {
