@@ -1,6 +1,7 @@
 package com.mggcode.cliente_elecciones.controller.autonomicas;
 
 
+import com.mggcode.cliente_elecciones.ClienteEleccionesApplication;
 import com.mggcode.cliente_elecciones.controller.AutonomicasIPF;
 import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
@@ -164,6 +165,10 @@ public class ACircunscripcionController {
             isSuscribed.set(true);
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
             exec.scheduleAtFixedRate(() -> {
+                if(!ClienteEleccionesApplication.closeCheck){
+                    System.out.println("Cerrando...");
+                    exec.shutdown();
+                }
                 if (circunscripciones.isEmpty()) {
                     System.out.println("Cargando partidos");
                     circunscripciones = circunscripcionService.findAll();

@@ -27,6 +27,7 @@ public class ClienteEleccionesApplication {
         SpringApplication.run(ClienteEleccionesApplication.class, args);
     }
 
+    public static volatile boolean closeCheck = true;
 
     @EventListener({ApplicationReadyEvent.class})
     void applicationReadyEvent() throws InterruptedException {
