@@ -60,8 +60,29 @@ public class CircunscripcionController {
         return "circunscripciones";
     }
 
-    @GetMapping("/selected/oficial/{codigo}")
-    public String selectCircunscripcionOficial(@PathVariable("codigo") String codigo) {
+    @GetMapping("/selected/oficial/f_autonomicas/{codigo}")
+    public String selectCircunscripcionAutonomiaOficial(@PathVariable("codigo") String codigo, Model model) {
+        System.out.println("---" + codigo);
+        Data data = Data.getInstance();
+        data.setCircunscripcionSeleccionada(codigo);
+        oficiales = true;
+        long ini = 0;
+        try {
+            lock.lock();
+            ini = System.currentTimeMillis();
+            System.out.println("Descargando: " + ini);
+            carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+            System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
+        }
+        return "redirect:";
+    }
+
+    @GetMapping("/selected/oficial/mapa_mayorias/{codigo}")
+    public String selectCircunscripcionMapaOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -72,7 +93,7 @@ public class CircunscripcionController {
             ini = System.currentTimeMillis();
 
             System.out.println("Descargando: " + ini);
-            updateSelectedOficial();
+            carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,11 +102,10 @@ public class CircunscripcionController {
             System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
         }
         return "redirect:";
-
     }
 
-    @GetMapping("/selected/sondeo/{codigo}")
-    public String selectCircunscripcionSondeo(@PathVariable("codigo") String codigo, Model model) {
+    @GetMapping("/selected/sondeo/f_autonomicas/{codigo}")
+    public String selectCircunscripcionAutnomiaSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -96,7 +116,7 @@ public class CircunscripcionController {
             ini = System.currentTimeMillis();
 
             System.out.println("Descargando: " + ini);
-            updateSelectedSondeo();
+            carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,7 +125,29 @@ public class CircunscripcionController {
             System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
         }
         return "redirect:";
+    }
 
+    @GetMapping("/selected/sondeo/mapa_mayorias/{codigo}")
+    public String selectCircunscripcionMapaSondeo(@PathVariable("codigo") String codigo, Model model) {
+        System.out.println("---" + codigo);
+        Data data = Data.getInstance();
+        data.setCircunscripcionSeleccionada(codigo);
+        oficiales = false;
+        long ini = 0;
+        try {
+            lock.lock();
+            ini = System.currentTimeMillis();
+
+            System.out.println("Descargando: " + ini);
+            carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+            System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
+        }
+        return "redirect:";
     }
 
     @RequestMapping(path = "/csv")
@@ -151,7 +193,7 @@ public class CircunscripcionController {
     public ResponseEntity<List<Circunscripcion>> findAutonomiasMuni() {
         List<Circunscripcion> res = null;
         try {
-            res = circunscripcionService. findAll().stream()
+            res = circunscripcionService.findAll().stream()
                     .filter(c -> c.getCodigoProvincia().equals("00") && c.getCodigoMunicipio().equals("000"))
                     .toList();
             return new ResponseEntity<>(res, HttpStatus.OK);
@@ -207,7 +249,7 @@ public class CircunscripcionController {
                         circunscripciones = circunscripcionesNew;
                     }
                 }
-            }, 0, 2, TimeUnit.SECONDS);
+            }, 0, 30, TimeUnit.SECONDS);
         }
     }
 
