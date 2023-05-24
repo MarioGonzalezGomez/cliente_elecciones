@@ -25,14 +25,26 @@ public class CircunscripcionService {
     RestTemplate restTemplate;
 
     public List<Circunscripcion> findAll() throws ConnectionException {
-        if (!Config.checkConnection(Config.connectedServer)){
+        if (!Config.checkConnection(Config.connectedServer)) {
             throw new ConnectionException();
         }
-            ResponseEntity<Circunscripcion[]> response =
-                    restTemplate.getForEntity(
-                            "http://" + Config.connectedServer + ":8080/municipales/circunscripciones",
-                            Circunscripcion[].class);
+        ResponseEntity<Circunscripcion[]> response =
+                restTemplate.getForEntity(
+                        "http://" + Config.connectedServer + ":8080/municipales/circunscripciones",
+                        Circunscripcion[].class);
 
+        Circunscripcion[] arrayP = response.getBody();
+        return Arrays.asList(arrayP);
+    }
+
+    public List<Circunscripcion> filtradasPorMostrar() throws ConnectionException {
+        if (!Config.checkConnection(Config.connectedServer)) {
+            throw new ConnectionException();
+        }
+        ResponseEntity<Circunscripcion[]> response =
+                restTemplate.getForEntity(
+                        "http://" + Config.connectedServer + ":8080/municipales/circunscripciones/filtrada",
+                        Circunscripcion[].class);
         Circunscripcion[] arrayP = response.getBody();
         return Arrays.asList(arrayP);
     }
@@ -88,7 +100,7 @@ public class CircunscripcionService {
         return circunscripciones;
     }
 
-    public List<Circunscripcion> findByAutonomia(String codAuto){
+    public List<Circunscripcion> findByAutonomia(String codAuto) {
         ResponseEntity<Circunscripcion[]> response =
                 restTemplate.getForEntity(
                         "http://" + Config.connectedServer + ":8080/municipales/circunscripciones",

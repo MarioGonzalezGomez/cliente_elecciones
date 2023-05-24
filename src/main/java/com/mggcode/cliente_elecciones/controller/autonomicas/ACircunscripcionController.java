@@ -207,6 +207,13 @@ public class ACircunscripcionController {
         return new ResponseEntity<>(circunscripcionService.findCircunscripcionByAutonomia(codigo), HttpStatus.OK);
     }
 
+    @GetMapping("/filtrada/{codigo}")
+    public ResponseEntity<List<Circunscripcion>> filtradasPorMostrar(@PathVariable("codigo") String codigo) {
+        List<Circunscripcion> circunscripcions = circunscripcionService.filtradasPorMostrar();
+        List<Circunscripcion> resultado = circunscripcions.stream().filter(c -> c.getCodigoComunidad().equals(codigo)).toList();
+        return new ResponseEntity<>(resultado, HttpStatus.OK);
+    }
+
 
     public void suscribeCircunscripciones() {
         if (!isSuscribed.get()) {
@@ -214,7 +221,7 @@ public class ACircunscripcionController {
             isSuscribed.set(true);
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
             exec.scheduleAtFixedRate(() -> {
-                if(!ClienteEleccionesApplication.closeCheck){
+                if (!ClienteEleccionesApplication.closeCheck) {
                     System.out.println("Cerrando...");
                     exec.shutdown();
                 }

@@ -41,5 +41,8 @@ public class Circunscripcion {
 
     private double participacionHist;
 
-    public Circunscripcion(){}
+    private int mostrar;
+
+    public Circunscripcion() {
+    }
 }

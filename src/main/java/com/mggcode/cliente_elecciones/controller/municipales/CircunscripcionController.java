@@ -189,6 +189,13 @@ public class CircunscripcionController {
         return new ResponseEntity<>(circunscripcionService.findByAutonomia(codigo), HttpStatus.OK);
     }
 
+    @GetMapping("/filtrada/{codigo}")
+    public ResponseEntity<List<Circunscripcion>> filtradasPorMostrar(@PathVariable("codigo") String codigo) throws ConnectionException {
+        List<Circunscripcion> circunscripcions = circunscripcionService.filtradasPorMostrar();
+        List<Circunscripcion> resultado = circunscripcions.stream().filter(c -> c.getCodigoComunidad().equals(codigo)).toList();
+        return new ResponseEntity<>(resultado, HttpStatus.OK);
+    }
+
     @GetMapping("/autonomias")
     public ResponseEntity<List<Circunscripcion>> findAutonomiasMuni() {
         List<Circunscripcion> res = null;
@@ -209,7 +216,7 @@ public class CircunscripcionController {
             isSuscribed.set(true);
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
             exec.scheduleAtFixedRate(() -> {
-                if(!ClienteEleccionesApplication.closeCheck){
+                if (!ClienteEleccionesApplication.closeCheck) {
                     System.out.println("Cerrando...");
                     exec.shutdown();
                 }

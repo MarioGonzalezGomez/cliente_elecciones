@@ -24,10 +24,18 @@ public class ACircunscripcionService {
     RestTemplate restTemplate;
 
     public List<Circunscripcion> findAll() {
-
         ResponseEntity<Circunscripcion[]> response =
                 restTemplate.getForEntity(
                         "http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones",
+                        Circunscripcion[].class);
+        Circunscripcion[] arrayP = response.getBody();
+        return Arrays.asList(arrayP);
+    }
+
+    public List<Circunscripcion> filtradasPorMostrar() {
+        ResponseEntity<Circunscripcion[]> response =
+                restTemplate.getForEntity(
+                        "http://" + Config.connectedServer + ":8080/autonomicas/circunscripciones/filtrada",
                         Circunscripcion[].class);
         Circunscripcion[] arrayP = response.getBody();
         return Arrays.asList(arrayP);
