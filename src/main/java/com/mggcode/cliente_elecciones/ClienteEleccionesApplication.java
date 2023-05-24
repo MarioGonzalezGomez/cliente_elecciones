@@ -31,7 +31,6 @@ public class ClienteEleccionesApplication {
 
     @EventListener({ApplicationReadyEvent.class})
     void applicationReadyEvent() throws InterruptedException {
-        //browse("http://localhost:9090");
         System.out.println("Servidor conectado: " + Config.connectedServer);
         //startListeners();
         Thread.sleep(1000);

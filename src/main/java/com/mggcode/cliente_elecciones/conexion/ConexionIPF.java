@@ -5,6 +5,7 @@ import com.mggcode.cliente_elecciones.config.Config;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import static com.mggcode.cliente_elecciones.config.Config.config;
@@ -16,6 +17,8 @@ public class ConexionIPF {
 
     private DataInputStream datoEntrada = null;
     private DataOutputStream datoSalida = null;
+
+    private final int TIMEOUT = 3000; // 3 segundos
 
 
     public ConexionIPF(String address) {
@@ -55,20 +58,36 @@ public class ConexionIPF {
     }
 
     private void conectar() {
-        try {
-            servidor = new Socket(direccion, Integer.parseInt(config.getProperty("puerto")));
-            crearFlujosES();
-            System.out.println("Cliente->Conectado al servidor...");
-        } catch (IOException ex) {
-            System.err.println("Cliente->ERROR: Al conectar al servidor en " + direccion + " > " + ex.getMessage());
+        Thread conexionRemotaThread = new Thread(() -> {
             try {
-                servidor = new Socket("127.0.0.1", Integer.parseInt(config.getProperty("puerto")));
+                servidor = new Socket();
+                servidor.connect(new InetSocketAddress(direccion, Integer.parseInt(config.getProperty("puerto"))), TIMEOUT);
+                crearFlujosES();
+                System.out.println("Cliente->Conectado al servidor...");
+            } catch (IOException ex) {
+                System.err.println("Cliente->ERROR: Al conectar al servidor en " + direccion + " > " + ex.getMessage());
+            }
+        });
+
+        Thread conexionLocalThread = new Thread(() -> {
+            try {
+                servidor = new Socket();
+                servidor.connect(new InetSocketAddress("127.0.0.1", Integer.parseInt(config.getProperty("puerto"))), TIMEOUT);
                 crearFlujosES();
                 System.out.println("Cliente->Conectado en local");
-            } catch (IOException e) {
+            } catch (IOException ex) {
                 System.err.println("Cliente->ERROR: Al conectar al IPF local -> " + ex.getMessage());
             }
-            // System.exit(-1);
+        });
+
+        conexionRemotaThread.start();
+        conexionLocalThread.start();
+
+        try {
+            conexionRemotaThread.join();
+            conexionLocalThread.join();
+        } catch (InterruptedException e) {
+            System.err.println("Cliente->ERROR: Al esperar por la finalización de los hilos de conexión -> " + e.getMessage());
         }
     }
 
