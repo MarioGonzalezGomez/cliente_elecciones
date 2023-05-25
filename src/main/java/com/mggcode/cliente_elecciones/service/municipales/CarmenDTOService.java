@@ -164,7 +164,7 @@ public class CarmenDTOService {
 
     public File writeAutonomiaSeleccionadaArcoMayoriasSondeo(String codCirunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codCirunscripcion + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codCirunscripcion + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "C_MapaMayoriasSondeo.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;

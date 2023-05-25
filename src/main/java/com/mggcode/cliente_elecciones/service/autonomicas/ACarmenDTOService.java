@@ -117,14 +117,6 @@ public class ACarmenDTOService {
         return response.getBody();
     }
 
-    public CarmenDTO getSondeoEspecial(String codAutonomia) {
-        ResponseEntity<CarmenDTO> response =
-                restTemplate.getForEntity(
-                        "http://" + Config.connectedServer + ":8080/autonomicas/carmen/sondeo/especial/" + codAutonomia,
-                        CarmenDTO.class);
-        return response.getBody();
-    }
-
     public File getSondeoEspecialCsv(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/sondeo/especial/" + codAutonomia + "/csv");
@@ -189,7 +181,7 @@ public class ACarmenDTOService {
 
     public File writeAutonomiaSeleccionadaArcoMayoriasSondeo(String codCirunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/sondeo/" + codCirunscripcion + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/carmen/sondeo/especial/" + codCirunscripcion + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "C_MapaMayoriasSondeo.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;

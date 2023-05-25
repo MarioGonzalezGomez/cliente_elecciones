@@ -78,11 +78,11 @@ public class ACarmenDTOController {
         return new ResponseEntity<>(carmenDTOService.findAllSondeo(codigo), HttpStatus.OK);
     }
 
-    @GetMapping("/sondeo/especial/{codigo}/csv")
-    public String findDtoSondeoEspecial(@PathVariable("codigo") String codigo, RedirectAttributes redirectAttributes) throws IOException {
-        carmenDTOService.getSondeoEspecialCsv(codigo);
-        redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:";
-    }
+    //  @GetMapping("/sondeo/especial/{codigo}/csv")
+    //  public String findDtoSondeoEspecial(@PathVariable("codigo") String codigo, RedirectAttributes redirectAttributes) throws IOException {
+    //      carmenDTOService.getSondeoEspecialCsv(codigo);
+    //      redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
+    //      return "redirect:";
+    //  }
 
 }
