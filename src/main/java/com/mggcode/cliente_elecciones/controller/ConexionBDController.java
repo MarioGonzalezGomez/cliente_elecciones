@@ -23,13 +23,13 @@ public class ConexionBDController {
     @RequestMapping(path = "/reserva")
     public String conectReservaDB() {
         service.conectReservaBD();
-        return "redirect";
+        return "redirect:";
     }
 
     @RequestMapping(path = "/local")
     public String conectLocalDB() {
         service.conectLocalBD();
-        return "redirect";
+        return "redirect:";
     }
 
 }
