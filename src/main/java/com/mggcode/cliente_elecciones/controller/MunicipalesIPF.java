@@ -527,7 +527,7 @@ public class MunicipalesIPF {
 
     @GetMapping("/resultados/sondeo/cambia")
     public String resultadosSondeoCambia() {
-        c.enviarMensaje(ipfBuilderCartones.resultadosSondeoCambiaMuni());
+        c.enviarMensaje(ipfBuilderCartones.resultadosSondeoCambiaMunicipio());
         return "redirect:";
     }
 

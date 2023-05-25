@@ -520,7 +520,7 @@ public class AutonomicasIPF {
 
     @GetMapping("/resultados/sondeo/cambia")
     public String resultadosSondeoCambia() {
-        c.enviarMensaje(ipfBuilderCartones.resultadosSondeoCambiaAuto());
+        c.enviarMensaje(ipfBuilderCartones.resultadosSondeoCambiaComunidad());
         return "redirect:";
     }
 

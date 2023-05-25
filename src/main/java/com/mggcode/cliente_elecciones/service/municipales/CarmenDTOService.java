@@ -100,6 +100,29 @@ public class CarmenDTOService {
         return response.getBody();
     }
 
+    public File getSondeoEspecialCsv(String codAutonomia) throws IOException {
+        File carpetaBase = comprobarCarpetas();
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codAutonomia + "/csv");
+        File csv = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".csv");
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        // Configurar otras propiedades de conexión si es necesario
+
+        try (InputStream inputStream = connection.getInputStream();
+             FileOutputStream outputStream = new FileOutputStream(csv)) {
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        }
+
+        return csv;
+    }
+
     public File findAllInCsvSondeo(String codAutonomia) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia + "/csv");

@@ -497,12 +497,12 @@ public class IPFCartonesMessageBuilder {
         return eventRunBuild("RESULTADOS_SONDEO/SALE", false);
     }
 
-    public String resultadosSondeoCambiaAuto() {
-        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA", false);
+    public String resultadosSondeoCambiaComunidad() {
+        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA_COMUNIDAD", false);
     }
 
-    public String resultadosSondeoCambiaMuni() {
-        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA", false);
+    public String resultadosSondeoCambiaMunicipio() {
+        return eventRunBuild("RESULTADOS_SONDEO/CAMBIA_MUNICIPIO", false);
     }
 
     public String load() {

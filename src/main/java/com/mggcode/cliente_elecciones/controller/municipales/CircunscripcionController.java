@@ -172,6 +172,11 @@ public class CircunscripcionController {
         return "circunscripcionDetalle";
     }
 
+    @GetMapping("/{codigo}/data")
+    public ResponseEntity<Circunscripcion> getCircunscripcionPorId(@PathVariable("codigo") String cod) {
+        return new ResponseEntity<>(circunscripcionService.findById(cod), HttpStatus.OK);
+    }
+
     @RequestMapping(path = "/{codPartido}/csv")
     public String findByIdInCsv(@PathVariable("codPartido") String codPartido) throws IOException {
         circunscripcionService.findByIdInCsv(codPartido);
