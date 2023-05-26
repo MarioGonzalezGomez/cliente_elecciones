@@ -2,6 +2,7 @@ package com.mggcode.cliente_elecciones.service.autonomicas;
 
 import com.mggcode.cliente_elecciones.DTO.CarmenDTO;
 import com.mggcode.cliente_elecciones.config.Config;
+import com.mggcode.cliente_elecciones.controller.municipales.CircunscripcionController;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,13 @@ public class ACarmenDTOService {
         return response.getBody();
     }
 
+    @Autowired
+    CircunscripcionController circunscripcionController;
+
     public void updateAllCsv() {
         File carpetaBase = comprobarCarpetas();
-        List<Circunscripcion> list = cirSer.findAutonomias();
+        List<Circunscripcion> list = cirSer.findAutonomias().stream().filter(c -> !c.getCodigo().startsWith("99")).toList();
+        circunscripcionController.updateEspania();
         list.forEach(autonomia -> {
             URL url = null;
             try {
