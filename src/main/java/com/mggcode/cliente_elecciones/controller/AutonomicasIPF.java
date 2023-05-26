@@ -5,20 +5,23 @@ import com.mggcode.cliente_elecciones.conexion.ConexionIPF;
 import com.mggcode.cliente_elecciones.conexion.ConexionManager;
 import com.mggcode.cliente_elecciones.config.Config;
 import com.mggcode.cliente_elecciones.model.CircunscripcionPartido;
+import com.mggcode.cliente_elecciones.model.Dummy;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionPartidoService;
 import com.mggcode.cliente_elecciones.utils.CarmenDtoReader;
 import com.mggcode.cliente_elecciones.utils.IPFCartonesMessageBuilder;
 import com.mggcode.cliente_elecciones.utils.IPFFaldonesMessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("/autonomicas")
 public class AutonomicasIPF {
     private ConexionManager conexionManager;
@@ -41,184 +44,211 @@ public class AutonomicasIPF {
     }
 
     @GetMapping("/reset")
-    public String resetIPF() {
+    public ResponseEntity<Dummy> resetIPF() {
         c.enviarMensaje(ipfBuilder.resetIPF());
         c.enviarMensaje(ipfBuilderCartones.resetIPF());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
     }
 
     //PACTOS
     @GetMapping("/carmen/pactos/entra")
-    public String entraPactos() {
+    public ResponseEntity<Dummy> entraPactos() {
         c.enviarMensaje(ipfBuilder.pactosEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/pactos/sale")
-    public String salePactos() {
+    public ResponseEntity<Dummy> salePactos() {
         c.enviarMensaje(ipfBuilder.pactosSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/pactos/reinicio")
-    public String reinicioPactos() {
+    public ResponseEntity<Dummy> reinicioPactos() {
         c.enviarMensaje(ipfBuilder.pactosReinicio());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/pactos/{posicion}/entraIzq")
-    public String entraIzqPactos(@PathVariable("posicion") int posicion) {
+    public ResponseEntity<Dummy> entraIzqPactos(@PathVariable("posicion") int posicion) {
         c.enviarMensaje(ipfBuilder.pactosEntraIzquierda(posicion));
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/pactos/{posicion}/entraDer")
-    public String entraDerPactos(@PathVariable("posicion") int posicion) {
+    public ResponseEntity<Dummy> entraDerPactos(@PathVariable("posicion") int posicion) {
         c.enviarMensaje(ipfBuilder.pactosEntraDerecha(posicion));
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
 
     //LATERAL
 
     @GetMapping("/carmen/lateral/entra")
-    public String entraFaldonLateral() {
+    public ResponseEntity<Dummy> entraFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
     }
 
     @GetMapping("/carmen/lateral/{codigo}/despliega")
-    public String despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public ResponseEntity<Dummy> despliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralDespliega(codCircunscripcion));
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
     }
 
     @GetMapping("/carmen/lateral/{codigo}/repliega")
-    public String repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public ResponseEntity<Dummy> repliegaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralRepliega(codCircunscripcion));
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
     }
 
     @GetMapping("/carmen/lateral/{codigo}/actualiza")
-    public String actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
+    public ResponseEntity<Dummy> actualizaFaldonLateral(@PathVariable("codigo") String codCircunscripcion) {
         c.enviarMensaje(ipfBuilder.lateralActualiza(codCircunscripcion));
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/lateral/actualiza")
-    public String actualizaFaldonLateral() {
+    public ResponseEntity<Dummy> actualizaFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralActualiza());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/lateral/sale")
-    public String saleFaldonLateral() {
+    public ResponseEntity<Dummy> saleFaldonLateral() {
         c.enviarMensaje(ipfBuilder.lateralSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     //INFERIOR
 
     @GetMapping("/carmen/faldon/entra")
-    public String faldonEntraAuto() {
+    public ResponseEntity<Dummy> faldonEntraAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/sondeo/entra")
-    public String faldonEntraAutoSondeo() {
+    public ResponseEntity<Dummy> faldonEntraAutoSondeo() {
         c.enviarMensaje(ipfBuilder.faldonAutoSondeoEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/sale")
-    public String faldonSaleAuto() {
+    public ResponseEntity<Dummy> faldonSaleAuto() {
         c.enviarMensaje(ipfBuilder.faldonAutoSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/sondeo/sale")
-    public String faldonSaleAutoSondeo() {
+    public ResponseEntity<Dummy> faldonSaleAutoSondeo() {
         c.enviarMensaje(ipfBuilder.faldonAutoSondeoSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/actualiza")
-    public String faldonAutoActualizo() {
+    public ResponseEntity<Dummy> faldonAutoActualizo() {
         c.enviarMensaje(ipfBuilder.faldonAutoActualizo());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/encadena")
-    public String faldonAutoEncadena() {
+    public ResponseEntity<Dummy> faldonAutoEncadena() {
         c.enviarMensaje(ipfBuilder.faldonAutoEncadena());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/sondeo/encadena")
-    public String faldonAutoSondeoEncadena() {
+    public ResponseEntity<Dummy> faldonAutoSondeoEncadena() {
         c.enviarMensaje(ipfBuilder.faldonAutoSondeoEncadena());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/deAutoaMuni")
-    public String faldonDeMuniaAuto() {
+    public ResponseEntity<Dummy> faldonDeMuniaAuto() {
         c.enviarMensaje(ipfBuilder.deAutoAMuni());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/deMuniASondeoAuto")
-    public String deMuniASondeoAuto() {
+    public ResponseEntity<Dummy> deMuniASondeoAuto() {
         c.enviarMensaje(ipfBuilder.deMuniASondeoAuto());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/deAutoSondeoAMuniSondeo")
-    public String deAutoSondeoAMuniSondeo() {
+    public ResponseEntity<Dummy> deAutoSondeoAMuniSondeo() {
         c.enviarMensaje(ipfBuilder.deAutoSondeoAMuniSondeo());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/deAutoSondeoAMuni")
-    public String deAutoSondeoAMuni() {
+    public ResponseEntity<Dummy> deAutoSondeoAMuni() {
         c.enviarMensaje(ipfBuilder.deAutoSondeoAMuni());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/faldon/deAutoSondeoAAuto")
-    public String deAutoSondeoAAuto() {
+    public ResponseEntity<Dummy> deAutoSondeoAAuto() {
         c.enviarMensaje(ipfBuilder.deAutoSondeoAAuto());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     //SEDES
 
     @GetMapping("/carmen/sedes/entra")
-    public String faldonSedesEntra() {
+    public ResponseEntity<Dummy> faldonSedesEntra() {
         c.enviarMensaje(ipfBuilder.sedesEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/carmen/sedes/sale")
-    public String faldonSedesSale() {
+    public ResponseEntity<Dummy> faldonSedesSale() {
         c.enviarMensaje(ipfBuilder.sedesSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     //ARCOS
     @GetMapping("/arco/load")
-    public String load() {
+    public ResponseEntity<Dummy> load() {
         c.enviarMensaje(ipfBuilderCartones.load());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
     }
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public ResponseEntity<Dummy> entraPartidoIzq1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(2);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -234,12 +264,13 @@ public class AutonomicasIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 1);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public ResponseEntity<Dummy> entraPartidoIzq2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(4);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -254,13 +285,14 @@ public class AutonomicasIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 2);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
 
     }
 
     @GetMapping("/arco/sondeo/{circunscripcion}/{partido}/entraIzq")
-    public String entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public ResponseEntity<Dummy> entraPartidoIzq3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(4);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -277,14 +309,15 @@ public class AutonomicasIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraIzq(cp, seleccionado, 4);
         // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
 
     }
 
 
     @GetMapping("/arco/oficial/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public ResponseEntity<Dummy> entraPartidoDer1(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(2);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -300,12 +333,13 @@ public class AutonomicasIPF {
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
 
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
     }
 
     @GetMapping("/arco/principales/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public ResponseEntity<Dummy> entraPartidoDer2(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(4);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -320,11 +354,12 @@ public class AutonomicasIPF {
         String resultado1 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 2);
         //System.out.println(resultado1);
         c.enviarMensaje(resultado1);
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/sondeo/{circunscripcion}/{partido}/entraDer")
-    public String entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
+    public ResponseEntity<Dummy> entraPartidoDer3(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(4);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -341,11 +376,12 @@ public class AutonomicasIPF {
         String resultado2 = ipfBuilderCartones.partidoEntraDer(cp, seleccionado, 4);
         // System.out.println(resultado2);
         c.enviarMensaje(resultado2);
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/{circunscripcion}/{partido}/{tipoElecciones}/{izquierda}/borrar")
-    public String borrarPartido(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, @PathVariable("tipoElecciones") int tipoElecciones, @PathVariable("izquierda") int izquierda) {
+    public ResponseEntity<Dummy> borrarPartido(@PathVariable("circunscripcion") String cir, @PathVariable("partido") String par, @PathVariable("tipoElecciones") int tipoElecciones, @PathVariable("izquierda") int izquierda) {
         CarmenDTO carmenDTO = CarmenDtoReader.getInstance().readCarmenDto(tipoElecciones);
         List<CircunscripcionPartido> cp = carmenDTO.getCpDTO()
                 .stream().map(
@@ -374,160 +410,185 @@ public class AutonomicasIPF {
         }
         //System.out.println(resultado);
         c.enviarMensaje(resultado);
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/reset")
-    public String resetArco() {
+    public ResponseEntity<Dummy> resetArco() {
         ipfBuilderCartones.reset();
         System.out.println("Reset completado");
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
 
     }
 
     @GetMapping("/arco/entra")
-    public String arcoEntra() {
+    public ResponseEntity<Dummy> arcoEntra() {
         c.enviarMensaje(ipfBuilderCartones.arcoEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/entra/delay")
-    public String arcoEntraDelay() {
+    public ResponseEntity<Dummy> arcoEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.arcoEntraDelay());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/sale")
-    public String arcoSale() {
+    public ResponseEntity<Dummy> arcoSale() {
         c.enviarMensaje(ipfBuilderCartones.arcoSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/pactos")
-    public String arcoPactos() {
+    public ResponseEntity<Dummy> arcoPactos() {
         c.enviarMensaje(ipfBuilderCartones.arcoPactos());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/sondeo/entra")
-    public String arcoSondeoEntra() {
+    public ResponseEntity<Dummy> arcoSondeoEntra() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/sondeo/entra/delay")
-    public String arcoSondeoEntraDelayed() {
+    public ResponseEntity<Dummy> arcoSondeoEntraDelayed() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoEntraDelay());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
 
     @GetMapping("/arco/sondeo/sale")
-    public String arcoSondeoSale() {
+    public ResponseEntity<Dummy> arcoSondeoSale() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/arco/sondeo/pactos")
-    public String arcoSondeoPactos() {
+    public ResponseEntity<Dummy> arcoSondeoPactos() {
         c.enviarMensaje(ipfBuilderCartones.arcoSondeoPactos());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     //PARTICIPACION
     @GetMapping("/participacion/entra")
-    public String participacionEntra() {
+    public ResponseEntity<Dummy> participacionEntra() {
         c.enviarMensaje(ipfBuilderCartones.participacionEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
 
     @GetMapping("/participacion/entra/delay")
-    public String participacionEntraDelay() {
+    public ResponseEntity<Dummy> participacionEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.participacionEntraDelay());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
 
     @GetMapping("/participacion/sale")
-    public String participacionSale() {
+    public ResponseEntity<Dummy> participacionSale() {
         c.enviarMensaje(ipfBuilderCartones.participacionSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/participacion/cambia")
-    public String participacionCambia() {
+    public ResponseEntity<Dummy> participacionCambia() {
         c.enviarMensaje(ipfBuilderCartones.participacionCambiaAuto());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
 
     @GetMapping("/participacion/entra/esp")
-    public String entraParticipacionEsp() {
+    public ResponseEntity<Dummy> entraParticipacionEsp() {
         c.enviarMensaje(ipfBuilderCartones.participacionEspAuto());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/participacion/entra/esp/delay")
-    public String entraParticipacionEspDelay() {
+    public ResponseEntity<Dummy> entraParticipacionEspDelay() {
         c.enviarMensaje(ipfBuilderCartones.participacionEspAutoDelay());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/participacion/sale/esp")
-    public String saleParticipacionEsp() {
+    public ResponseEntity<Dummy> saleParticipacionEsp() {
         c.enviarMensaje(ipfBuilderCartones.saleParticipacionEsp());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     //RESULTADOS
 
     @GetMapping("/resultados/entra")
-    public String resultadosEntra() {
+    public ResponseEntity<Dummy> resultadosEntra() {
         c.enviarMensaje(ipfBuilderCartones.resultadosEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/resultados/entra/delay")
-    public String resultadosEntraDelay() {
+    public ResponseEntity<Dummy> resultadosEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.resultadosEntraDelay());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/resultados/sale")
-    public String resultadosSale() {
+    public ResponseEntity<Dummy> resultadosSale() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/resultados/cambia")
-    public String resultadosCambia() {
+    public ResponseEntity<Dummy> resultadosCambia() {
         c.enviarMensaje(ipfBuilderCartones.resultadosCambiaComunidad());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/resultados/sondeo/entra")
-    public String resultadosSondeoEntra() {
+    public ResponseEntity<Dummy> resultadosSondeoEntra() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntra());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/resultados/sondeo/entra/delay")
-    public String resultadosSondeoEntraDelay() {
+    public ResponseEntity<Dummy> resultadosSondeoEntraDelay() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoEntraDelay());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/resultados/sondeo/sale")
-    public String resultadosSondeoSale() {
+    public ResponseEntity<Dummy> resultadosSondeoSale() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoSale());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/resultados/sondeo/cambia")
-    public String resultadosSondeoCambia() {
+    public ResponseEntity<Dummy> resultadosSondeoCambia() {
         c.enviarMensaje(ipfBuilderCartones.resultadosSondeoCambiaComunidad());
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
 

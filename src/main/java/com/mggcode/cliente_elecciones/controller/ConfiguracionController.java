@@ -2,15 +2,17 @@ package com.mggcode.cliente_elecciones.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mggcode.cliente_elecciones.model.Configuracion;
+import com.mggcode.cliente_elecciones.model.Dummy;
 import com.mggcode.cliente_elecciones.service.ConfiguracionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@Controller
+@RestController
 @RequestMapping("/configuracion")
 public class ConfiguracionController {
 
@@ -18,18 +20,20 @@ public class ConfiguracionController {
     private ConfiguracionService configuracionService;
 
     @GetMapping()
-    public String mostrarFormulario(Model model) {
+    public ResponseEntity<Dummy> mostrarFormulario(Model model) {
         Configuracion configuracion = configuracionService.cargarConfiguracion();
         model.addAttribute("configuracion", configuracion);
-        return "configuraciones";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @PostMapping()
-    public String guardarConfiguracion(@RequestBody String jsonConfiguracion) {
+    public ResponseEntity<Dummy> guardarConfiguracion(@RequestBody String jsonConfiguracion) {
         Configuracion configuracion = convertirJsonAConfiguracion(jsonConfiguracion);
         System.out.println(jsonConfiguracion);
         configuracionService.guardarConfiguracion(configuracion);
-        return "redirect:/configuracion";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     private Configuracion convertirJsonAConfiguracion(String jsonConfiguracion) {

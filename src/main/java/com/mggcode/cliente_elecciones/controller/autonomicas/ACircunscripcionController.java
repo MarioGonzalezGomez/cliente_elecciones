@@ -5,18 +5,15 @@ import com.mggcode.cliente_elecciones.ClienteEleccionesApplication;
 import com.mggcode.cliente_elecciones.controller.AutonomicasIPF;
 import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
+import com.mggcode.cliente_elecciones.model.Dummy;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ASedesDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -29,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-@Controller
+@RestController
 @RequestMapping("/autonomicas/circunscripciones")
 public class ACircunscripcionController {
 
@@ -56,16 +53,17 @@ public class ACircunscripcionController {
 
 
     @GetMapping
-    public String verCircunscripciones(Model model) {
+    public ResponseEntity<Dummy> verCircunscripciones(Model model) {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
         model.addAttribute("circunscripciones", circunscripciones);
         model.addAttribute("tipo", "autonomicas");
         model.addAttribute("ruta", "/autonomicas/circunscripciones");
-        return "circunscripciones";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/selected/oficial/f_autonomicas/{codigo}")
-    public String selectCircunscripcionAutonomiaOficial(@PathVariable("codigo") String codigo, Model model) {
+    public ResponseEntity<Dummy> selectCircunscripcionAutonomiaOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -78,11 +76,12 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/selected/oficial/mapa_mayorias/{codigo}")
-    public String selectCircunscripcionMapaOficial(@PathVariable("codigo") String codigo, Model model) {
+    public ResponseEntity<Dummy> selectCircunscripcionMapaOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -97,11 +96,12 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/selected/sondeo/f_autonomicas/{codigo}")
-    public String selectCircunscripcionAutnomiaSondeo(@PathVariable("codigo") String codigo, Model model) {
+    public ResponseEntity<Dummy> selectCircunscripcionAutnomiaSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -116,11 +116,12 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/selected/sondeo/mapa_mayorias/{codigo}")
-    public String selectCircunscripcionMapaSondeo(@PathVariable("codigo") String codigo, Model model) {
+    public ResponseEntity<Dummy> selectCircunscripcionMapaSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -135,50 +136,57 @@ public class ACircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/update")
-    public String update() throws IOException {
+    public ResponseEntity<Dummy> update() throws IOException {
         updateAllCsv();
         ipf.actualizaFaldonLateral();
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
 
     //Descarga todos los csv de autonomía
     @RequestMapping(path = "/csv")
-    public String findAllInCsv(RedirectAttributes redirectAttributes) throws IOException {
+    public ResponseEntity<Dummy> findAllInCsv(RedirectAttributes redirectAttributes) throws IOException {
         circunscripcionService.findAllInCsv();
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/autonomicas/circunscripciones";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/excel")
-    public String findAllInExcel(RedirectAttributes redirectAttributes) throws IOException {
+    public ResponseEntity<Dummy> findAllInExcel(RedirectAttributes redirectAttributes) throws IOException {
         circunscripcionService.findAllInExcel();
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/autonomicas/circunscripciones";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/{codigo}")
-    public String verCircunscripcionDetalle(@PathVariable("codigo") String cod, Model model, @RequestHeader("Referer") String referer) {
+    public ResponseEntity<Dummy> verCircunscripcionDetalle(@PathVariable("codigo") String cod, Model model, @RequestHeader("Referer") String referer) {
         Circunscripcion circunscripcion = circunscripcionService.findById(cod);
         model.addAttribute("circunscripcion", circunscripcion);
         model.addAttribute("referer", referer);
-        return "circunscripcionDetalle";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{codPartido}/csv")
-    public String findByIdInCsv(@PathVariable("codPartido") String codPartido) throws IOException {
+    public ResponseEntity<Dummy> findByIdInCsv(@PathVariable("codPartido") String codPartido) throws IOException {
         circunscripcionService.findByIdInCsv(codPartido);
-        return "circunscripcionDetalle";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{codPartido}/excel")
-    public String findByIdInExcel(@PathVariable("codPartido") String codPartido) throws IOException {
+    public ResponseEntity<Dummy> findByIdInExcel(@PathVariable("codPartido") String codPartido) throws IOException {
         circunscripcionService.findByIdInExcel(codPartido);
-        return "circunscripcionDetalle";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/autonomias")

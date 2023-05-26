@@ -6,6 +6,7 @@ import com.mggcode.cliente_elecciones.config.Config;
 import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
+import com.mggcode.cliente_elecciones.model.Dummy;
 import com.mggcode.cliente_elecciones.service.municipales.CarmenDTOService;
 import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionService;
 import com.mggcode.cliente_elecciones.service.municipales.SedesDTOService;
@@ -13,12 +14,8 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -34,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-@Controller
+@RestController
 @RequestMapping("/municipales/circunscripciones")
 public class CircunscripcionController {
 
@@ -57,16 +54,17 @@ public class CircunscripcionController {
 
 
     @GetMapping
-    public String verCircunscripciones(Model model) throws ConnectionException {
+    public ResponseEntity<Dummy> verCircunscripciones(Model model) throws ConnectionException {
         List<Circunscripcion> circunscripciones = circunscripcionService.findAll();
         model.addAttribute("circunscripciones", circunscripciones);
         model.addAttribute("tipo", "municipales");
         model.addAttribute("ruta", "/municipales/circunscripciones");
-        return "circunscripciones";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/selected/oficial/f_autonomicas/{codigo}")
-    public String selectCircunscripcionAutonomiaOficial(@PathVariable("codigo") String codigo, Model model) {
+    public ResponseEntity<Dummy> selectCircunscripcionAutonomiaOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -79,11 +77,12 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/selected/oficial/mapa_mayorias/{codigo}")
-    public String selectCircunscripcionMapaOficial(@PathVariable("codigo") String codigo, Model model) {
+    public ResponseEntity<Dummy> selectCircunscripcionMapaOficial(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -98,11 +97,12 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/selected/sondeo/f_autonomicas/{codigo}")
-    public String selectCircunscripcionAutnomiaSondeo(@PathVariable("codigo") String codigo, Model model) {
+    public ResponseEntity<Dummy> selectCircunscripcionAutnomiaSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -117,11 +117,12 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/selected/sondeo/mapa_mayorias/{codigo}")
-    public String selectCircunscripcionMapaSondeo(@PathVariable("codigo") String codigo, Model model) {
+    public ResponseEntity<Dummy> selectCircunscripcionMapaSondeo(@PathVariable("codigo") String codigo, Model model) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -136,29 +137,33 @@ public class CircunscripcionController {
         } finally {
             lock.unlock();
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/csv")
-    public String findAllInCsv(RedirectAttributes redirectAttributes) throws IOException {
+    public ResponseEntity<Dummy> findAllInCsv(RedirectAttributes redirectAttributes) throws IOException {
         circunscripcionService.findAllInCsv();
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/municipales/circunscripciones";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/excel")
-    public String findAllInExcel(RedirectAttributes redirectAttributes) throws IOException {
+    public ResponseEntity<Dummy> findAllInExcel(RedirectAttributes redirectAttributes) throws IOException {
         circunscripcionService.findAllInExcel();
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
-        return "redirect:/municipales/circunscripciones";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/{codigo}")
-    public String verCircunscripcionDetalle(@PathVariable("codigo") String cod, Model model, @RequestHeader("Referer") String referer) {
+    public ResponseEntity<Dummy> verCircunscripcionDetalle(@PathVariable("codigo") String cod, Model model, @RequestHeader("Referer") String referer) {
         Circunscripcion circunscripcion = circunscripcionService.findById(cod);
         model.addAttribute("circunscripcion", circunscripcion);
         model.addAttribute("referer", referer);
-        return "circunscripcionDetalle";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/{codigo}/data")
@@ -167,15 +172,17 @@ public class CircunscripcionController {
     }
 
     @RequestMapping(path = "/{codigo}/csv")
-    public String findByIdInCsv(@PathVariable("codigo") String codigo) throws IOException {
+    public ResponseEntity<Dummy> findByIdInCsv(@PathVariable("codigo") String codigo) throws IOException {
         circunscripcionService.findByIdInCsv(codigo);
-        return "circunscripcionDetalle";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{codigo}/excel")
-    public String findByIdInExcel(@PathVariable("codigo") String codigo) throws IOException {
+    public ResponseEntity<Dummy> findByIdInExcel(@PathVariable("codigo") String codigo) throws IOException {
         circunscripcionService.findByIdInExcel(codigo);
-        return "circunscripcionDetalle";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
     @GetMapping("/municipios/{codigo}")
@@ -281,7 +288,7 @@ public class CircunscripcionController {
     private final String ruta = Config.config.getProperty("rutaFicheros");
 
     @GetMapping("/update/espania")
-    public String updateEspania() {
+    public ResponseEntity<Dummy> updateEspania() {
         File carpetaBase = comprobarCarpetas();
         URL url = null;
         try {
@@ -295,8 +302,10 @@ public class CircunscripcionController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return "redirect:";
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
+
     private File comprobarCarpetas() {
         File datos = new File(ruta);
         if (!datos.exists()) {
