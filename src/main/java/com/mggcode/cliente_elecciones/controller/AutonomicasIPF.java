@@ -52,6 +52,13 @@ public class AutonomicasIPF {
 
     }
 
+    @GetMapping("/cartones/actualiza")
+    public ResponseEntity<Dummy> cartonesActualiza() {
+        c.enviarMensaje(ipfBuilderCartones.actualiza());
+        Dummy dummy = new Dummy("202 OK");
+        return new ResponseEntity<>(dummy, HttpStatus.OK);
+    }
+
     //PACTOS
     @GetMapping("/carmen/pactos/entra")
     public ResponseEntity<Dummy> entraPactos() {

@@ -549,6 +549,10 @@ public class IPFCartonesMessageBuilder {
         return eventRunBuild("LOAD", false);
     }
 
+    public String actualiza() {
+        return eventRunBuild("ACTUALIZA", false);
+    }
+
     public String resetIPF() {
         return eventRunBuild("RESET", false);
     }

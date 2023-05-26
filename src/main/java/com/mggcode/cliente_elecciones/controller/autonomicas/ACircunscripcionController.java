@@ -228,6 +228,7 @@ public class ACircunscripcionController {
                         try {
                             updateAllCsv();
                             ipf.actualizaFaldonLateral();
+                            ipf.cartonesActualiza();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
