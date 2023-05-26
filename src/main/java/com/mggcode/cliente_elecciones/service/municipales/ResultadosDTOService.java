@@ -22,23 +22,38 @@ public class ResultadosDTOService {
     @Autowired
     RestTemplate restTemplate;
 
-    public ResultadosDTO findById(String circunscripcion) {
+    public ResultadosDTO findByIdOficial(String circunscripcion) {
         ResponseEntity<ResultadosDTO> response =
                 restTemplate.getForEntity(
-                        "http://" + Config.connectedServer + ":8080/municipales/resultados/" + circunscripcion,
+                        "http://" + Config.connectedServer + ":8080/municipales/resultados/oficial/" + circunscripcion,
+                        ResultadosDTO.class);
+        return response.getBody();
+    }
+    public ResultadosDTO findByIdSondeo(String circunscripcion) {
+        ResponseEntity<ResultadosDTO> response =
+                restTemplate.getForEntity(
+                        "http://" + Config.connectedServer + ":8080/municipales/resultados/sondeo/" + circunscripcion,
                         ResultadosDTO.class);
         return response.getBody();
     }
 
-    public File findByIdCsv(String circunscripcion) throws IOException {
+    public File findByIdCsvOficial(String circunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/resultados/" + circunscripcion + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/resultados/oficial/" + circunscripcion + "/csv");
         File csv = new File(carpetaBase.getPath() +
                 File.separator + "MapaComunidad.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
 
+    public File findByIdCsvSondeo(String circunscripcion) throws IOException {
+        File carpetaBase = comprobarCarpetas();
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/resultados/sondeo/" + circunscripcion + "/csv");
+        File csv = new File(carpetaBase.getPath() +
+                File.separator + "MapaComunidad.csv");
+        FileUtils.copyURLToFile(url, csv);
+        return csv;
+    }
     private File comprobarCarpetas() {
         File datos = new File(ruta);
         if (!datos.exists()) {

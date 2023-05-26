@@ -29,9 +29,18 @@ public class AResultadosDTOService {
         return response.getBody();
     }
 
-    public File findByIdCsv(String circunscripcion) throws IOException {
+    public File findByIdCsvOficial(String circunscripcion) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/resultados/" + circunscripcion + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/resultados/oficial/" + circunscripcion + "/csv");
+        File csv = new File(carpetaBase.getPath() +
+                File.separator + "MapaComunidad.csv");
+        FileUtils.copyURLToFile(url, csv);
+        return csv;
+    }
+
+    public File findByIdCsvSondeo(String circunscripcion) throws IOException {
+        File carpetaBase = comprobarCarpetas();
+        URL url = new URL("http://" + Config.connectedServer + ":8080/autonomicas/resultados/sondeo/" + circunscripcion + "/csv");
         File csv = new File(carpetaBase.getPath() +
                 File.separator + "MapaComunidad.csv");
         FileUtils.copyURLToFile(url, csv);

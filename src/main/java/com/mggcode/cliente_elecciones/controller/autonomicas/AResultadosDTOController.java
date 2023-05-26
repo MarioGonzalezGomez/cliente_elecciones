@@ -25,9 +25,16 @@ public class AResultadosDTOController {
         return dto;
     }
 
-    @RequestMapping(path = "/{circunscripcion}/csv")
-    public String findByIdCsv(@PathVariable("circunscripcion") String circunscripcion, RedirectAttributes redirectAttributes) throws IOException {
-        service.findByIdCsv(circunscripcion);
+    @RequestMapping(path = "/oficial/{circunscripcion}/csv")
+    public String findByIdCsvOficial(@PathVariable("circunscripcion") String circunscripcion, RedirectAttributes redirectAttributes) throws IOException {
+        service.findByIdCsvOficial(circunscripcion);
+        redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
+        return "redirect:";
+    }
+
+    @RequestMapping(path = "/sondeo/{circunscripcion}/csv")
+    public String findByIdCsvSondeo(@PathVariable("circunscripcion") String circunscripcion, RedirectAttributes redirectAttributes) throws IOException {
+        service.findByIdCsvSondeo(circunscripcion);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         return "redirect:";
     }
