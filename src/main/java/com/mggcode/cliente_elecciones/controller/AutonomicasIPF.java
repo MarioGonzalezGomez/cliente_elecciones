@@ -171,6 +171,12 @@ public class AutonomicasIPF {
         return "redirect:";
     }
 
+    @GetMapping("/carmen/faldon/deMuniASondeoAuto")
+    public String deMuniASondeoAuto() {
+        c.enviarMensaje(ipfBuilder.deMuniASondeoAuto());
+        return "redirect:";
+    }
+
     @GetMapping("/carmen/faldon/deAutoSondeoAMuniSondeo")
     public String deAutoSondeoAMuniSondeo() {
         c.enviarMensaje(ipfBuilder.deAutoSondeoAMuniSondeo());

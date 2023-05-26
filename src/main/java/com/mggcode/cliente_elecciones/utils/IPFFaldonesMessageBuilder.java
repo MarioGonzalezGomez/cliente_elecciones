@@ -93,7 +93,11 @@ public class IPFFaldonesMessageBuilder {
     public String faldonAutoSondeoSale() {
         return eventRunBuild("FALDON_AUTO_SONDEO/SALE");
     }
-    public String faldonAutoSondeoEncadena() {return eventRunBuild("FALDON_AUTO_SONDEO/ENCADENA");}
+
+    public String faldonAutoSondeoEncadena() {
+        return eventRunBuild("FALDON_AUTO_SONDEO/ENCADENA");
+    }
+
     public String faldonAutoEncadena() {
         return eventRunBuild("FALDON_AUTO/ENCADENA");
     }
@@ -122,6 +126,10 @@ public class IPFFaldonesMessageBuilder {
 
     public String deMuniSondeoAAuto() {
         return eventRunBuild("GIRO/DeSondeoMuniAAuto");
+    }
+
+    public String deMuniASondeoAuto() {
+        return eventRunBuild("GIRO/DeMuniASondeoAuto");
     }
 
     //ESTANDO EN AUTO

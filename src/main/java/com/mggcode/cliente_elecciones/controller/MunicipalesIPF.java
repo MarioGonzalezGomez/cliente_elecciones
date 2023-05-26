@@ -143,6 +143,12 @@ public class MunicipalesIPF {
         return "redirect:";
     }
 
+    @GetMapping("/carmen/faldon/deMuniASondeoAuto")
+    public String deMuniASondeoAuto() {
+        c.enviarMensaje(ipfBuilder.deMuniASondeoAuto());
+        return "redirect:";
+    }
+
     //LATERAL
     @GetMapping("/carmen/lateral/entra")
     public String entraFaldonLateral() {
