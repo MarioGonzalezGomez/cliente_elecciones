@@ -177,15 +177,15 @@ public class CircunscripcionController {
         return new ResponseEntity<>(circunscripcionService.findById(cod), HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/{codPartido}/csv")
-    public String findByIdInCsv(@PathVariable("codPartido") String codPartido) throws IOException {
-        circunscripcionService.findByIdInCsv(codPartido);
+    @RequestMapping(path = "/{codigo}/csv")
+    public String findByIdInCsv(@PathVariable("codigo") String codigo) throws IOException {
+        circunscripcionService.findByIdInCsv(codigo);
         return "circunscripcionDetalle";
     }
 
-    @RequestMapping(path = "/{codPartido}/excel")
-    public String findByIdInExcel(@PathVariable("codPartido") String codPartido) throws IOException {
-        circunscripcionService.findByIdInExcel(codPartido);
+    @RequestMapping(path = "/{codigo}/excel")
+    public String findByIdInExcel(@PathVariable("codigo") String codigo) throws IOException {
+        circunscripcionService.findByIdInExcel(codigo);
         return "circunscripcionDetalle";
     }
 
