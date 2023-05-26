@@ -226,9 +226,17 @@ public class IPFCartonesMessageBuilder {
         if (tipoArco != 3) {
             if (((totalEscanios / 2) + 1) > getEscaniosSumados(tipoArco)) {
                 if (izq) {
-                    quitaMayoria = mayoriasIzqSale();
+                    if (tipoArco == 4) {
+                        quitaMayoria = mayoriasIzqSaleSondeo();
+                    } else {
+                        quitaMayoria = mayoriasIzqSale();
+                    }
                 } else {
-                    quitaMayoria = mayoriasDerSale();
+                    if (tipoArco == 4) {
+                        quitaMayoria = mayoriasDerSaleSondeo();
+                    } else {
+                        quitaMayoria = mayoriasDerSale();
+                    }
                 }
             }
         }
@@ -292,7 +300,11 @@ public class IPFCartonesMessageBuilder {
         String mayoria = "";
         if (tipoArco != 3) {
             if (((totalEscanios / 2) + 1) <= getEscaniosSumados(tipoArco)) {
-                mayoria = mayoriasIzqEntra();
+                if (tipoArco == 4) {
+                    mayoria = mayoriasIzqEntraSondeo();
+                } else {
+                    mayoria = mayoriasIzqEntra();
+                }
             }
         }
 
@@ -323,7 +335,11 @@ public class IPFCartonesMessageBuilder {
         String mayoria = "";
         if (tipoArco != 3) {
             if (((totalEscanios / 2) + 1) <= getEscaniosSumados(tipoArco)) {
-                mayoria = mayoriasDerEntra();
+                if (tipoArco == 4) {
+                    mayoria = mayoriasDerEntraSondeo();
+                } else {
+                    mayoria = mayoriasDerEntra();
+                }
             }
         }
 
@@ -413,13 +429,37 @@ public class IPFCartonesMessageBuilder {
         };
     }
 
-    public String mayoriasIzqEntra() {return eventRunBuild("ARCO/MAYORIA/IZQ/ENTRA", false);}
+    public String mayoriasIzqEntra() {
+        return eventRunBuild("ARCO/MAYORIA/IZQ/ENTRA", false);
+    }
 
-    public String mayoriasIzqSale() {return eventRunBuild("ARCO/MAYORIA/IZQ/SALE", false);}
+    public String mayoriasIzqSale() {
+        return eventRunBuild("ARCO/MAYORIA/IZQ/SALE", false);
+    }
 
-    public String mayoriasDerEntra() {return eventRunBuild("ARCO/MAYORIA/DCHA/ENTRA", false);}
+    public String mayoriasDerEntra() {
+        return eventRunBuild("ARCO/MAYORIA/DCHA/ENTRA", false);
+    }
 
-    public String mayoriasDerSale() {return eventRunBuild("ARCO/MAYORIA/DCHA/SALE", false);}
+    public String mayoriasDerSale() {
+        return eventRunBuild("ARCO/MAYORIA/DCHA/SALE", false);
+    }
+
+    public String mayoriasIzqEntraSondeo() {
+        return eventRunBuild("ARCO_SONDEO/MAYORIA/IZQ/ENTRA", false);
+    }
+
+    public String mayoriasIzqSaleSondeo() {
+        return eventRunBuild("ARCO_SONDEO/MAYORIA/IZQ/SALE", false);
+    }
+
+    public String mayoriasDerEntraSondeo() {
+        return eventRunBuild("ARCO_SONDEO/MAYORIA/DCHA/ENTRA", false);
+    }
+
+    public String mayoriasDerSaleSondeo() {
+        return eventRunBuild("ARCO_SONDEO/MAYORIA/DCHA/SALE", false);
+    }
 
     /*
     PARTICIPACION
