@@ -66,17 +66,13 @@ public class CircunscripcionController {
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
         oficiales = true;
-        long ini = 0;
         try {
             lock.lock();
-            ini = System.currentTimeMillis();
-            System.out.println("Descargando: " + ini);
             carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
-            System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
         }
         return "redirect:";
     }
@@ -87,19 +83,15 @@ public class CircunscripcionController {
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
         oficiales = true;
-        long ini = 0;
         try {
             lock.lock();
-            ini = System.currentTimeMillis();
 
-            System.out.println("Descargando: " + ini);
             carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
-            System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
         }
         return "redirect:";
     }
@@ -110,19 +102,15 @@ public class CircunscripcionController {
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
         oficiales = false;
-        long ini = 0;
         try {
             lock.lock();
-            ini = System.currentTimeMillis();
 
-            System.out.println("Descargando: " + ini);
             carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
-            System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
         }
         return "redirect:";
     }
@@ -133,19 +121,15 @@ public class CircunscripcionController {
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
         oficiales = false;
-        long ini = 0;
         try {
             lock.lock();
-            ini = System.currentTimeMillis();
 
-            System.out.println("Descargando: " + ini);
             carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
-            System.out.println("Fin de descarga: " + (System.currentTimeMillis() - ini));
         }
         return "redirect:";
     }
