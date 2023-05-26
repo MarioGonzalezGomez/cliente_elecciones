@@ -2,12 +2,14 @@ package com.mggcode.cliente_elecciones.controller.municipales;
 
 
 import com.mggcode.cliente_elecciones.ClienteEleccionesApplication;
+import com.mggcode.cliente_elecciones.config.Config;
 import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.service.municipales.CarmenDTOService;
 import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionService;
 import com.mggcode.cliente_elecciones.service.municipales.SedesDTOService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -273,5 +278,30 @@ public class CircunscripcionController {
         changes = differences;
     }
 
+    private final String ruta = Config.config.getProperty("rutaFicheros");
 
+    @GetMapping("/update/espania")
+    public String updateEspania() {
+        File carpetaBase = comprobarCarpetas();
+        URL url = null;
+        try {
+            url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/9900000/csv");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        File csv = new File(carpetaBase.getPath() + File.separator + "F_9900000.csv");
+        try {
+            FileUtils.copyURLToFile(url, csv);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:";
+    }
+    private File comprobarCarpetas() {
+        File datos = new File(ruta);
+        if (!datos.exists()) {
+            datos.mkdir();
+        }
+        return datos;
+    }
 }
