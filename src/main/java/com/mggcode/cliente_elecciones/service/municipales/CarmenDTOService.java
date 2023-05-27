@@ -71,7 +71,12 @@ public class CarmenDTOService {
     public File writeCricunscripcionSeleccionadaOficial(String codCirunscripcion, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
         URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codCirunscripcion + "/" + avance + "/csv");
-        File csv = new File(carpetaBase.getPath() + File.separator + "F_municipales.csv");
+        File csv;
+        if (codCirunscripcion.equals("1800000") || codCirunscripcion.equals("1900000")) {
+            csv = new File(carpetaBase.getPath() + File.separator + "F_autonomicas.csv");
+        } else {
+            csv = new File(carpetaBase.getPath() + File.separator + "F_municipales.csv");
+        }
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
