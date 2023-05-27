@@ -65,8 +65,7 @@ public class ConexionIPF {
                 servidor = new Socket();
                 servidor.connect(new InetSocketAddress(direccion, Integer.parseInt(config.getProperty("puerto"))), TIMEOUT);
                 crearFlujosES();
-                System.out.println("Cliente->Conectado al servidor...");
-
+                System.out.println("Cliente->Conectado al IPF...");
             } catch (IOException ex) {
                 System.err.println("Cliente->ERROR: Al conectar al servidor en " + direccion + " > " + ex.getMessage());
             }
@@ -85,7 +84,7 @@ public class ConexionIPF {
 
         conexionRemotaThread.start();
         try {
-            Thread.sleep(200);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -94,11 +93,11 @@ public class ConexionIPF {
         try {
             conexionRemotaThread.join();
             conexionLocalThread.join();
-
         } catch (InterruptedException e) {
             System.err.println("Cliente->ERROR: Al esperar por la finalización de los hilos de conexión -> " + e.getMessage());
         }
     }
+
 
     private void crearFlujosES() {
         try {

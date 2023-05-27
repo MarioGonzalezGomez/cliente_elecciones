@@ -59,7 +59,7 @@ public class HomeController {
 
     }
 
-    @RequestMapping("init/listeners")
+    @RequestMapping("/init/listeners")
     public ResponseEntity<Dummy> initListeners(Model model) {
         if (Config.checkConnectionWithRetry()) {
             startListeners();
