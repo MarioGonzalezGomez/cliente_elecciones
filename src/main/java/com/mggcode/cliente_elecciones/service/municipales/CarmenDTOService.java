@@ -29,17 +29,17 @@ public class CarmenDTOService {
     //Este DTO trae los partidos de una circunscripción dada por código
     // ordenados del modo en que Carmen necesita para sus gráficos
 
-    public CarmenDTO findAllOficial(String codAutonomia) {
+    public CarmenDTO findAllOficial(String codAutonomia, String avance) {
         ResponseEntity<CarmenDTO> response =
                 restTemplate.getForEntity(
-                        "http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia,
+                        "http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/" + avance,
                         CarmenDTO.class);
         return response.getBody();
     }
 
-    public File findAllInCsvOficial(String codAutonomia) throws IOException {
+    public File findAllInCsvOficial(String codAutonomia, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/" + avance + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".csv");
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -60,49 +60,49 @@ public class CarmenDTOService {
         return csv;
     }
 
-    public File findAllInExcelOficial(String codAutonomia) throws IOException {
+    public File findAllInExcelOficial(String codAutonomia, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/" + avance + "/excel");
         File excel = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".xlsx");
         FileUtils.copyURLToFile(url, excel);
         return excel;
     }
 
-    public File writeCricunscripcionSeleccionadaOficial(String codCirunscripcion) throws IOException {
+    public File writeCricunscripcionSeleccionadaOficial(String codCirunscripcion, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codCirunscripcion + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codCirunscripcion + "/" + avance + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "F_municipales.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
 
-    public File writeAutonomiaSeleccionadaArcoMayoriasOficial(String codAutonomia) throws IOException {
+    public File writeAutonomiaSeleccionadaArcoMayoriasOficial(String codAutonomia, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/oficial/" + codAutonomia + "/" + avance + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "C_MapaMayorias.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
 
-    public CarmenDTO findAllSondeo(String codAutonomia) {
+    public CarmenDTO findAllSondeo(String codAutonomia, String avance) {
         ResponseEntity<CarmenDTO> response =
                 restTemplate.getForEntity(
-                        "http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia,
+                        "http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia + "/" + avance,
                         CarmenDTO.class);
         return response.getBody();
     }
 
-    public CarmenDTO getSondeoEspecial(String codAutonomia) {
+    public CarmenDTO getSondeoEspecial(String codAutonomia, String avance) {
         ResponseEntity<CarmenDTO> response =
                 restTemplate.getForEntity(
-                        "http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codAutonomia,
+                        "http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codAutonomia + "/" + avance,
                         CarmenDTO.class);
         return response.getBody();
     }
 
-    public File getSondeoEspecialCsv(String codAutonomia) throws IOException {
+    public File getSondeoEspecialCsv(String codAutonomia, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codAutonomia + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codAutonomia + "/" + avance + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".csv");
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -123,9 +123,9 @@ public class CarmenDTOService {
         return csv;
     }
 
-    public File findAllInCsvSondeo(String codAutonomia) throws IOException {
+    public File findAllInCsvSondeo(String codAutonomia, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia + "/" + avance + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".csv");
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -146,25 +146,25 @@ public class CarmenDTOService {
         return csv;
     }
 
-    public File findAllInExcelSondeo(String codAutonomia) throws IOException {
+    public File findAllInExcelSondeo(String codAutonomia, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia + "/excel");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/" + codAutonomia + "/" + avance + "/excel");
         File excel = new File(carpetaBase.getPath() + File.separator + "F_" + codAutonomia + ".xlsx");
         FileUtils.copyURLToFile(url, excel);
         return excel;
     }
 
-    public File writeCricunscripcionSeleccionadaSondeo(String codCirunscripcion) throws IOException {
+    public File writeCricunscripcionSeleccionadaSondeo(String codCirunscripcion, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codCirunscripcion + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codCirunscripcion + "/" + avance + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "F_SondeoMunicipales.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;
     }
 
-    public File writeAutonomiaSeleccionadaArcoMayoriasSondeo(String codCirunscripcion) throws IOException {
+    public File writeAutonomiaSeleccionadaArcoMayoriasSondeo(String codCirunscripcion, String avance) throws IOException {
         File carpetaBase = comprobarCarpetas();
-        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codCirunscripcion + "/csv");
+        URL url = new URL("http://" + Config.connectedServer + ":8080/municipales/carmen/sondeo/especial/" + codCirunscripcion + "/" + avance + "/csv");
         File csv = new File(carpetaBase.getPath() + File.separator + "C_MapaMayoriasSondeo.csv");
         FileUtils.copyURLToFile(url, csv);
         return csv;

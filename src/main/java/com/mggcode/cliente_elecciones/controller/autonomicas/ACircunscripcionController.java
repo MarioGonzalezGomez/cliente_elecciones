@@ -51,6 +51,8 @@ public class ACircunscripcionController {
     Data data = Data.getInstance();
     private boolean oficiales = true;
 
+    private String avance = "1";
+
 
     @GetMapping
     public ResponseEntity<Dummy> verCircunscripciones(Model model) {
@@ -62,26 +64,27 @@ public class ACircunscripcionController {
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @GetMapping("/selected/oficial/f_autonomicas/{codigo}")
-    public ResponseEntity<Dummy> selectCircunscripcionAutonomiaOficial(@PathVariable("codigo") String codigo, Model model) {
+    @GetMapping("/selected/oficial/f_autonomicas/{codigo}/{avance}")
+    public ResponseEntity<Dummy> selectCircunscripcionAutonomiaOficial(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
         oficiales = true;
         try {
             lock.lock();
-            carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
+            carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada(), avance);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
         }
+        this.avance = avance;
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @GetMapping("/selected/oficial/mapa_mayorias/{codigo}")
-    public ResponseEntity<Dummy> selectCircunscripcionMapaOficial(@PathVariable("codigo") String codigo, Model model) {
+    @GetMapping("/selected/oficial/mapa_mayorias/{codigo}/{avance}")
+    public ResponseEntity<Dummy> selectCircunscripcionMapaOficial(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -89,19 +92,20 @@ public class ACircunscripcionController {
         try {
             lock.lock();
 
-            carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
+            carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada(), avance);
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
         }
+        this.avance = avance;
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @GetMapping("/selected/sondeo/f_autonomicas/{codigo}")
-    public ResponseEntity<Dummy> selectCircunscripcionAutnomiaSondeo(@PathVariable("codigo") String codigo, Model model) {
+    @GetMapping("/selected/sondeo/f_autonomicas/{codigo}/{avance}")
+    public ResponseEntity<Dummy> selectCircunscripcionAutnomiaSondeo(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -109,19 +113,20 @@ public class ACircunscripcionController {
         try {
             lock.lock();
 
-            carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
+            carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada(), avance);
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
         }
+        this.avance = avance;
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @GetMapping("/selected/sondeo/mapa_mayorias/{codigo}")
-    public ResponseEntity<Dummy> selectCircunscripcionMapaSondeo(@PathVariable("codigo") String codigo, Model model) {
+    @GetMapping("/selected/sondeo/mapa_mayorias/{codigo}/{avance}")
+    public ResponseEntity<Dummy> selectCircunscripcionMapaSondeo(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance) {
         System.out.println("---" + codigo);
         Data data = Data.getInstance();
         data.setCircunscripcionSeleccionada(codigo);
@@ -129,13 +134,14 @@ public class ACircunscripcionController {
         try {
             lock.lock();
 
-            carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
+            carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada(), avance);
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
         }
+        this.avance = avance;
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
@@ -167,10 +173,10 @@ public class ACircunscripcionController {
     }
 
     @GetMapping("/{codigo}")
-    public ResponseEntity<Dummy> verCircunscripcionDetalle(@PathVariable("codigo") String cod, Model model, @RequestHeader("Referer") String referer) {
+    public ResponseEntity<Dummy> verCircunscripcionDetalle(@PathVariable("codigo") String cod, @RequestHeader("Referer") String referer) {
         Circunscripcion circunscripcion = circunscripcionService.findById(cod);
-        model.addAttribute("circunscripcion", circunscripcion);
-        model.addAttribute("referer", referer);
+        //model.addAttribute("circunscripcion", circunscripcion);
+        //model.addAttribute("referer", referer);
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
@@ -257,17 +263,17 @@ public class ACircunscripcionController {
     }
 
     private void updateAllCsv() throws IOException {
-        carmenDTOService.updateAllCsv();
+        carmenDTOService.updateAllCsv(avance);
     }
 
     private void updateSelectedOficial() throws IOException {
-        carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada());
-        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada());
+        carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada(), avance);
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada(), avance);
     }
 
     private void updateSelectedSondeo() throws IOException {
-        carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada());
-        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada());
+        carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada(), avance);
+        carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada(), avance);
     }
 
     private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {

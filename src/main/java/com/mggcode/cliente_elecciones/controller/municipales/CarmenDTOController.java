@@ -22,64 +22,64 @@ public class CarmenDTOController {
     @Autowired
     private CarmenDTOService carmenDTOService;
 
-    @RequestMapping(path = "/oficial/{codigo}")
-    public ResponseEntity<Dummy> findAllOficial(@PathVariable("codigo") String codAutonomia, Model model) {
-        CarmenDTO cdto = carmenDTOService.findAllOficial(codAutonomia);
+    @RequestMapping(path = "/oficial/{codigo}/{avance}")
+    public ResponseEntity<Dummy> findAllOficial(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance, Model model) {
+        CarmenDTO cdto = carmenDTOService.findAllOficial(codigo, avance);
         model.addAttribute("carmen", cdto);
-        model.addAttribute("ruta", "/municipales/carmen/" + codAutonomia);
+        model.addAttribute("ruta", "/municipales/carmen/" + codigo);
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/sondeo/{codigo}")
-    public ResponseEntity<Dummy> findAllSondeo(@PathVariable("codigo") String codAutonomia, Model model) {
-        CarmenDTO cdto = carmenDTOService.findAllSondeo(codAutonomia);
+    @RequestMapping(path = "/sondeo/{codigo}/{avance}")
+    public ResponseEntity<Dummy> findAllSondeo(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance, Model model) {
+        CarmenDTO cdto = carmenDTOService.findAllSondeo(codigo, avance);
         model.addAttribute("carmen", cdto);
-        model.addAttribute("ruta", "/municipales/carmen/" + codAutonomia);
+        model.addAttribute("ruta", "/municipales/carmen/" + codigo);
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/oficial/{codigo}/csv")
-    public ResponseEntity<Dummy> findAllInCsvOficial(@PathVariable("codigo") String codCircunscripcion, RedirectAttributes redirectAttributes) throws IOException {
-        carmenDTOService.findAllInCsvOficial(codCircunscripcion);
+    @RequestMapping(path = "/oficial/{codigo}/{avance}/csv")
+    public ResponseEntity<Dummy> findAllInCsvOficial(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance, RedirectAttributes redirectAttributes) throws IOException {
+        carmenDTOService.findAllInCsvOficial(codigo, avance);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/oficial/{codigo}/excel")
-    public ResponseEntity<Dummy> findAllInExcelOficial(@PathVariable("codigo") String codAutonomia, RedirectAttributes redirectAttributes) throws IOException {
-        carmenDTOService.findAllInExcelOficial(codAutonomia);
+    @RequestMapping(path = "/oficial/{codigo}/{avance}/excel")
+    public ResponseEntity<Dummy> findAllInExcelOficial(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance, RedirectAttributes redirectAttributes) throws IOException {
+        carmenDTOService.findAllInExcelOficial(codigo, avance);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/sondeo/{codigo}/csv")
-    public ResponseEntity<Dummy> findAllInCsvSondeo(@PathVariable("codigo") String codCircunscripcion, RedirectAttributes redirectAttributes) throws IOException {
-        carmenDTOService.findAllInCsvSondeo(codCircunscripcion);
+    @RequestMapping(path = "/sondeo/{codigo}/{avance}/csv")
+    public ResponseEntity<Dummy> findAllInCsvSondeo(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance, RedirectAttributes redirectAttributes) throws IOException {
+        carmenDTOService.findAllInCsvSondeo(codigo, avance);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/sondeo/{codigo}/excel")
-    public ResponseEntity<Dummy> findAllInExcelSondeo(@PathVariable("codigo") String codAutonomia, RedirectAttributes redirectAttributes) throws IOException {
-        carmenDTOService.findAllInExcelSondeo(codAutonomia);
+    @RequestMapping(path = "/sondeo/{codigo}/{avance}/excel")
+    public ResponseEntity<Dummy> findAllInExcelSondeo(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance, RedirectAttributes redirectAttributes) throws IOException {
+        carmenDTOService.findAllInExcelSondeo(codigo, avance);
         redirectAttributes.addFlashAttribute("mensaje", "Archivo descargado correctamente.");
         Dummy dummy = new Dummy("202 OK");
         return new ResponseEntity<>(dummy, HttpStatus.OK);
     }
 
-    @GetMapping("/oficial/{codigo}/data")
-    public ResponseEntity<CarmenDTO> findDtoByCodigo(@PathVariable("codigo") String codigo) {
-        return new ResponseEntity<>(carmenDTOService.findAllOficial(codigo), HttpStatus.OK);
+    @GetMapping("/oficial/{codigo}/{avance}/data")
+    public ResponseEntity<CarmenDTO> findDtoByCodigo(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance) {
+        return new ResponseEntity<>(carmenDTOService.findAllOficial(codigo, avance), HttpStatus.OK);
     }
 
-    @GetMapping("/sondeo/{codigo}/data")
-    public ResponseEntity<CarmenDTO> findDtoOficial(@PathVariable("codigo") String codigo) {
-        return new ResponseEntity<>(carmenDTOService.findAllSondeo(codigo), HttpStatus.OK);
+    @GetMapping("/sondeo/{codigo}/{avance}/data")
+    public ResponseEntity<CarmenDTO> findDtoOficial(@PathVariable("codigo") String codigo, @PathVariable("avance") String avance) {
+        return new ResponseEntity<>(carmenDTOService.findAllSondeo(codigo, avance), HttpStatus.OK);
     }
 
     // @GetMapping("/sondeo/especial/{codigo}/csv")
