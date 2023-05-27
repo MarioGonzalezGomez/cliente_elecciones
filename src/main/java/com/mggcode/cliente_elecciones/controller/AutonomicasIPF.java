@@ -33,8 +33,6 @@ public class AutonomicasIPF {
     @Autowired
     private ACircunscripcionPartidoService cpSer;
 
-
-    //TODO(Indicar aquí la dirección de la conexión IPF que quiero, ¿Cada controller va a un IPF?)
     public AutonomicasIPF() {
         conf = Config.getConfiguracion();
         conexionManager = ConexionManager.getConexionManager();
