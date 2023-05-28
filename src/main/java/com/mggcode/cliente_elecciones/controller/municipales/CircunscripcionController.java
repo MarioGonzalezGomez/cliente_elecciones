@@ -3,12 +3,14 @@ package com.mggcode.cliente_elecciones.controller.municipales;
 
 import com.mggcode.cliente_elecciones.ClienteEleccionesApplication;
 import com.mggcode.cliente_elecciones.config.Config;
+import com.mggcode.cliente_elecciones.controller.AutonomicasIPF;
 import com.mggcode.cliente_elecciones.data.Data;
 import com.mggcode.cliente_elecciones.exception.ConnectionException;
 import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.model.Dummy;
 import com.mggcode.cliente_elecciones.service.municipales.CarmenDTOService;
 import com.mggcode.cliente_elecciones.service.municipales.CircunscripcionService;
+import com.mggcode.cliente_elecciones.service.municipales.ResultadosDTOService;
 import com.mggcode.cliente_elecciones.service.municipales.SedesDTOService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,12 @@ public class CircunscripcionController {
 
     @Autowired
     private SedesDTOService sedesDTOService;
+
+    @Autowired
+    private ResultadosDTOService resultadosDTOService;
+
+    @Autowired
+    private AutonomicasIPF ipf;
 
     List<Circunscripcion> circunscripciones = new ArrayList<>();
     AtomicBoolean isSuscribed = new AtomicBoolean(false);
@@ -250,8 +258,10 @@ public class CircunscripcionController {
                                 lock.lock();
                                 if (oficiales) {
                                     updateSelectedOficial();
+                                    ipf.cartonesActualiza();
                                 } else {
                                     updateSelectedSondeo();
+                                    ipf.cartonesActualiza();
                                 }
                             } catch (IOException e) {
                                 System.err.println(e.getMessage());
@@ -270,11 +280,13 @@ public class CircunscripcionController {
     private void updateSelectedOficial() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada(), avance);
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada(), avance);
+        resultadosDTOService.findByIdCsvOficial(data.getCircunscripcionSeleccionada());
     }
 
     private void updateSelectedSondeo() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada(), avance);
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada(), avance);
+        resultadosDTOService.findByIdCsvSondeo(data.getCircunscripcionSeleccionada());
     }
 
     private boolean containsSelected(String codigo) {

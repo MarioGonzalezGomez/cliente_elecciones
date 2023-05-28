@@ -8,6 +8,7 @@ import com.mggcode.cliente_elecciones.model.Circunscripcion;
 import com.mggcode.cliente_elecciones.model.Dummy;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACarmenDTOService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ACircunscripcionService;
+import com.mggcode.cliente_elecciones.service.autonomicas.AResultadosDTOService;
 import com.mggcode.cliente_elecciones.service.autonomicas.ASedesDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,9 @@ public class ACircunscripcionController {
     private ASedesDTOService sedesDTOService;
 
     @Autowired
+    private AResultadosDTOService resultadosDTOService;
+
+    @Autowired
     private AutonomicasIPF ipf;
 
     List<Circunscripcion> changes;
@@ -50,6 +54,7 @@ public class ACircunscripcionController {
 
     Data data = Data.getInstance();
     private boolean oficiales = true;
+
 
     private String avance = "1";
 
@@ -234,7 +239,6 @@ public class ACircunscripcionController {
                         try {
                             updateAllCsv();
                             ipf.actualizaFaldonLateral();
-                            ipf.cartonesActualiza();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -245,8 +249,10 @@ public class ACircunscripcionController {
                                 lock.lock();
                                 if (oficiales) {
                                     updateSelectedOficial();
+                                    ipf.cartonesActualiza();
                                 } else {
                                     updateSelectedSondeo();
+                                    ipf.cartonesActualiza();
                                 }
                             } catch (IOException e) {
                                 System.err.println(e.getMessage());
@@ -269,11 +275,13 @@ public class ACircunscripcionController {
     private void updateSelectedOficial() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaOficial(data.getCircunscripcionSeleccionada(), avance);
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasOficial(data.getCircunscripcionSeleccionada(), avance);
+        resultadosDTOService.findByIdCsvOficial(data.getCircunscripcionSeleccionada());
     }
 
     private void updateSelectedSondeo() throws IOException {
         carmenDTOService.writeCricunscripcionSeleccionadaSondeo(data.getCircunscripcionSeleccionada(), avance);
         carmenDTOService.writeAutonomiaSeleccionadaArcoMayoriasSondeo(data.getCircunscripcionSeleccionada(), avance);
+        resultadosDTOService.findByIdCsvSondeo(data.getCircunscripcionSeleccionada());
     }
 
     private List<Circunscripcion> getChanges(List<Circunscripcion> oldList, List<Circunscripcion> newList) {
